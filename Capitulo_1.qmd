@@ -1,0 +1,31 @@
+## Intriducción
+
+Basicamente se van a usar los paquetes del tidyverse:
+
+
+```{r}
+#| eval: False
+
+install.packages("tidyverse")
+library(tidyverse)
+tidyverse_update()  # para revisar si se necesitan actualizar.
+```
+
+
+Otros paquetes que se van a usar:
+
+```{r}
+#| eval: False
+
+install.packages(
+  c("arrow", "babynames", "curl", "duckdb", "gapminder", 
+    "ggrepel", "ggridges", "ggthemes", "hexbin", "janitor", "Lahman", 
+    "leaflet", "maps", "nycflights13", "openxlsx", "palmerpenguins", 
+    "repurrrsive", "tidymodels", "writexl")
+  )
+```
+
+
+
+
+  
