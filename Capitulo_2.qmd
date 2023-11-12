@@ -1,0 +1,118 @@
+---
+title: 'Capítulo 2'
+author: 'Mateo Vega'
+format: 
+  html:
+    embed-resources: true
+---
+
+
+
+## Básicos
+
+### Comandos básicos
+
+Se puede usar R para hacer calculos básicos
+
+```{r}
+print(1 / 200 * 30)
+print((59 + 73 + 2) / 3) 
+print(sin(pi / 2))
+```
+Se crean nuevos objetos con el operador `<-`
+
+```{r}
+x <- 3 * 4
+```
+
+Se pueden combinar elementos en un vector con `c()`:
+
+```{r}
+primos <- c(2, 3, 5, 7, 11, 13)
+```
+
+Se pueden hacer operaciones básicas de aritmética a vectores
+
+```{r}
+print(primos * 2)
+print(primos - 1)
+```
+
+Todos las expresiones donde se crean objetos, **expresiones de asignación**, tienen la misma forma:
+
+```{r}
+#| eval: FALSE
+
+nombre_objeto <- valor
+```
+### Comentarios
+
+R ignorará cualquier texto después de un `#`, esto permite escribir comentarios:
+
+```{r}
+# crear un vector de primos
+primos <- c(2, 3, 5, 7, 11, 13)
+
+# multiplicar los primos por 2
+primos * 2
+```
+Los comentarios deberían ser para explicar el por qué de un código, no el qué ni el como.
+
+### Nombres de objetos
+
+Deben empezar con una letra y solo pueden contener letras, numeros, `_` y `.`. Se puede inspeccionar un objeto escribiendo el nombre:
+
+```{r}
+x
+```
+Hacer otra asignación:
+
+```{r}
+un_nombre_muy_largo <- 2.5
+```
+
+
+```{r}
+un_nombre_muy_largo <- 3.5
+```
+
+### Llamando funciones
+
+Las funciones de R están construidas así:
+
+```{r}
+#| eval: FALSE
+  
+nombre_funcion(argumento1 = valor1, argumento2 = valor2, ...)
+
+```
+
+Por ejemplo la función `seq()` que genera una secuencia de numeros
+
+```{r}
+seq(from = 1, to = 10)
+```
+Que es lo mismo que:
+
+```{r}
+seq(1, 10)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
