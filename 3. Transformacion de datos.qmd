@@ -1,0 +1,147 @@
+---
+title: 'Transformación de datos'
+author: 'Mateo Vega'
+format: 
+  html:
+    embed-resources: true
+---
+
+
+
+```{r}
+{
+library(nycflights13)
+library(tidyverse)
+}
+```
+
+
+## nycflights13
+
+Para explorar los verbos básicos de dplyr vamos a usar `nycflights13::flights`
+
+```{r}
+flights
+```
+
+Esto es un tibble, un tipo de data frame usado por el tidyverse.
+
+```{r}
+data(flights)
+glimpse(flights)
+```
+Aquí podemos ver todas las variables en el tibble y su tipo de dato.
+
+## Básicos de dplyr 
+
+Los verbos de dplyr tienen algunas cosas en común:
+
+1. El primer argumento siempre es un data frame.
+2. Los siguientes argumentos tipicamente describen en cuales columnas operar.
+3. El resultado siempre es un data frame nuevo.
+
+Podemos combinar verbos con la pipe `|>`, esta pipe toma la cosa a la izquierda y la pasa a la función en su derecha
+`x |> f(y)` es equivalente a `f(x, y)`. La fomr a más fácil de pronunciar una pipe es con **entonces**.
+
+```{r}
+flights |> 
+  filter(dest == 'IAH') |> 
+  group_by(year, month, day) |>
+  summarize(
+    arr_delay = mean(arr_delay, na.rm = TRUE))
+```
+## Filas
+
+
+El verbo más importante que operan en filas son `filter()`, cambia las filas que están presentes sin cambiar su orden.
+`arrange()`, cambia el orden de las filas sin cambiar las filas que están presentes.
+
+### filter()
+
+`filter()` permite seleccionar filas basado en los valores de las columnas. Por ejemplo, todos lo vuelos que salieron más de 120 minutos tarde.
+
+```{r}
+flights |> 
+  filter(dep_delay > 120)
+```
+
+Vuelos que salieron el primero de Enero:
+
+```{r}
+flights |>
+  filter(month == 1 & day == 1)
+```
+
+Vuelos que salieron en Enero o Febrero:
+
+```{r}
+flights |>
+  filter(month == 1 | month == 2)
+```
+
+Podemos cambiar el `|` por `%in%`
+
+```{r}
+flights |> 
+  filter(month %in% c(1, 2))
+```
+
+Al correr `filter()` dplyr crea un nuevo data frame y lo muestra, no modifica el data frame anterior, para guardar el resultado tenemos que usar el operador de asignación `<-`
+
+```{r}
+jan1 = flights |> 
+  filter(month == 1 & day == 1)
+```
+
+## arrange()
+
+`arrange()` cambia el orden de las filas basado en valores de las columnas. Por ejemplo, se ordena por tiempo de llegada, primero obtenemos los primeros años, dentro de un año los primeros meses, etc:
+
+```{r}
+flights |>
+  arrange(year, month, day, dep_time)
+```
+
+Se puede hacer tambííen en orden descendente, por ejemplo, los vuelos con más retraso de salida:
+
+```{r}
+flights |>
+  arrange(desc(dep_delay))
+```
+El número de filas no ha cambiado, sólo organizamos los datos, no los filtramos.
+
+## distinct()
+
+`distinct()` encuentra las filas únicas en un conjunto de datos, por ejemplo quitar todas las filas duplicadas
+
+```{r}
+flights |> 
+  distinct()
+```
+
+Encontrar todos los origenes y destinos únicos:
+
+```{r}
+flights |>
+  distinct(origin, dest)
+```
+
+Si se quiere seguir teniendo todas las columnas:
+
+```{r}
+flights |> 
+  distinct(origin, dest, .keep_all = TRUE)
+```
+
+`distinct()` encuentra la primer ocurrencia y elimina las siguientes. Si se quiere encontrar el número de ocurrencias se debería usar `count()`, con `sort = TRUE` podemos ordenarlos en descendiente de número de ocurrencias.
+
+```{r}
+flights |>
+  count(origin, dest, sort = TRUE)
+```
+
+## Ejercicios
+
+1. In a single pipeline for each condition, find all flights that meet the condition:
+
+* Had an arrival delay of two or more hours
