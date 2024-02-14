@@ -1,0 +1,272 @@
+---
+title: 'Estilo de código'
+author: 'Mateo Vega'
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| warning: false
+library(styler)
+```
+
+Se usan los datos de nycflights13 para ejemplos
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(nycflights13)
+```
+
+
+## Nombres
+
+Los nombres de variables se prefieren largos y descriptivos, solo con minusculas y usando _ para separar palabras.
+
+```{r}
+# preferimos 
+
+vuelos_cortos <- flights |> filter(air_time < 60)
+
+# evitamos
+
+VUELOSCORTOS <- flights |> filter(air_time < 60)
+```
+
+
+## Espacios
+
+Es mejor poner espacios entre los operadores matemáticos excepto `^` y al rededor del operador de asignación `<-`.
+
+
+```{r}
+#| eval: false
+# Se busca 
+
+z <- (a + b)^2 / d
+
+# Se evita
+
+z<-( a+ b )^ 2/d
+```
+No hay que poner espacios dentro o fuera de los paréntesis al llamar una función, siempre poner un espacio después de una coma.
+
+```{r}
+#| eval: false
+# Se busca 
+
+mean(x, na.rm = TRUE)
+
+# Se evita
+
+mean( x ,na.rm=TRUE)
+```
+
+Está bien agregar espacios en blanco si ayuda con el alineamiento.
+
+
+```{r}
+flights |> 
+  mutate(
+    speed      = distance / air_time,
+    dep_hour   = dep_time %/% 100,
+    dep_minute = dep_time %% 100
+  )
+```
+## Pipes
+
+`|>` debería tener siempre un espacio antes y ser la última cosa en una linea. Esto ayuda a agregar nuevos pasos, reordenar pasos existentes, modificar elementos en un paso.
+
+```{r}
+# Se busca
+
+flights |> 
+  filter(!is.na(arr_delay), !is.na(tailnum)) |>
+  count(dest)
+
+# evitar
+
+flights |> filter(!is.na(arr_delay),!is.na(tailnum))|>count(dest)
+```
+
+Si se necesita una función dentro de la pipe, se debe poner cada nuevo argumento con nombre en una linea nueva
+
+
+```{r}
+# se busca 
+
+flights |> 
+  group_by(tailnum) |> 
+  summarize(
+    delay = mean(arr_delay, na.rm = TRUE),
+    n = n()
+  )
+
+# evitar
+
+flights |>
+  group_by(
+    tailnum
+  ) |> 
+  summarize(delay = mean(arr_delay, na.rm = TRUE), n = n())
+```
+
+Luego del primer paso de la pipeline, identar cada linea con dos espacios
+
+```{r}
+# se busca
+
+flights |> 
+  group_by(tailnum) |>
+  summarize(
+    delay = mean(arr_delay, na.rm = TRUE),
+    n = n()
+  )
+
+# se evita
+
+flights|>
+  group_by(tailnum) |> 
+  summarize(
+             delay = mean(arr_delay, na.rm = TRUE), 
+             n = n()
+           )
+
+flights|>
+  group_by(tailnum) |> 
+  summarize(
+  delay = mean(arr_delay, na.rm = TRUE), 
+  n = n()
+  )
+```
+
+No hay que buscar hacer todo en una linea, verticalmente es más fácil de leer y se puede expandir más fácil en el futuro.
+
+```{r}
+#| eval: false
+
+# esto cabe en una linea
+
+df |> mutate(y = x + 1)
+
+# Esto toma 4 veces más espacio pero es más fácil de leer y de expandir.
+
+df |> 
+  mutate(
+    y = x + 1
+  )
+```
+
+También tener cuidado de pipes muy largas, más de 10 o 15 lineas. Intentar dividirlas en tareas más pequeñas.
+
+## Ggplot2
+
+Aquí aplican las mismas reglas, tratar `+` como si fuera `|>`
+
+```{r}
+flights |> 
+  group_by(month) |> 
+  summarize(
+    delay = mean(arr_delay, na.rm = TRUE)
+  ) |> 
+  ggplot(aes(x = month, y = delay)) +
+  geom_point() + 
+  geom_line()
+```
+Si no caben los argumentos en una linea es mejor poner cada argumento en su linea
+
+```{r}
+flights |> 
+  group_by(dest) |> 
+  summarize(
+    distance = mean(distance),
+    speed = mean(distance / air_time, na.rm = TRUE)
+  ) |> 
+  ggplot(aes(x = distance, y = speed)) +
+  geom_smooth(
+    method = "loess",
+    span = 0.5,
+    se = FALSE, 
+    color = "white", 
+    linewidth = 4
+  ) +
+  geom_point()
+```
+
+## Comentarios por sección
+
+Se pueden usar secciones para dividir el script en partes más organizado.
+
+```{r}
+# Load data --------------------------------------
+
+# Plot data --------------------------------------
+
+# ctr + shift + R
+```
+
+
+## Ejercicios
+
+Aplicar el estilo a estos códigos:
+
+1.
+```{r}
+flights|>filter(dest=="IAH")|>group_by(year,month,day)|>summarize(n=n(),
+delay=mean(arr_delay,na.rm=TRUE))|>filter(n>10)
+```
+
+```{r}
+flights |>
+  filter(dest == "IAH") |>
+  group_by(year, month, day) |> 
+  summarize(
+    n     = n(),
+    delay = mean(arr_delay, na.rm = TRUE)) |>
+  filter(n > 10)
+```
+
+
+2. 
+```{r}
+flights|>filter(carrier=="UA",dest%in%c("IAH","HOU"),sched_dep_time>
+0900,sched_arr_time<2000)|>group_by(flight)|>summarize(delay=mean(
+arr_delay,na.rm=TRUE),cancelled=sum(is.na(arr_delay)),n=n())|>filter(n>10)
+```
+
+```{r}
+flights |>
+  filter(
+    carrier == "UA",
+    dest %in% c("IAH", "HOU"),
+    sched_dep_time > 0900,
+    sched_arr_time < 2000
+  ) |>
+  group_by(flight) |>
+  summarize(
+    delay     = mean(arr_delay, na.rm = TRUE),
+    cancelled = sum(is.na(arr_delay)),
+    n = n() 
+  ) |>
+  filter(n > 1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
