@@ -93,7 +93,7 @@ jan1 = flights |>
   filter(month == 1 & day == 1)
 ```
 
-## arrange()
+### arrange()
 
 `arrange()` cambia el orden de las filas basado en valores de las columnas. Por ejemplo, se ordena por tiempo de llegada, primero obtenemos los primeros años, dentro de un año los primeros meses, etc:
 
@@ -110,7 +110,7 @@ flights |>
 ```
 El número de filas no ha cambiado, sólo organizamos los datos, no los filtramos.
 
-## distinct()
+### distinct()
 
 `distinct()` encuentra las filas únicas en un conjunto de datos, por ejemplo quitar todas las filas duplicadas
 
@@ -140,8 +140,375 @@ flights |>
   count(origin, dest, sort = TRUE)
 ```
 
-## Ejercicios
+### Ejercicios
 
 1. In a single pipeline for each condition, find all flights that meet the condition:
 
-* Had an arrival delay of two or more hours
+* Had an arrival delay of two or more hours:
+
+```{r}
+flights |>
+  filter(arr_delay >= 120)
+```
+
+* Flew to Houston (IAH or HOU):
+
+```{r}
+flights |>
+  filter(dest %in% c('IAH', 'HOU'))
+```
+
+* Were operated by United, American, or Delta:
+
+```{r}
+flights |>
+  filter(carrier %in% c('UA', 'AA', 'DL'))
+```
+
+* Departed in summer (July, August, and September)
+
+```{r}
+flights |> 
+  filter(month %in% c(7, 8, 9))
+```
+
+* Arrived more than two hours late, but didn’t leave late:
+
+```{r}
+flights |>
+  filter(arr_delay > 120 & dep_delay <= 0)
+```
+
+* Were delayed by at least an hour, but made up over 30 minutes in flight:
+
+```{r}
+flights |>
+  filter(dep_delay >= 60 & dep_delay - arr_delay > 30)
+```
+
+2. Sort flights to find the flights with longest departure delays. Find the flights that left earliest in the morning.
+
+
+```{r}
+flights |> 
+  arrange(desc(dep_delay))
+```
+
+```{r}
+flights |> 
+  arrange(hour, minute)
+```
+3. Sort flights to find the fastest flights. (Hint: Try including a math calculation inside of your function.)
+
+```{r}
+flights |>
+  arrange(desc(distance / air_time))
+```
+4. Was there a flight on every day of 2013?
+
+```{r}
+flights |> 
+  filter(year == 2013) |>
+  count(day)
+```
+5. Which flights traveled the farthest distance? Which traveled the least distance?
+
+```{r}
+flights |>
+  arrange(desc(distance))
+```
+
+```{r}
+flights |>
+  arrange(distance)
+```
+
+6. Does it matter what order you used filter() and arrange() if you’re using both? Why/why not? Think about the results and how much work the functions would have to do.
+
+
+No importa el orden, ya que no importa si el data frame se ordena primero o después de filtrar, el resultado del filtro es el mismo.
+
+
+## Columnas
+
+Los verbos más importantes que operan en columnas sin cambiar las filas son: `mutate()`, `select()`, `rename()` y `relocate()`
+
+### mutate()
+
+Agrega nuevas columnas que son calculadas de las columnas existentes. Por ejemplo, cuanto tiempo un vuelo atrasado adelantó en el aire y la velocidad :
+
+```{r}
+flights |>
+  mutate(
+    gain = dep_delay - arr_delay,
+    speed = distance / air_time * 60
+  )
+```
+Por default `mutate()` agrega las columnas al final del data frame, podemos usar `.before` para agregar las columnas a la izquierda.
+
+```{r}
+flights |>
+  mutate(
+    gain = dep_delay - arr_delay,
+    speed = distance / air_time * 60,
+    .before = 1
+  )
+```
+El `.` señala que before es un argumento, no una nueva variable. También podemos usar `.after` para agregar después de una variable específica.
+
+```{r}
+flights |>
+  mutate(
+    gain = dep_delay - arr_delay,
+    speed = distance / air_time * 60,
+    .after = day
+  )
+```
+También podemos usar `.keep` para solo especificar las columnas que queremos mantener o usar `'used'` lo cual especifica que solo queremos las variables que usamos en el calculo:
+
+```{r}
+flights |>
+  mutate(
+    gain = dep_delay - arr_delay,
+    hours = air_time / 60,
+    gain_per_hour = gain / hours,
+    .keep = 'used'
+  )
+```
+### select():
+
+`select()` selecciona subgrupos de columnas. 
+
+* Seleccionar columnas por nombre:
+
+```{r}
+flights |>
+  select(year, month, day)
+```
+* Seleccionar todas las columnas entre año y dia (inclusivo):
+
+```{r}
+flights |>
+  select(year:day)
+```
+* Seleccionar todas las columnas excepto las que están entre año y dia (inclusivo):
+
+```{r}
+flights |> 
+  select(!year:day)
+```
+* Seleccionar todas las columnas que empiezan con carácteres:
+
+```{r}
+flights |>
+  select(where(is.character))
+```
+
+Hay muchas funciones de ayuda para seleccionar columnas:
+
+* `starts_with('abc')`: columnas que empiezan con 'abc'.
+* `ends_with('xyz')`: columnas que terminan con 'xyz'.
+* `contains('ijk')`: columnas que contienen 'ijk'.
+* `num_range('x', 1:3)`: columnas que empiezan con 'x' seguido de 1, 2 o 3.
+
+También podemos renombrar variables mientras usamos `select()` usando `=`:
+
+```{r}
+flights |>
+  select(tail_num = tailnum)
+```
+### rename()
+
+Si se quiere quedarse con las variables existentes y solo renombrar algunas, podemos usar `rename()`:
+
+```{r}
+flights |> 
+  rename(tail_num = tailnum)
+```
+`janitor::clean_names()` provee alguna limpieza automática.
+
+### relocate()
+
+`relocate()` mueve columnas a una nueva posición. Por default las mueve al frente:
+
+```{r}
+flights |> 
+  relocate(time_hour, air_time)
+```
+
+Tambíen podemos usar `.before` y `.after` para especificar la posición:
+
+```{r}
+flights |>
+  relocate(year:dep_time, .after = time_hour)
+flights |>
+  relocate(starts_with('arr'), .before = dep_time)
+```
+
+### Ejercicios
+
+## Pipe
+
+La verdadera funcionalidad es cuando se combinan muchos verbos en una pipe:
+
+```{r}
+flights |> 
+  filter(dest == 'IAH') |>
+  mutate(speed = distance / air_time * 60) |>
+  select(year:day, dep_time, carrier, flight, speed) |>
+  arrange(desc(speed))
+```
+
+
+## Grupos
+
+Los verbos más importantes que operan en grupos son: `group_by()` y `summarize()`
+
+### group_by()
+
+Se usa `group_by()` para dividir el conjunto en grupos con significado para  el análisis.
+
+```{r}
+flights |> 
+  group_by(month)
+```
+
+Ahora el data frame está agrupado por meses, cualquier operación que se le haga ahora se hará en cada grupo.
+
+### summarize()
+
+`summarize()` toma un data frame y lo reduce a un resumen de algún valor que queramos tomar.
+
+```{r}
+flights |> 
+  group_by(month) |> 
+  summarize(
+    delay = mean(dep_delay, na.rm = TRUE)
+  )
+```
+
+Podemos usar distintas funciones resúmen, por ejemplo el número de observaciones en cada grupo con `n()`.
+
+```{r}
+flights |> 
+  group_by(month) |> 
+  summarize(
+    delay = mean(dep_delay, na.rm = TRUE),
+    n = n()
+  )
+```
+
+### La función slice_
+
+`slice()` es como `filter()` pero en lugar de filtrar filas, selecciona filas por su posición.
+
+* `df |> slice_head(n = 1)` toma la primer fila de cada grupo.
+* `df |> slice_tail(n = 1)` toma la última fila de cada grupo.
+* `df |> slice_min(x, n = 1)` toma la fila con el valor minimo de la columna x.
+* `df |> slice_max(x, n = 1)` toma la fila con el valor máximo de la columna x.
+* `df |> slice_sample(n = 1)` toma una muestra aleatoria de n filas de cada grupo.
+
+En lugar de `n` se puede usar `prop` para tomar una proporción de filas de cada grupo. Por ejemplo, los vuelos que más se atrasan luego de llegar a su destino:
+
+```{r}
+flights |> 
+  group_by(dest) |> 
+  slice_max(arr_delay, n = 1) |> 
+  relocate(dest)
+```
+
+### Agrupando con multiples variables
+
+Podemos agrupar con múltiples variables, por ejemplo un grupo por cada fecha:
+
+```{r}
+daily = flights |> 
+  group_by(year, month, day)
+daily
+```
+```{r}
+daily_flights = daily |> 
+  summarize(n = n())
+```
+Aquí se elimina el último grupo, en este caso 'day', se puede pedir para no obtener el mensaje:
+
+```{r}
+daily_flights = daily |> 
+  summarize(n = n(),
+            .groups = 'drop_last')
+```
+
+Esto hace lo mismo que el código anterior, también se puede 'drop' para quitar todos los grupos o 'keep' para mantener todos los grupos.
+
+### Desagrupar
+
+
+Para desagrupar se usa `ungroup()`:
+
+```{r}
+daily |> 
+  ungroup()
+```
+### .by
+
+Se puede usar dentro de dplyr para agrupar con una sola operación:
+
+```{r}
+flights |> 
+  summarize(
+    delay = mean(dep_delay, na.rm = TRUE),
+    n = n(),
+    .by = month
+  )
+```
+
+O si se quieren varias variables:
+
+```{r}
+flights |> 
+  summarize(
+    delay = mean(dep_delay, na.rm = TRUE),
+    n = n(),
+    .by = c(origin, dest)
+  )
+```
+
+`.by` funciona con todos los verbos y tiene la ventaja que no se necesita usar el argumento `.groups`.
+
+### Ejercicios
+
+## Caso de estudio
+
+Cuando se hacen agregaciones es bueno incluir `n()` para darse cuenta si se están sacando conclusiones basadas en muy pocos datos. Aquí un ejemplo:
+
+```{r}
+batters = Lahman::Batting |> 
+  group_by(playerID) |> 
+  summarize(
+    performance = sum(H, na.rm = TRUE) / sum(AB, na.rm = TRUE),
+    n = sum(AB, na.rm = TRUE)
+  )
+batters
+```
+
+Ahora grafiquemos el performance contra el número de oportunidades de golpear la pelota (n):
+
+```{r}
+batters |> 
+  filter(n > 100) |> 
+  ggplot(aes(x = n, y = performance)) +
+  geom_point(alpha = 1 / 10) +
+  geom_smooth(se = FALSE)
+```
+
+1. La variación en performance es más grande entre jugadores con menos oportunidades en el bate.
+2. Hay una correlación positiva entre performance y oportunidades en el bate.
+
+Ahora si organizamos de manera descendente por performance:
+
+```{r}
+batters |> 
+  arrange(desc(performance))
+```
+
+Los que mejor tienen performance son los que tienen menos oportunidades en el bate. Esto es un error, por lo que hay que tener cuidado con la cantidad de datos que tenemos.

@@ -3263,9 +3263,8 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> day <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-</section>
-<section id="arrange" class="level2">
-<h2 class="anchored" data-anchor-id="arrange">arrange()</h2>
+<section id="arrange" class="level3">
+<h3 class="anchored" data-anchor-id="arrange">arrange()</h3>
 <p><code>arrange()</code> cambia el orden de las filas basado en valores de las columnas. Por ejemplo, se ordena por tiempo de llegada, primero obtenemos los primeros años, dentro de un año los primeros meses, etc:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
@@ -3316,8 +3315,8 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </div>
 <p>El número de filas no ha cambiado, sólo organizamos los datos, no los filtramos.</p>
 </section>
-<section id="distinct" class="level2">
-<h2 class="anchored" data-anchor-id="distinct">distinct()</h2>
+<section id="distinct" class="level3">
+<h3 class="anchored" data-anchor-id="distinct">distinct()</h3>
 <p><code>distinct()</code> encuentra las filas únicas en un conjunto de datos, por ejemplo quitar todas las filas duplicadas</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
@@ -3409,14 +3408,1015 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </div>
 </div>
 </section>
-<section id="ejercicios" class="level2">
-<h2 class="anchored" data-anchor-id="ejercicios">Ejercicios</h2>
+<section id="ejercicios" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios">Ejercicios</h3>
 <ol type="1">
 <li>In a single pipeline for each condition, find all flights that meet the condition:</li>
 </ol>
 <ul>
-<li>Had an arrival delay of two or more hours</li>
+<li>Had an arrival delay of two or more hours:</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;=</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10,200 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      811            630       101     1047            830
+ 2  2013     1     1      848           1835       853     1001           1950
+ 3  2013     1     1      957            733       144     1056            853
+ 4  2013     1     1     1114            900       134     1447           1222
+ 5  2013     1     1     1505           1310       115     1638           1431
+ 6  2013     1     1     1525           1340       105     1831           1626
+ 7  2013     1     1     1549           1445        64     1912           1656
+ 8  2013     1     1     1558           1359       119     1718           1515
+ 9  2013     1     1     1732           1630        62     2028           1825
+10  2013     1     1     1803           1620       103     2008           1750
+# ℹ 10,190 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Flew to Houston (IAH or HOU):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;IAH&#39;</span>, <span class="st">&#39;HOU&#39;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9,313 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      623            627        -4      933            932
+ 4  2013     1     1      728            732        -4     1041           1038
+ 5  2013     1     1      739            739         0     1104           1038
+ 6  2013     1     1      908            908         0     1228           1219
+ 7  2013     1     1     1028           1026         2     1350           1339
+ 8  2013     1     1     1044           1045        -1     1352           1351
+ 9  2013     1     1     1114            900       134     1447           1222
+10  2013     1     1     1205           1200         5     1503           1505
+# ℹ 9,303 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Were operated by United, American, or Delta:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(carrier <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;UA&#39;</span>, <span class="st">&#39;AA&#39;</span>, <span class="st">&#39;DL&#39;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 139,504 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      554            600        -6      812            837
+ 5  2013     1     1      554            558        -4      740            728
+ 6  2013     1     1      558            600        -2      753            745
+ 7  2013     1     1      558            600        -2      924            917
+ 8  2013     1     1      558            600        -2      923            937
+ 9  2013     1     1      559            600        -1      941            910
+10  2013     1     1      559            600        -1      854            902
+# ℹ 139,494 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Departed in summer (July, August, and September)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 86,326 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     7     1        1           2029       212      236           2359
+ 2  2013     7     1        2           2359         3      344            344
+ 3  2013     7     1       29           2245       104      151              1
+ 4  2013     7     1       43           2130       193      322             14
+ 5  2013     7     1       44           2150       174      300            100
+ 6  2013     7     1       46           2051       235      304           2358
+ 7  2013     7     1       48           2001       287      308           2305
+ 8  2013     7     1       58           2155       183      335             43
+ 9  2013     7     1      100           2146       194      327             30
+10  2013     7     1      100           2245       135      337            135
+# ℹ 86,316 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Arrived more than two hours late, but didn’t leave late:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;</span> <span class="dv">120</span> <span class="sc">&amp;</span> dep_delay <span class="sc">&lt;=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 29 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1    27     1419           1420        -1     1754           1550
+ 2  2013    10     7     1350           1350         0     1736           1526
+ 3  2013    10     7     1357           1359        -2     1858           1654
+ 4  2013    10    16      657            700        -3     1258           1056
+ 5  2013    11     1      658            700        -2     1329           1015
+ 6  2013     3    18     1844           1847        -3       39           2219
+ 7  2013     4    17     1635           1640        -5     2049           1845
+ 8  2013     4    18      558            600        -2     1149            850
+ 9  2013     4    18      655            700        -5     1213            950
+10  2013     5    22     1827           1830        -3     2217           2010
+# ℹ 19 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Were delayed by at least an hour, but made up over 30 minutes in flight:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_delay <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">&amp;</span> dep_delay <span class="sc">-</span> arr_delay <span class="sc">&gt;</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,844 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1     2205           1720       285       46           2040
+ 2  2013     1     1     2326           2130       116      131             18
+ 3  2013     1     3     1503           1221       162     1803           1555
+ 4  2013     1     3     1839           1700        99     2056           1950
+ 5  2013     1     3     1850           1745        65     2148           2120
+ 6  2013     1     3     1941           1759       102     2246           2139
+ 7  2013     1     3     1950           1845        65     2228           2227
+ 8  2013     1     3     2015           1915        60     2135           2111
+ 9  2013     1     3     2257           2000       177       45           2224
+10  2013     1     4     1917           1700       137     2135           1950
+# ℹ 1,834 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Sort flights to find the flights with longest departure delays. Find the flights that left earliest in the morning.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(dep_delay))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     9      641            900      1301     1242           1530
+ 2  2013     6    15     1432           1935      1137     1607           2120
+ 3  2013     1    10     1121           1635      1126     1239           1810
+ 4  2013     9    20     1139           1845      1014     1457           2210
+ 5  2013     7    22      845           1600      1005     1044           1815
+ 6  2013     4    10     1100           1900       960     1342           2211
+ 7  2013     3    17     2321            810       911      135           1020
+ 8  2013     6    27      959           1900       899     1236           2226
+ 9  2013     7    22     2257            759       898      121           1026
+10  2013    12     5      756           1700       896     1058           2020
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(hour, minute)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     7    27       NA            106        NA       NA            245
+ 2  2013     1     2      458            500        -2      703            650
+ 3  2013     1     3      458            500        -2      650            650
+ 4  2013     1     4      456            500        -4      631            650
+ 5  2013     1     5      458            500        -2      640            650
+ 6  2013     1     6      458            500        -2      718            650
+ 7  2013     1     7      454            500        -6      637            648
+ 8  2013     1     8      454            500        -6      625            648
+ 9  2013     1     9      457            500        -3      647            648
+10  2013     1    10      450            500       -10      634            648
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Sort flights to find the fastest flights. (Hint: Try including a math calculation inside of your function.)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(distance <span class="sc">/</span> air_time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     5    25     1709           1700         9     1923           1937
+ 2  2013     7     2     1558           1513        45     1745           1719
+ 3  2013     5    13     2040           2025        15     2225           2226
+ 4  2013     3    23     1914           1910         4     2045           2043
+ 5  2013     1    12     1559           1600        -1     1849           1917
+ 6  2013    11    17      650            655        -5     1059           1150
+ 7  2013     2    21     2355           2358        -3      412            438
+ 8  2013    11    17      759            800        -1     1212           1255
+ 9  2013    11    16     2003           1925        38       17             36
+10  2013    11    16     2349           2359       -10      402            440
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Was there a flight on every day of 2013?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2013</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 2
+     day     n
+   &lt;int&gt; &lt;int&gt;
+ 1     1 11036
+ 2     2 10808
+ 3     3 11211
+ 4     4 11059
+ 5     5 10858
+ 6     6 11059
+ 7     7 10985
+ 8     8 11271
+ 9     9 10857
+10    10 11227
+# ℹ 21 more rows</code></pre>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Which flights traveled the farthest distance? Which traveled the least distance?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(distance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      857            900        -3     1516           1530
+ 2  2013     1     2      909            900         9     1525           1530
+ 3  2013     1     3      914            900        14     1504           1530
+ 4  2013     1     4      900            900         0     1516           1530
+ 5  2013     1     5      858            900        -2     1519           1530
+ 6  2013     1     6     1019            900        79     1558           1530
+ 7  2013     1     7     1042            900       102     1620           1530
+ 8  2013     1     8      901            900         1     1504           1530
+ 9  2013     1     9      641            900      1301     1242           1530
+10  2013     1    10      859            900        -1     1449           1530
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(distance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     7    27       NA            106        NA       NA            245
+ 2  2013     1     3     2127           2129        -2     2222           2224
+ 3  2013     1     4     1240           1200        40     1333           1306
+ 4  2013     1     4     1829           1615       134     1937           1721
+ 5  2013     1     4     2128           2129        -1     2218           2224
+ 6  2013     1     5     1155           1200        -5     1241           1306
+ 7  2013     1     6     2125           2129        -4     2224           2224
+ 8  2013     1     7     2124           2129        -5     2212           2224
+ 9  2013     1     8     2127           2130        -3     2304           2225
+10  2013     1     9     2126           2129        -3     2217           2224
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ol start="6" type="1">
+<li>Does it matter what order you used filter() and arrange() if you’re using both? Why/why not? Think about the results and how much work the functions would have to do.</li>
+</ol>
+<p>No importa el orden, ya que no importa si el data frame se ordena primero o después de filtrar, el resultado del filtro es el mismo.</p>
+</section>
+</section>
+<section id="columnas" class="level2">
+<h2 class="anchored" data-anchor-id="columnas">Columnas</h2>
+<p>Los verbos más importantes que operan en columnas sin cambiar las filas son: <code>mutate()</code>, <code>select()</code>, <code>rename()</code> y <code>relocate()</code></p>
+<section id="mutate" class="level3">
+<h3 class="anchored" data-anchor-id="mutate">mutate()</h3>
+<p>Agrega nuevas columnas que son calculadas de las columnas existentes. Por ejemplo, cuanto tiempo un vuelo atrasado adelantó en el aire y la velocidad :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">speed =</span> distance <span class="sc">/</span> air_time <span class="sc">*</span> <span class="dv">60</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 21
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# ℹ 336,766 more rows
+# ℹ 13 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, gain &lt;dbl&gt;, speed &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Por default <code>mutate()</code> agrega las columnas al final del data frame, podemos usar <code>.before</code> para agregar las columnas a la izquierda.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">speed =</span> distance <span class="sc">/</span> air_time <span class="sc">*</span> <span class="dv">60</span>,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="dv">1</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 21
+    gain speed  year month   day dep_time sched_dep_time dep_delay arr_time
+   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+ 1    -9  370.  2013     1     1      517            515         2      830
+ 2   -16  374.  2013     1     1      533            529         4      850
+ 3   -31  408.  2013     1     1      542            540         2      923
+ 4    17  517.  2013     1     1      544            545        -1     1004
+ 5    19  394.  2013     1     1      554            600        -6      812
+ 6   -16  288.  2013     1     1      554            558        -4      740
+ 7   -24  404.  2013     1     1      555            600        -5      913
+ 8    11  259.  2013     1     1      557            600        -3      709
+ 9     5  405.  2013     1     1      557            600        -3      838
+10   -10  319.  2013     1     1      558            600        -2      753
+# ℹ 336,766 more rows
+# ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+#   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+#   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<p>El <code>.</code> señala que before es un argumento, no una nueva variable. También podemos usar <code>.after</code> para agregar después de una variable específica.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">speed =</span> distance <span class="sc">/</span> air_time <span class="sc">*</span> <span class="dv">60</span>,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.after =</span> day</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 21
+    year month   day  gain speed dep_time sched_dep_time dep_delay arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+ 1  2013     1     1    -9  370.      517            515         2      830
+ 2  2013     1     1   -16  374.      533            529         4      850
+ 3  2013     1     1   -31  408.      542            540         2      923
+ 4  2013     1     1    17  517.      544            545        -1     1004
+ 5  2013     1     1    19  394.      554            600        -6      812
+ 6  2013     1     1   -16  288.      554            558        -4      740
+ 7  2013     1     1   -24  404.      555            600        -5      913
+ 8  2013     1     1    11  259.      557            600        -3      709
+ 9  2013     1     1     5  405.      557            600        -3      838
+10  2013     1     1   -10  319.      558            600        -2      753
+# ℹ 336,766 more rows
+# ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+#   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+#   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<p>También podemos usar <code>.keep</code> para solo especificar las columnas que queremos mantener o usar <code>&#39;used&#39;</code> lo cual especifica que solo queremos las variables que usamos en el calculo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gain =</span> dep_delay <span class="sc">-</span> arr_delay,</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">hours =</span> air_time <span class="sc">/</span> <span class="dv">60</span>,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">gain_per_hour =</span> gain <span class="sc">/</span> hours,</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.keep =</span> <span class="st">&#39;used&#39;</span></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 6
+   dep_delay arr_delay air_time  gain hours gain_per_hour
+       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+ 1         2        11      227    -9 3.78          -2.38
+ 2         4        20      227   -16 3.78          -4.23
+ 3         2        33      160   -31 2.67         -11.6 
+ 4        -1       -18      183    17 3.05           5.57
+ 5        -6       -25      116    19 1.93           9.83
+ 6        -4        12      150   -16 2.5           -6.4 
+ 7        -5        19      158   -24 2.63          -9.11
+ 8        -3       -14       53    11 0.883         12.5 
+ 9        -3        -8      140     5 2.33           2.14
+10        -2         8      138   -10 2.3           -4.35
+# ℹ 336,766 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="select" class="level3">
+<h3 class="anchored" data-anchor-id="select">select():</h3>
+<p><code>select()</code> selecciona subgrupos de columnas.</p>
+<ul>
+<li>Seleccionar columnas por nombre:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, month, day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 3
+    year month   day
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1  2013     1     1
+ 2  2013     1     1
+ 3  2013     1     1
+ 4  2013     1     1
+ 5  2013     1     1
+ 6  2013     1     1
+ 7  2013     1     1
+ 8  2013     1     1
+ 9  2013     1     1
+10  2013     1     1
+# ℹ 336,766 more rows</code></pre>
+</div>
+</div>
+<ul>
+<li>Seleccionar todas las columnas entre año y dia (inclusivo):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 3
+    year month   day
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1  2013     1     1
+ 2  2013     1     1
+ 3  2013     1     1
+ 4  2013     1     1
+ 5  2013     1     1
+ 6  2013     1     1
+ 7  2013     1     1
+ 8  2013     1     1
+ 9  2013     1     1
+10  2013     1     1
+# ℹ 336,766 more rows</code></pre>
+</div>
+</div>
+<ul>
+<li>Seleccionar todas las columnas excepto las que están entre año y dia (inclusivo):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>year<span class="sc">:</span>day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 16
+   dep_time sched_dep_time dep_delay arr_time sched_arr_time arr_delay carrier
+      &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;  
+ 1      517            515         2      830            819        11 UA     
+ 2      533            529         4      850            830        20 UA     
+ 3      542            540         2      923            850        33 AA     
+ 4      544            545        -1     1004           1022       -18 B6     
+ 5      554            600        -6      812            837       -25 DL     
+ 6      554            558        -4      740            728        12 UA     
+ 7      555            600        -5      913            854        19 B6     
+ 8      557            600        -3      709            723       -14 EV     
+ 9      557            600        -3      838            846        -8 B6     
+10      558            600        -2      753            745         8 AA     
+# ℹ 336,766 more rows
+# ℹ 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Seleccionar todas las columnas que empiezan con carácteres:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.character))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 4
+   carrier tailnum origin dest 
+   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;
+ 1 UA      N14228  EWR    IAH  
+ 2 UA      N24211  LGA    IAH  
+ 3 AA      N619AA  JFK    MIA  
+ 4 B6      N804JB  JFK    BQN  
+ 5 DL      N668DN  LGA    ATL  
+ 6 UA      N39463  EWR    ORD  
+ 7 B6      N516JB  EWR    FLL  
+ 8 EV      N829AS  LGA    IAD  
+ 9 B6      N593JB  JFK    MCO  
+10 AA      N3ALAA  LGA    ORD  
+# ℹ 336,766 more rows</code></pre>
+</div>
+</div>
+<p>Hay muchas funciones de ayuda para seleccionar columnas:</p>
+<ul>
+<li><code>starts_with(&#39;abc&#39;)</code>: columnas que empiezan con ‘abc’.</li>
+<li><code>ends_with(&#39;xyz&#39;)</code>: columnas que terminan con ‘xyz’.</li>
+<li><code>contains(&#39;ijk&#39;)</code>: columnas que contienen ‘ijk’.</li>
+<li><code>num_range(&#39;x&#39;, 1:3)</code>: columnas que empiezan con ‘x’ seguido de 1, 2 o 3.</li>
+</ul>
+<p>También podemos renombrar variables mientras usamos <code>select()</code> usando <code>=</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">tail_num =</span> tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 1
+   tail_num
+   &lt;chr&gt;   
+ 1 N14228  
+ 2 N24211  
+ 3 N619AA  
+ 4 N804JB  
+ 5 N668DN  
+ 6 N39463  
+ 7 N516JB  
+ 8 N829AS  
+ 9 N593JB  
+10 N3ALAA  
+# ℹ 336,766 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="rename" class="level3">
+<h3 class="anchored" data-anchor-id="rename">rename()</h3>
+<p>Si se quiere quedarse con las variables existentes y solo renombrar algunas, podemos usar <code>rename()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">tail_num =</span> tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tail_num &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<p><code>janitor::clean_names()</code> provee alguna limpieza automática.</p>
+</section>
+<section id="relocate" class="level3">
+<h3 class="anchored" data-anchor-id="relocate">relocate()</h3>
+<p><code>relocate()</code> mueve columnas a una nueva posición. Por default las mueve al frente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(time_hour, air_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+   time_hour           air_time  year month   day dep_time sched_dep_time
+   &lt;dttm&gt;                 &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+ 1 2013-01-01 05:00:00      227  2013     1     1      517            515
+ 2 2013-01-01 05:00:00      227  2013     1     1      533            529
+ 3 2013-01-01 05:00:00      160  2013     1     1      542            540
+ 4 2013-01-01 05:00:00      183  2013     1     1      544            545
+ 5 2013-01-01 06:00:00      116  2013     1     1      554            600
+ 6 2013-01-01 05:00:00      150  2013     1     1      554            558
+ 7 2013-01-01 06:00:00      158  2013     1     1      555            600
+ 8 2013-01-01 06:00:00       53  2013     1     1      557            600
+ 9 2013-01-01 06:00:00      140  2013     1     1      557            600
+10 2013-01-01 06:00:00      138  2013     1     1      558            600
+# ℹ 336,766 more rows
+# ℹ 12 more variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;, sched_arr_time &lt;int&gt;,
+#   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,
+#   dest &lt;chr&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Tambíen podemos usar <code>.before</code> y <code>.after</code> para especificar la posición:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(year<span class="sc">:</span>dep_time, <span class="at">.after =</span> time_hour)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+   sched_dep_time dep_delay arr_time sched_arr_time arr_delay carrier flight
+            &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;
+ 1            515         2      830            819        11 UA        1545
+ 2            529         4      850            830        20 UA        1714
+ 3            540         2      923            850        33 AA        1141
+ 4            545        -1     1004           1022       -18 B6         725
+ 5            600        -6      812            837       -25 DL         461
+ 6            558        -4      740            728        12 UA        1696
+ 7            600        -5      913            854        19 B6         507
+ 8            600        -3      709            723       -14 EV        5708
+ 9            600        -3      838            846        -8 B6          79
+10            600        -2      753            745         8 AA         301
+# ℹ 336,766 more rows
+# ℹ 12 more variables: tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+#   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, year &lt;int&gt;,
+#   month &lt;int&gt;, day &lt;int&gt;, dep_time &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="fu">starts_with</span>(<span class="st">&#39;arr&#39;</span>), <span class="at">.before =</span> dep_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day arr_time arr_delay dep_time sched_dep_time dep_delay
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;
+ 1  2013     1     1      830        11      517            515         2
+ 2  2013     1     1      850        20      533            529         4
+ 3  2013     1     1      923        33      542            540         2
+ 4  2013     1     1     1004       -18      544            545        -1
+ 5  2013     1     1      812       -25      554            600        -6
+ 6  2013     1     1      740        12      554            558        -4
+ 7  2013     1     1      913        19      555            600        -5
+ 8  2013     1     1      709       -14      557            600        -3
+ 9  2013     1     1      838        -8      557            600        -3
+10  2013     1     1      753         8      558            600        -2
+# ℹ 336,766 more rows
+# ℹ 11 more variables: sched_arr_time &lt;int&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="ejercicios-1" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios-1">Ejercicios</h3>
+</section>
+</section>
+<section id="pipe" class="level2">
+<h2 class="anchored" data-anchor-id="pipe">Pipe</h2>
+<p>La verdadera funcionalidad es cuando se combinan muchos verbos en una pipe:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dest <span class="sc">==</span> <span class="st">&#39;IAH&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">speed =</span> distance <span class="sc">/</span> air_time <span class="sc">*</span> <span class="dv">60</span>) <span class="sc">|&gt;</span></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>day, dep_time, carrier, flight, speed) <span class="sc">|&gt;</span></span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(speed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,198 × 7
+    year month   day dep_time carrier flight speed
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt;
+ 1  2013     7     9      707 UA         226  522.
+ 2  2013     8    27     1850 UA        1128  521.
+ 3  2013     8    28      902 UA        1711  519.
+ 4  2013     8    28     2122 UA        1022  519.
+ 5  2013     6    11     1628 UA        1178  515.
+ 6  2013     8    27     1017 UA         333  515.
+ 7  2013     8    27     1205 UA        1421  515.
+ 8  2013     8    27     1758 UA         302  515.
+ 9  2013     9    27      521 UA         252  515.
+10  2013     8    28      625 UA         559  515.
+# ℹ 7,188 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="grupos" class="level2">
+<h2 class="anchored" data-anchor-id="grupos">Grupos</h2>
+<p>Los verbos más importantes que operan en grupos son: <code>group_by()</code> y <code>summarize()</code></p>
+<section id="group_by" class="level3">
+<h3 class="anchored" data-anchor-id="group_by">group_by()</h3>
+<p>Se usa <code>group_by()</code> para dividir el conjunto en grupos con significado para el análisis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+# Groups:   month [12]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<p>Ahora el data frame está agrupado por meses, cualquier operación que se le haga ahora se hará en cada grupo.</p>
+</section>
+<section id="summarize" class="level3">
+<h3 class="anchored" data-anchor-id="summarize">summarize()</h3>
+<p><code>summarize()</code> toma un data frame y lo reduce a un resumen de algún valor que queramos tomar.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   month delay
+   &lt;int&gt; &lt;dbl&gt;
+ 1     1 10.0 
+ 2     2 10.8 
+ 3     3 13.2 
+ 4     4 13.9 
+ 5     5 13.0 
+ 6     6 20.8 
+ 7     7 21.7 
+ 8     8 12.6 
+ 9     9  6.72
+10    10  6.24
+11    11  5.44
+12    12 16.6 </code></pre>
+</div>
+</div>
+<p>Podemos usar distintas funciones resúmen, por ejemplo el número de observaciones en cada grupo con <code>n()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span> </span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>()</span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 3
+   month delay     n
+   &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+ 1     1 10.0  27004
+ 2     2 10.8  24951
+ 3     3 13.2  28834
+ 4     4 13.9  28330
+ 5     5 13.0  28796
+ 6     6 20.8  28243
+ 7     7 21.7  29425
+ 8     8 12.6  29327
+ 9     9  6.72 27574
+10    10  6.24 28889
+11    11  5.44 27268
+12    12 16.6  28135</code></pre>
+</div>
+</div>
+</section>
+<section id="la-función-slice_" class="level3">
+<h3 class="anchored" data-anchor-id="la-función-slice_">La función slice_</h3>
+<p><code>slice()</code> es como <code>filter()</code> pero en lugar de filtrar filas, selecciona filas por su posición.</p>
+<ul>
+<li><code>df |&gt; slice_head(n = 1)</code> toma la primer fila de cada grupo.</li>
+<li><code>df |&gt; slice_tail(n = 1)</code> toma la última fila de cada grupo.</li>
+<li><code>df |&gt; slice_min(x, n = 1)</code> toma la fila con el valor minimo de la columna x.</li>
+<li><code>df |&gt; slice_max(x, n = 1)</code> toma la fila con el valor máximo de la columna x.</li>
+<li><code>df |&gt; slice_sample(n = 1)</code> toma una muestra aleatoria de n filas de cada grupo.</li>
+</ul>
+<p>En lugar de <code>n</code> se puede usar <code>prop</code> para tomar una proporción de filas de cada grupo. Por ejemplo, los vuelos que más se atrasan luego de llegar a su destino:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dest) <span class="sc">|&gt;</span> </span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(arr_delay, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(dest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 108 × 19
+# Groups:   dest [105]
+   dest   year month   day dep_time sched_dep_time dep_delay arr_time
+   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+ 1 ABQ    2013     7    22     2145           2007        98      132
+ 2 ACK    2013     7    23     1139            800       219     1250
+ 3 ALB    2013     1    25      123           2000       323      229
+ 4 ANC    2013     8    17     1740           1625        75     2042
+ 5 ATL    2013     7    22     2257            759       898      121
+ 6 AUS    2013     7    10     2056           1505       351     2347
+ 7 AVL    2013     8    13     1156            832       204     1417
+ 8 BDL    2013     2    21     1728           1316       252     1839
+ 9 BGR    2013    12     1     1504           1056       248     1628
+10 BHM    2013     4    10       25           1900       325      136
+# ℹ 98 more rows
+# ℹ 11 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+#   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="agrupando-con-multiples-variables" class="level3">
+<h3 class="anchored" data-anchor-id="agrupando-con-multiples-variables">Agrupando con multiples variables</h3>
+<p>Podemos agrupar con múltiples variables, por ejemplo un grupo por cada fecha:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>daily <span class="ot">=</span> flights <span class="sc">|&gt;</span> </span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month, day)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>daily</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+# Groups:   year, month, day [365]
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>daily_flights <span class="ot">=</span> daily <span class="sc">|&gt;</span> </span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the
+`.groups` argument.</code></pre>
+</div>
+</div>
+<p>Aquí se elimina el último grupo, en este caso ‘day’, se puede pedir para no obtener el mensaje:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>daily_flights <span class="ot">=</span> daily <span class="sc">|&gt;</span> </span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">&#39;drop_last&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Esto hace lo mismo que el código anterior, también se puede ‘drop’ para quitar todos los grupos o ‘keep’ para mantener todos los grupos.</p>
+</section>
+<section id="desagrupar" class="level3">
+<h3 class="anchored" data-anchor-id="desagrupar">Desagrupar</h3>
+<p>Para desagrupar se usa <code>ungroup()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>daily <span class="sc">|&gt;</span> </span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 336,776 × 19
+    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+ 1  2013     1     1      517            515         2      830            819
+ 2  2013     1     1      533            529         4      850            830
+ 3  2013     1     1      542            540         2      923            850
+ 4  2013     1     1      544            545        -1     1004           1022
+ 5  2013     1     1      554            600        -6      812            837
+ 6  2013     1     1      554            558        -4      740            728
+ 7  2013     1     1      555            600        -5      913            854
+ 8  2013     1     1      557            600        -3      709            723
+ 9  2013     1     1      557            600        -3      838            846
+10  2013     1     1      558            600        -2      753            745
+# ℹ 336,766 more rows
+# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
+#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="by" class="level3">
+<h3 class="anchored" data-anchor-id="by">.by</h3>
+<p>Se puede usar dentro de dplyr para agrupar con una sola operación:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> month</span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 3
+   month delay     n
+   &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+ 1     1 10.0  27004
+ 2    10  6.24 28889
+ 3    11  5.44 27268
+ 4    12 16.6  28135
+ 5     2 10.8  24951
+ 6     3 13.2  28834
+ 7     4 13.9  28330
+ 8     5 13.0  28796
+ 9     6 20.8  28243
+10     7 21.7  29425
+11     8 12.6  29327
+12     9  6.72 27574</code></pre>
+</div>
+</div>
+<p>O si se quieren varias variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">|&gt;</span> </span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(origin, dest)</span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 224 × 4
+   origin dest  delay     n
+   &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 EWR    IAH   11.8   3973
+ 2 LGA    IAH    9.06  2951
+ 3 JFK    MIA    9.34  3314
+ 4 JFK    BQN    6.67   599
+ 5 LGA    ATL   11.4  10263
+ 6 EWR    ORD   14.6   6100
+ 7 EWR    FLL   13.5   3793
+ 8 LGA    IAD   16.7   1803
+ 9 JFK    MCO   10.6   5464
+10 LGA    ORD   10.7   8857
+# ℹ 214 more rows</code></pre>
+</div>
+</div>
+<p><code>.by</code> funciona con todos los verbos y tiene la ventaja que no se necesita usar el argumento <code>.groups</code>.</p>
+</section>
+<section id="ejercicios-2" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicios-2">Ejercicios</h3>
+</section>
+</section>
+<section id="caso-de-estudio" class="level2">
+<h2 class="anchored" data-anchor-id="caso-de-estudio">Caso de estudio</h2>
+<p>Cuando se hacen agregaciones es bueno incluir <code>n()</code> para darse cuenta si se están sacando conclusiones basadas en muy pocos datos. Aquí un ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>batters <span class="ot">=</span> Lahman<span class="sc">::</span>Batting <span class="sc">|&gt;</span> </span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">|&gt;</span> </span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">performance =</span> <span class="fu">sum</span>(H, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">sum</span>(AB, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">sum</span>(AB, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>batters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20,469 × 3
+   playerID  performance     n
+   &lt;chr&gt;           &lt;dbl&gt; &lt;int&gt;
+ 1 aardsda01      0          4
+ 2 aaronha01      0.305  12364
+ 3 aaronto01      0.229    944
+ 4 aasedo01       0          5
+ 5 abadan01       0.0952    21
+ 6 abadfe01       0.111      9
+ 7 abadijo01      0.224     49
+ 8 abbated01      0.254   3044
+ 9 abbeybe01      0.169    225
+10 abbeych01      0.281   1756
+# ℹ 20,459 more rows</code></pre>
+</div>
+</div>
+<p>Ahora grafiquemos el performance contra el número de oportunidades de golpear la pelota (n):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>batters <span class="sc">|&gt;</span> </span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> performance)) <span class="sc">+</span></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = &#39;gam&#39; and formula = &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAB7FBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrYEBAQFBQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4QEBASEhIUFBQWFhYYGBgZGRkbGxscHBweHh4fHx8hISEiIiIlJSUmJiYpKSkqKiouLi4vLy8zMzMzZv80NDQ5OTk6AAA6OgA6Ojo6OmY6ZmY6ZpA6ZrY6kJA6kLY6kNs/Pz9BQUFGRkZISEhNTU1NTW5NTY5Nbo5NbqtNjshOTk5QUFBXV1dZWVlhYWFjY2NmAABmADpmOgBmOjpmOpBmZjpmZmZmZpBmkGZmkJBmkLZmkNtmtttmtv9sbGxuTU1ubm5ubo5ujqtujshuq+R4eHh7e3uGhoaJiYmOTU2Obk2Obm6Oq8iOq+SOyOSOyP+QOgCQOjqQZjqQZmaQkLaQtraQttuQ2/+VlZWZmZmmpqaqqqqrbk2rbm6rjm6ryOSr5P+2ZgC2Zjq2kDq2kGa2kJC2tpC2tra2ttu229u22/+2//+5ubm9vb3Ijk3Ijm7IyKvI5P/I///Ozs7T09PbkDrbkGbbtmbbtpDbtrbbttvb27bb29vb2//b///kq27kyI7kyKvk///l5eXr6+v/tmb/yI7/25D/27b/29v/5Kv/5Mj/5OT//7b//8j//9v//+T///+MC/vOAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nOy9247kSpYdqOeZnu6uOqeQSBwkAoGY8gd/9ebpUQtsFv+gitBM8Zg0t9e0MI1mPiCtB1LwXSNFQA/dgND5o2NrbTPSeHOne/iNcWx3V55MdzppRqMt7svae/+L70mSJEmS5CT5F7ceQJIkSZKsVRKAJkmSJMmJkgA0SZIkSU6UBKBJkiRJcqIkAE2SJEmSEyUBaJIkSZKcKAlAkyRJkuRESQCaJEmSJCdKAtAkSZIkOVESgCZJkiTJiZIANEmSJElOlASgSZIkSXKiJABNkiRJkhPl0gD6dpwc/YO7lY8ykbQi9yZpRW4qCUCvIx9lImlF7k3SitxUEoBeRz7KRNKK3JukFbmpJAC9jnyUiaQVuTdJK3JTSQB6HfkoE0krcm+SVuSmkgD0OvJRJpJW5N4krchNJQHodeSjTCStyL1JWpGbSgLQ68hHmUhakXuTtCI3lQSg15GPMpG0IvcmaUVuKglAryMfZSJpRe5N0orcVBKAXkc+ykTSitybpBW5qSQAvY58lImkFbk3SStyU0kAeh35KBNJK3JvklbkppIA9DryUSaSVuTeJK3ITSUB6HXko0wkrci9SVqRm0oC0OvIR5lIWpF7k7QiN5UEoNeRjzKRtCL3JmlFbioJQK8jH2UiaUXuTdKK3FQSgF5HPspE0orcm6QVuakkAL2OfJSJpBW5N0krclNJAHod+SgTSStyb5JW5KaSAPQ68lEmklbk3iStyE0lAeh15KNMJK3IvUlakZtKAtDryEeZSFqRe5O0IjeVBKDXkY8ykbQi9yZpRW4qCUCvIx9lImlF7k3SitxUEoBeRz7KRNKK3JukFbmpJAC9jnyUiaQVuTdJK3JTSQB6HfkoE0krcm+SVuSmkgD0OvJRJpJW5N4krchNJQHodeSjTCStyL1JWpGbSgLQ68hHmUhakXuTtCI3lQSg15GPMpG0IvcmaUVuKglAryMfZSJpRe5N0orcVBKAXkc+ykTSitybXH9FGmubS5x3lSuSAPQ68lEmklbk3uTqK+Lg00HoBU68yhVJAHod+SgTSStyb3LtFXHwCbkAgq5yRRKAXkc+ykTSitybXHlFmgCg57fiV7kiCUCvIx9lImlF7k2uvCIePy+hgq5yRRKAXkc+ykTSitybJAC9qSQAvY58lImkFbk3SSb8TSUB6HXko0wkrci9SQoi3VQSgF5HPspE0orcmyQa000lAeh15KNMJK3IvUki0t9UEoBeRz7KRNKK3JukFbmpJAC9jnyUiaQVuTdJK3JTSQB6HfkoE0krcm+SVuSmkgD0OvJRJpJW5N4krchNJQHodeSjTCStyL1JWpGbSgLQ68hHmUhakXuTtCI3lQSgF5SI77HuiXSy8hWJ5KNMJK3ITSUB6OUkZhyveiKRrHtFYvkoE0krclNJAHox6eW8rXkisax6RXpyykQuRSF/j/y6V+TmkgD0UtKvurDiifRkzSvSlxMmcrEkxvfIr3pFbi8JQC8l/bpfK55IT9a8In05fiKXK6PxHvk1r8gdSALQS0kC0PuWoydywUJu75Ff8YrcgyQAvZQkE/6+5eiJXLCU8HvkV7wi9yAJQC8mKYh015IA9N5klRNJAHo5STSme5Zkwt+brHIiCUAHck6mykcj0rv5vH6IiUBSEOneZJUTSQDal0sxVVb5cAwE9+bl5dajOJckGtO9ySonkgC0JxdTMlb5cPSF9+b19d4A5FRJRPp7k1VOJAFoLJdzc63y4ehJEwD07iDkNFn/iogkAL2pJACN5XKB1lU+HD2Re/P6em8+wFNl/SsikgD0ppIANJYEoPOSAPQ+JQHoTWV9AHpJP1Qy4eclmfD3KQlAbyqrA9DLRkJTEGleUhDpLiUB6E1lbQB6aS5eojHNy6+exnSXkgD0prIyAL18NsiFPASrfDiG8isn0t+nJAC9qawMQO80H/mwrPLhmJC0Xe9N0orcVBKAXkdW+XBMSNqu9yZpRW4qKwPQOy3ocFhW+XBMSNqu9yZpRW4qKwPQOy3ocFhW+XBMSNqu9yZpRW4qawPQ+yzocFhW+XBMSNqu9yZpRW4qqwPQuyzocFje8XDc1YTTdr03SStyU1kfgK5TTp/IfancaUXuTdKK3FQSgF5HTp7InTl904rcm6QVualcGUCTHCmvL6+Ul9dbjyRJkiSHJGmgF5JTJ3JvxNe0IvcmaUVuKmsB0LuKpJwgCUDvTT7KRNKK3FRWAqD3FUk5QU59OO4tcyBt13uTtCI3lXUA6J1FUk6QFES6N/koE0krclNZBYDemxp2vDQvJ4/9vpTvD7Nd37Ei9yUfZkUSgF4MQO/NEXi0WPt6Ogjelfv3o2zXd63IXclHWZEEoAlA58SN/3W9o+/JB9muH3ZF7upte6Ss8tFaBYCu3IRvwnZd5/B7ch0AvTQMjFdkvcDTW5H78vccKQlALwWg9xZJOVIw+tcVjz+WqwDoxWFgtCIrBp54Rda9TxKAXgxA1/yAJwA9Vi4PA8MVWTPwRCuyckstAejlAHTFJlYy4Y+UK8DAYEVWDTzRiqw8VpAA9IIAumr5sCGLi8g1YKC/IqsGngSgN5UEoNeQd5Jm7kj9vhsAfec96a3IO4Dn9kuTTPibSgLQq8i7aNv35AC+FxP+3fckXpHuisfi4R0sTQoi3VQSgF5H3jGRm+6KIaJcP4g0iWlnuCc99o8/3bF4OBrGDRTSRGO6qawEQG9vKb1TTn84bmqXjTbk1WlMk5BwjnvSm4hc5VhYHg3jFviViPQ3lXUA6KpfrJR3tPS4YWRgjCjXJtJPY9o57kl/Ig0fsSNheTiMm9gKyUq7qawCQNft2qGsEkAnEOXK23UG084PoHNnndTowoeDH9zGVkgAelNZA4CuPLhIWaUJP4EoV96uM0h5dhN+7mKTpk/74WAYt3nVJQC9qawBQFdOb6OsMoh0twB67iCSyBiWJy8Tfdj/PgHo+2SVE0kAeh15z8NxMw/w3Zrw57gnExMZ4uXk1Xsf9oaRTPj3ySonsgYA/XWb8G83DK3eKoi0bwRe3n1PpiYygOXJN3f/w8Ya0wXhT3/Pz03n8DQTgN5U1gCgv6Yg0p3RUG5DY9o7gnPJ5ET6t38BgPbHd/Jg53644IQJQG8qqwDQXw+N6e4megsi/f4RnEsWTOSwCT98t5842DkNYYnmkAD0prIOAL03xex4WTbz+1e1f13b9VAQ6UzepbmzLDr7r2tF7k5WAqCrl0UTWYGz91e2IvtpTOeKbx7gGuw/+69sRe5N1g+g61BOl23Xs2zHU2TxTfy1bde9RPoEoGeVVU5kJQA6v8Hvzms4LfcNoMtvYtquPUkm/BlllRNZB4CON/ggm+7uEfSuTfgjbmLarn05z/OXgkiQVU5kFQA6fo4Coq7Aayhyz0GkY25i2q4DOY8FlGhMbwlALwage1LsVpOkdM80pmNuYtquQzmPDz4R6ROAXgxARxu8Q9SPBqA3CYklAL2QXGUxJ1dkHZHVgazy0VolgHYffDAT/nxyzA5KJvxl5DrmxNSKrCSyOpBVPlprANDRBjfIP0YWsvlYQaTzyXE7KAWRLiGnP5pL3348bmJF1rIpBrLKR2sNADp8IFC/wRj+Ydfysr3iw+FuhzlyByUa0/nldONo6WrIceMVWY1ZNpBVPlqrANBBxYamMdZqTZywK3H3XO/hcLfDanPkDkpE+rPLye75pfqjP+5lNJHVBAYGsspHax0AGm3wxmggqHZiPEasAUKv9nBg95igg55/ByUAXSqnwthS/TEc9/J6rivfWlb5aK0EQFtx0OAs96YBgPqHZBVG/LUejiYAqF0FgN7w3XevJvxS+AvHvb6c68q3lgSglwdQMd+dftUpWffuMReMuNbDIbjp784FdtB5AfSW7757DSK9H0CvEL66iCQAvTiANtajg2UhcOLnnb9uPUZcFUDD6+UC0HRWAL3pu+9eaUzvN+FPfzHd1phLAHopAG3fi9ajA1TQvgJ6rypo2A1XNeEbOoovU8f9jBO5ral5t0T6dweRLn7lC0kC0AsBaPde9OhgoIL6T+8bQFuMmFATFv386H3gL2guVcf9jE/5bZeum8i9BSHfS2M6VW7tO00AehkAjd6LfolB0wnP/a1Xfb+0GDF2VC359SkW1WXNsA8IoPcXhHwvkf5EubUukgD0IgDabyM7XuG7DiK9C0BPnNlFFaqPZ8Lf9fOzQBKA3lTuH0D7yzqhLlxEgzgTCr3HhL9L3frDBZHu8i4fI8mEv6msDUCnkO0CKtfZQPkdQaRbKwST8uFoTLe9y9Gje+pTfMYVSUGk4+X+AfQW78UzPkmn05h+BQB6B0T6m97luD3dqe+Swyuy/CYnGtPRcv8AeoP34lkx+2Qi/a0tqkn5cKmct7zL0ZN9+kN+cEWOQcVEpD9WVgCgb1J66QKTn5MLaCWnPBz3GN74cAB6w7scYfc7YPzQitzjUzQtq3y0EoBOyJ0A6D2Gxz4egN7Obo0es3c8cQdW5C7tmGlZ5aO1AgBtn4CrmRcXeOhOezjuLzz2AQH0ZnbrVQD0Lj3p07LKR+v+AZRo5pRQZa6nKJzf7HnHw3HW/f3ema0AQBfer6MncnacvYoJnwD0snL/AMr6bMZqra74GJzdrDv94TjrUN6tW78DQK+k6C29X8dO5AKW/jWCSMmEv6ysAkBRXEi7/3OKqJaMzos/Due+xMkPx3mV4XfrI0cuYXQbL+RqHC7U4vt15IpcJBZzDRpTCiJdVO4fQBtWrwN+sgy9WkkF5YGc+nCcWYG4MoDGAHGZfTx8Fpbfr2PfBBdR5K5BpF/NdkkAehEAfWPpJQegVtcarlC9mldqJKc+HGd2YV3XhB+XgTk3AI1gefn9aieyCLnu15V4TiL9bSUB6GUA9E1DA1VGlbWBHlrbtTh1IrkTAL1qECkGzcsA0BiWjwfQZQramgF0LbLKiawBQBvQQJWuq1pBD9VrVEHvxIS/Ko0pBp3LAND4rHvvV08V66dyHhrW/cZiEoDeVNYAoBJH0mWtVQ1jXp1rK77Ttjnm53cSRHo7OOoDX58KoJcBoAlY3nO/+u+O0Oxg4bguGot5z4OYAPSmsgoARS6SNU4B1c6aN0qfaSsuVMbmnu6jdLk7oTG9+2qnmvCXAaAp+JudwWAE3+MPFwzsguvwrlMnAL2prANA32DEW+X+1NYGH+h7p75wS8893cchwr0Q6Q/IwUmdGkS6EABNjXfmfg3B9lgAvdw6vO/dkgD0prISAOUzZjTJTPY8W3Gh8Tb3dB9pk67j4Tg8qZNpTBcCoH3PQv+CQ6g80oS/nLxzCAlAbyqrAFBkcgqCKm3smbai8Y2Rp9783QVmn+4joyLreDgOT+p0Iv2FZP4KA2ydBtCr8Mz334V3xtcSgN5U1gCg2AmaCGr1+aLR2npYHj+3Y/73+KgEoFeUU3B4iIzTJvw1fMwHrpAA1MsqJ7ICAJUHDPz5Mz7ntrHSX36gW2Krxltv9ulOJvz1nLOnYNwsRbQLIvnxX3oah3TcZMJ7WeVE7h9Aw/MFi/ts024kw96BaP/BxlZtU52at31P99WCSNeUyUnFCBMt4dXoASdZ2VMMpz6N6UrjP4yPKYgkssqJ3D+AXoSCbT0kW23HH1szVkGnwvDXoTFdVw51Pe2W8GpFKk7T0KYem56u+XKl8S94fhONibLKiXwoAD2ie5ac0RjT/70H0Di6NP90X4VIf20ZTaoPlO0SXi98fdob9ND4mpcrjX/J8BORHrLKidw/gIaCyubgI3bEi3x6ewVYFRW0C8SfYZOt8uGADO5Un1h2Lyrcnp/ZmfWzr1ca/6XfNAlAbyr3D6BM5PTG9vRe8J8eZVNOHhy8rXYmOv8OWeXDARnA1xUBNCx2H4GO7tE781o9AUBPfJNe2NeRAPSmsgIAbRlH1rKw8vAgv0OOfNNP7atwCn3+7iGzMx/uylvXHpspUDwC0Iub8N0C9VgRR7gLOZXZRIijTfiTPZVH//CoZyAB6E1lDQDaeM67Rkq8g9D+MQBXPqFHqkRTT2kLCmdHsbmZDzfXravfjq4/Z8JfWrGaRs2DFx2/j+Zw8tgg0jvmO/U47XnEjnsGEoDeVNYAoMGyVpWhEtoP/KBaqEG3j3PYlBfDr5mZD3fl1ULbMzJx/Zkg0oWxftpuP6j2jsY0/1qdojE1tkeWk8uGP8+qce+5eUc+AwlAbyrrAVCjdK01EFTHXRD4CRjx5ixP+KUs6OmZD3flwdDxhe37yevP0JguO5pp4DtkZYyxZw+AThAOEKs07Vxl4sGVesT7+fCNsQLVU+c6FqkTgN5U1gCgfKSMdPTQZL/Lt7pWqE8vAGrtrbW3vTI98+GuPLBLL27fT19/hkh/UTkJQCewZx6OxhOxjVg4gb8m722xbI7xEB1epkacUZOpIce6ohKA3lTWAKB4ptAYvgCAgqUpjxbg01n1iqElrZqb+w/3yTkA9PJviMOb91rbdRr4DmhnU8OfvWmjiUj3Qv7R5aBZX3Kmez8fZtMdXia5UKcKHJrEPkkAelNZBYDCttJKK0Cmtv69rTTsLXxmNTsl3T6CvUfOYMJfgbp+mHN7te06DUP7wWkSe+Zeq6OJeAU0qKBeAbW2r4IehLUly2TClUaUkmTCr0zWAaBvDc330qGl8haWrYGfRldaAVbVtEPpSLkcAp8hiHQN6rqdSnCFhDtzve06DXx7rYw5tXVyUY8F0KUGzpJl2gegKYi0KlkLgKIpvDFVUQcDXlMBhQqKbvFmVFbJ/+4oRLygD+AMNKar5P60nNuZYV5xu+7NmpiWY7DnSBO+WfowLVmmfSZ8ojGtSlYCoLZRTstUWpfB8641WiS5j0q1qLDnArmkj/EMRPqrZJ8Hzu0km94Ot2tj9OEM22vKEQt+ZBBp8RCWLNO+INJbItKvSdYBoI1TMusa/6t9klBTl7WuKq2rer60/HGIeCRAHafczsz8qJNcg2YwqT9Fd6a3hBYhvbG5H/3wagDbMUUX+w7HH+2jMS2XJcu0h8Z0rCQAvamsAkDdQ6ycvunUzVqJrukszVoVtfu0mieAHpvceZSJfOS+monCH3eSY/fyCS7d6ThM92G8hN4QnbZDecAhgJ2VY0d+gvNlakX2EOmPGNySwZzPW5QA9KayBgDF/gV+GgMqPTYyW8tVZVUXFdxUM6/zI52GRx1+rDY4OfOjVcrJrTu7n4ebdAkqTVPpJwG08aGQ2Zj9QYCdld7I+8OenMTUjTw025O36z7sm4Hc2SPPIAlAbyorAFDuaad7KmfCGwKoJflTq7JiqySLBCWtR78+EkCPUVj9sfaghdpGr2dOQmfYu3bS7H4eRfgXKT2TWNQ5RuNUTh8JmUPIRioX6OOt+N4Y+sOenMS+9vCzQHXqdt1LlLgBEzkB6E1lBQDKJxZUeQefhohpLAGUpFCAa9BAB5sFFuQRJvwxCmEIMFizf7900evpk/hYwrLxjQTznR10hypyW5bObgIEDEhkZhhE2gegHBn4UJoUs+Om1MPD/rD3skPjz8OB85B24nbd95q9hpO6NxQMIgHoTWUtACqqTF1pS+AS5cYQIU3owGH6mwU7m98tD8MvViAE1H1XugOHCfBMfushaKg8LzTvMNxeA6epa6OIVRMj7fHGpbvLWmkhhy4z4Xkj8TPPNFtcjEh+GOHhsKjI5CTGANoWJpwJL76dvF33mDXXK9IvI5GnNQHoTWUFABoabei6VnUNUHSogb0r9M8m7LcB4cQuUhGDLHde+cMJ2Px/pYOSN3WU31GvUxXNZhDoGMZ2v4HT6OvutsSodHCeve/5ssKdx0eLgkgetZRwdesaBQwGR0xPsccc4lD7eDWDXvMdOMMzMTHb8wJo9Ioar8VF8jPCFBOA3lRWAKBhW5Exrypl6QjFtq51EyUp9zdL4EEvCwKfwlWhAgqCv+KAZvEAw7AvUwe0laTsxK8OjWaygdPoe6fPyX91GIw9PNt+DEfLq0oNNdDZKHur/jFZTCk90tNnpjgYcuR46AHosJXVxPn8B/OvlzOb8CPNefTlue36dhyvq8SdKVnlRNYAoPIEGig0bivTinf/s4JaTXiUjOlto4vG1N+Cg4BWqsN1O+kq6Kzo5nXq/J5O3f9iqSEYwKTfwGl0QOvg6Gz98Wz7KtLA7RgscYbplhDpbUjfqZU2qtLi6OhF0qenOFCa7ejQJpgVQ613TDiYeiZ60z1nECkA/+S03uEZ3Vd1OTxbL5fFnSvWl0gAeikA5SrS3oXfk3F4G60rCo3YnuH39uYrONlFD+5JzqvGMOsRA4KCZid+Hs7rhvY6df4mVNOf4Qztlb6SNRmG76lFYXdPGbw9+Bl8L/onVEmzMGThS1xj3oj8WVGSoxHOTXHgto0/64JI057noQtmH6TJdM9IY9rrcX2HZ3Sf6nolAL0mryAB6EUBVLNoHTby4CFFhMP9/4BPfyBbric2pDwf96QgCKQlSX+/Cuq28eskJs5rM4cH0+7a+QZO/ZB22AujzK3BKAYDaKzyCug4lXP6ttiQEdl0eLcMQFvaRKT3DGhMJkQGp6Lg0aE+jWj+Br8cnMicjJSyKeAff3k0DO1VXa9jwr9Dez5eEoBeCkC5GRTq19Xib+y5uzzbcLhZ9HSEe0omTeklv9MWF54H0G4bTwPoFFtxscYSI+OCw8JFQrmQdjTDCw53vJVXhGqWAWgTUsotva0sjjeYzlwwfZo20Z/ffOLuYLf72c6qiy/ns0y7OzaxFicD6LLip/b7VHzyTHJdXkEC0AsBqCiSuoIapJSyvRWNQtmD/JXlGmg4xfGJjwRuM2fCv/lt7P74JgfMpAX2Ru6dDwvC8MvMq4EKR/ZA7JUc7vDRroGbQmn54PASejelb/7XRYT6Q5rwrgT/5gFm7TQe+aT18W6fVRdfZy6z7300+K5LwN+DMyeD0CG7yK/ry2R88jxyuvZ8itwGQH8vcurPVwCg0jZOG1FB6wkFNLBp4uf7CB9oE/g4U9UZe8dNqBfCp5pRQINo8yIIPw15AyVxcQp5PKA9+75/mLeq7ZzJPmG3mW4jLwJQvlIGNTn6x/gZDkfWHKZNzEfBJSvt4KvnAIDu9Tv2v+v+udfSPdUMPmgXycPyOhmfPI98TAD9/ZScerIVAKjY4g6k4OqsK9V/wOfyYY5Ye7ssI0i4AHa4c71/cJ8W4GD2G94BM0b30E05qZ9NyayncM8kmmZYM3kmqGSiCHt39iUm/FD174bp/xZ07KHiHS3Y5PtAEGNiWWVW6Cw40fd6dBI5wbQJvw/tpn3FgqD7bv+JgZhFdlETAPQiRvbHMeEnQfPXAaBNAFD3QCllLHjZ0SFzbPQj1t56zeVQBTJCjxm51Nq29HM6IIbyEoIfzTjs08UgZMSzyUXDEXUbc7GW4+3pHpNy/OOGKn+kDbZzW7CE885nP+DpoHUPQCcxx38YXmQ2wmXeNiVNWxeqoJNBpH1PzeC7IcFqz3KdRAVaZhfZ5nXGvX7MlQ6RpVYcRDqInB8eQENQVyv+BbTsfufvmXyY5Wu/CGuFgiiUnMlzAnGmty5++dq09MYR8Sg4uzxyzpAXJ0/rjzomT3PiyCkje+au+iXc6zDoaaCxliyXNiHWPpX50MT0+Umbgoa/OwMU5Oj1AUquqkL4f+892ENj2me3DL67tHm7zC46A4BeQns+Sc4IoEth81cBoD5jXACUQRvbM/OmXIbMrFu89ksAS9TUfvglFk9+nDpHH0DH1PfG/9ZrZPvSZ3pTHAHOchV0b6D7bU+eewjr7XEU9pzP0ZGB3A6PsZmYZ+wJnkD5wXxjOqj/J42TJdUP5on09wWgC+yi95vwBx7+tRDpj4fMdyJnGPTdA2hjm1A6hCja6hjt3hznw3iDevHaL8Bar4DamXBRz2E14ePsAHScfBm0vWC670ngHgwonOeYzbzovTJbaUmcKl6FPDiuvp/Qvx6slk5tI027HdnkdKIPm0AlsE243xyvYkbFQkybfBZPNuHPLwvP/94g0nXdnOOrR9c9HkBvApl9uX8A7Wg9iNb45HG33nt28fGemwNY60kyftNOnLkJae1CfowhquF48ZTbNtbRG568IQxyduSLPSWExpMcqmyH3xpL3iv7AHQvl72/I3u709vtVkx8O+HrDSObB1B5EILG2amg3kiZz2sdy0yPgD2Pzp4g0iVk4fn30JgWrfTUvb6W9HfKEehwY9SMZAUASja2Nj2KNipUtrt4+JzMvVRPtkZCTqT1TW7Hp4kBp//gy2/taxOgdVSAjois2N7ef7NISZwCJ92MwPu0Ge8x4e0+RTzMp+kpoJGjVrBT6J6zCNFMpbg23inonoQRgAYHyp681pH0n8X2Tp1EYzqzBN/UovPPE+mX2Ro3BNDBA3AQHW6vb45lDQDaxmeC5Ya8bKXDLh49JzPPxMnPe6cYGjOzQW1AUPLNqSmZWJkyL12wdogbkXMgpAIuAr7eeaxEVXSvpN87dngUROqbWa/tW2x2z434kZENH15BDuv3jG/Sodw1zRya8G9tzfw9ea1D6T2LPVft0UT6M0vnm1py/tlNtUyDvaEJP7z0eCInIeYVUDOSNQBo9ySEEkhGWbpEsWn06DmZBtCTGyG26xxgY+IUEefEh4SFjthlLMcj6Z8khgN7zJa0UpLKnwUujX6A6l02ZhuaG5hZL03T5brP/Lbd+GH6PibPAccO3hmEsNN8Th0K47fZAGN7uunTm/bczV5dvv136nxAeYRRvXTZ5jbVUmS8tCfi4JXba/uJ3Dtk9mUFANp3qtF0V9Ynu2ijxqzJmSAuCo4sS+3sy8AOnfYzdnse1YdN0N7a3/ZYh4PfHzSK537YaJT1i2LcofLRkdymiStINtGYUQQAbaSAymiwk7eF+KnFB+P9wYf2axO83oPIoM8oxY9tj8bEb9sIFPsV9D6alOhZjGFCvxUAACAASURBVHo+Tcn5TPUlwc1jl21uUy22za/JVOpfeDDCG8Lm6a/IFQDo4D5D1WL+pNuWWqFUUNMcZIa7zxQLJ53QI3L0JM6wvD1ISIE7KzlL0wA6uoJi67WDD/vwwqMYd6/00SnerXCFyIrsb2eY8I1BnU81BIJZ8rs2sUJ5eL/OWRDxa6anaUZ4HxIg7fRTEEn0LLb195bEjt4h4XWy9wYcu2zvBtBrMpUG18Xw7kHhfMc7ZH0AKlF5EkOlEKfP4IuZoBM3RPmqwNOJHfsdX30MCWbpKHTlwzm4hvFV2CdN+JGgWwlz/Pc/yMOdPBPj7n2ybCcOwt9ReGfgxdTPL7bRbA1gB7XbZnCG77ZeSs3B/ToeuPg2Bn7P+BeidlpPh0Ddw+aQJjfqjjeTdX4+J2HjX3L7KyeeC0Bvy086IPeAmp285xW5AgDtngTZeq0HTFMLoquuVx3jbYoZHgBUTwHo/jdQ//62fHA79RN8q9gAowdAe8v3ou2a1Isbma3DU3fRqbfBVot3J7DtmB0Upt+5LNtfxtdo6tq8PKNGstM/A40zImPNXC0KsB0ayMypRI1tQ22ju96Fl8jHZQMSdQiI5NESh0wgd0w7ZI8DtHkZv+Om5Fwm/HGwcC0t9D4Qsy/vetWsAEDbJ6ELxkvdMx2I6SpwQ+fPZI0AqFEtDnaHH3rUevjq8XPGZ0mQ09LuLuaifJ9/RgHqiI9oNVWPt3/qXnBlHOMW+zCUNlm6g9rjwgmj4v7Rw2WB8s8vuqL7eci5nMeZQ/3j9wwo+qfx3Hs71YOpQ0BtQyvQfm/P8a3/HtbGtqSofRZ808t+O0nGXpb5w94fRDrKML2wH/QeYbOTd70izwGg//zv//Tzz//6P8Qf/ed/+/PPf/u//ZfzAKiPC3TcFqFThngEGE1z9KLuJvmywCFq3YUaZoNOvbDUAG1n9Yh4k8Suuu+zzyjLHmHD68pOL2PrHBhs9MG4Q4Si4+Ev2xbdaSYANEJXg8r0376iKZUTFRICWsfKXPXKXpLBMukNvPF3nLr1VLW7tj20oYKuvaURqdHj+9DYlzBd3TT7qjj1HSXHAU0fbsdxvgWzPyh7NtVitD+fm9fLcYh5K+T0cmsA/W//5mfI//Qfu4/+Ez/5+V/+x+GxR49OZigtefw2bMKTER7ttp3Hnhsgpr4OsaYu1DBzA+cf4t42EGN5+G0jbr/4LN/nntHG68aaTYdGOB4NJVa05AYMztndlRDDPoZPGiFohD3t5X1nj2+/AOhtaJRkO89GeL+NL3hCveoJ+2CeJB8DaBMaONmO3zZx693pX0NGQxuFnBle9PMjgWYq6Eem2Z6rDWd/UM7Q1vhM7tL3ouatKtLf2oT/h5//7j98/6d/9/PftQrnP/7pb/+P79//6d/+/K/OAqDywlahrJ0eb60FN6DHLQxKkZ7LHPRKz6TXLgBoE1W36x55D+V6AHCvc2O0bc8hFYqN9K8aBXTaYEew9adg3i6rbuqlEWqt7UNNDygCWAuAflVGah4hdyoq+2m9W3rKxbyn0MoCafXiueh1z4np2RamaTMsJvYHPnltc2rHTOK3Xph/lpKwbOCD17IexzzfJWcA0Pe6ec+kbN6spcd7FPD3A+g//om653/7N3/7/3SQ+r9E37wXQCV4omqqoDqudd5WiIxAa/4uBZ7RW6sT+cDweF80wc06iUItH7wNqMZA1v09Pu/L3DPqjlE1N70y4aoxTMQnCXSbru3vNCPVvx36n0+qNZaXl7Pa5q3l5o+R2Z2WJvxzrahfix7aXqWxZIdiEoNLQN0i2M48nwczf+JEhhmiZhxeMp4T1vJ1x/DQBAC14cQjaO4RTQckhYVbbQpuvY/llAZcc3IzAH2vwjmS2/VEuimN6T95PfM/CWpG8t/+zVkAVGBF69ptdKXcdu9tBSG42C50MivRTvUKaNj+ozeQVzJ93uBo2zYhH9FblX1yePuD+LmcBVDgS+2m5RRs3UxUHI1P4gnfrZdz0mdrlefx943EaZYmr6h1F9wO3PwxjUFU0G/PStHg1f2ynzgTX259RbPxIR2j51IYbJtONb7RvffjAQ93oDExiNTzxY7hgZ+8Rmlbo0vbcfvkLglgIdDMwdIB2v6xcl0T/uyoGckNm8rdkkj/Dz//n/zvfx0Z7P/4p78bhpGOHt1beJhBWtKqBommb42F0EnPI3dA+hropLMq5CvOZVfbNjN+toS87WzjeRP+zSlMxumgtYDAKDjV24byjzjG078N/Asal47oPpMg1Ph5KsauB8cNnynoqgo+0DZ2HXceie5Yb3GMuF7MnP1t29D6lNLrk28PKwiNh3Ib3i/9VNnBrRcA3eNVbcakUwlcLgaat3kAfa/BPJAzAOgSG/YSiDmQX2dXzn/+d950H8Hl//cnD61O/kcvR5/eyevLy/Pz87fn569//uX56y8vL99eX7+9vLzyy5fX15dv+Nez++Pbt1f/8Z5z4YDX5xfK82v/8+4wXMGdEP/36uRl6lTPL6+Ub9/kv8Ojvj1zSDKml8lDcBDlK0b07dvXZ3+y9jj3a0zQT+wF831+HV0vHITLfMPN4nWjwX7D16+D24NPOM9n3EJ/NTnzK6/UG6375Nsvv7zIzcL9jgfR3bHouhzVM27DV3/58U0MP3se3R/3Y9wZ98N2eQbLNJKwIP3D4jmFq1Kevw3n2P2Cw3pp76LcP95V99d9Y2jH2d3LyUFOPlTL5NBtOF7Gqy1yHGyed0yrlPMB6D/8/PPf/t/tv94DoN9fACvAmK9//OWrwNqzX29sQCDn89cX/8DvfSrb54Sg6/43e+AQQKce2IBKAUgH1w7nCFsQED+64AtH/+zmAwRxMx0BSX+oAmzDnfkaDnqRF8rz12/9MfvXy2CILYC237Sbe4xnvX1LtO/dme6OEV/8OB0wfv3zH7+6Gco1XgcnA8TKq8zfxOgI3Bese7dKc9u8O+cMZPF30a9HkDqQF6zEtwhAw7vQDehbeNnMi7/SzDtzbpSL5dBtOEXCnTgOMRNyDuVdABp7PP/5/6r+9PPf/u/Do4/Wj/EnA6vOylW6FuelCpZxo0OJ5XI/13BE+4l5oFPiqwaPy8fHx/howDQLoAnWKW3j73EMKz4oUHyk3qgOZaIjMziKqXeM0P6YAlddbMyh9+5tOllRSt/b4HXthUlmG9t1vIhhKoHcMR95E1MaB5WVUmUZWLvj8J8fuRpXGTGenVCpPld/D4FSvjejdF06eeJfg8a0Lx+9RiRKtyZ8d//U3lbtg3HOuB7eE/Qd/zxsqndQ/E9DzRMvNi/JhB94PP9zZMO/A0DdjqjrShldK+9mC4RJFmYiggZo9cSkkf/OO0ojVDj0vEl5OKUnOS5y0s59F84bn9MzoTykv0yfxrYIqoVnpYZFRZrgCWzeYkdnf2e2Pl3Fq4wj+RPJilF+ZAeELbm8RdLpFZGrsJ9zF8lDfN7TrPwwGlvhxVfX5SDxsw2sax/x0mMA1QRQ92s1JjVMix9WjyMU1mTwaxDpp07Bw93zpnXNvs4+TTZ+ze0fQ+9KMw/Zu/J+hrchcKVPOec9wGYnCUCHIaP/+vPwo6NH90bVRlUVE7CFQld3DGhwKAGdtapMF1afIjA3Ld9v6bufoY9Azhzvgzg13cdVepftxQqal/6miogxAUBD77x6cuxNnxA+2JmBqs4IGw7pN4nqruJ/a33Wjo0zPxfdql5PJDAiOG3WcnYzUEq0Wt+ZSGlVuteeg9BC925jeCto7fBRKhmMmQXaJ2gx7P+2R7/0p6QaHdqutPMJiv8odDPdVA4ncegJCC2r2oa60NFr7uAjtCBItFxbnKAmDE4/rJl7WN6pcF4sbf7XCaB7ovATmHr06N7AOdKqcjqopvkEOG3CVqJJhcTsGvvMeg768GE6qFbBGu8Tm0UREU1ups5ZHyB7NmKfvsghvYaD+3Hizs5vm2joPt+nu8weDUz2N2hE/ZL00TnaNALBO6h+hhVSRTnvjh0r64MVEep9E3KDxNGhK/zLLZS2bdKQQz/3YlPOenD/6w3LZzUo1HSqFLMux5q+8EoVjYDWATPHQQ/UgEHj1KhMa9P0K2pPPYu8BJVPU5dQnVuOVvuaOwuAiixAoimG6hSAHtbO34mae4d0JvmVAmjgf3Y80H/+dx5TzwKgDft3uC1YWZ+M4pOjoZBCy2EVDqRmKxPli0RZ0wcde2/g/eiIeC4oR0UrZGW20vQhpn2Qo5Ty4N/rvm4B1Dspe0U7RakKGeMDOuk4U31iYxIaSMOczNfpKcsCBu621WTvj042mSUarYgnLJk2O52WvEYyADwepm1NBIdEpXUF57Wp+9q52O01/C8OqkhYH21M98LDEUbZ8Foa6ZfdgoXXk3dL+x9ElfSagKVh8SeeRZ+ygTuDBp9t8djoNXcQqJazKhcg0dQqTJrwe56NdyPm4SGdSX6lADqZifSvev99F4AiZkSXfmVDvTfRqKRehDH0f4boxduEptJ6I+f8mcF/Gv4tZ/A1SrjnolRN643eYeiofYa7HOxuhwQTXgzcEInolafwwaIwvJZg3oUk5jcJjEytgkbY7twhpd92DEdw91m3VM3c+pntzYLKQvfvYNKpamVdw9/hG61oQVkD/VISyPq9NixK1MO4539Reu6tlzzpjzIsTt2+bEwguI6wqQMVY9qoH1VtZUPY0UReDM5k6i5iQqyNBdeBNvH9k9fcEvxYhjELjpqG4qkg0ujZODNsHhjSeeRXCqBO3/yXo1z4n//n//L9n//fnztMfQeAwkJ3Jjy0G+1TZLh/Q3txHYDOdFxwEytzQYFQapoVbwOAxrqkoQbq7fcOTQJ8NCOjc0LPjWy0lxZcJS7ShYq6KEfcitJ274Bwcf/sDvyb4erBro62ZISBHUz7e+NMawZptJoLdUx/+v3Fvwi6aoLWgWddVjDUQ6cq3d4l2A5G3k3W667UCPH2K2spia3r8YDl33QyhP1Km19P1t2a8nNYD4ZcWXjP6361k9fWF91/zwC1ObCK5WaHI1tiwR44ZuzhmTvP9Cuzf/rOhD8ONI9Ezv1DOov8SgH0+z9F1Zj+8U/EzP8q1Zj+dhiEP8mE9z5QpzNZuKfEPKa1KgQco1Svk/o4jUTIMloxA3H8wIbETtiZcnjjizf5k/QUuI740+8wt9/T+j046bzDtprYF9HPmq6D8yAVu61fEomkshrbv27vn22qjgdQXWoBUGOXQEI3jxdR5lnFmqc34uQsK11UmqQIo7s8LeMseDfhaPQMOBEJHebW4gCw4wH7UUe1+Romi+reMX1eV6Sn22COs3OWpl+hl+NpMRFqyl3iknd1aCJoVeqoFkL3OlkSQ+kdM00JWYJEc8fEZ2xeXo5FzkOj3ycJQAdyBgD9/k//3oHlv6b+6QH0+z/9rw4++yVCTwVQ4QPWVVHRRFTSyrjVg4xkYMf5j+MmbdjtSk+7zzoL3mljQUsTxPUZkZGyEGm3zTBNPgDo5CP23esdtEoV0lLHykcbMY7jvr0rTDdWno77DP7tDxINEcF+VWupjHzUhnAmfJsDLxdwc3EAqsq6ykrFMLy1gWRKA79WxrZqvZUaToqNo+qqltJzA2/veHItuNk4jbxtqhf/tOeBptUi7No+pdc2r41gasxQFZAHtQPcVdvl+r5D3kEJ2a+lHg2b53BfJhN+IOcA0CPk6NG5Pxr49OuqzAqij5jrfhmdXRZVpPe/apye2i+xbEWdHGRqB2HkAX6vtmFZ6BnSo3kG/WaIzt15JoHMz8T/lxOA9SzmYR+CQ8n99h3Q1fjwGGMm6oiE600roB00CCuLgXfeDyVvHjM13D0rEjmMJdbm1DWHhLrIyhKg3EF2E9ed7qn18tLTdVGH0nOjAbfiDV7twS2681FZo772HkXBQJOqpUFVXEK/AYCy+p7x1WS9ki8qqTWkMA3eXyeJV9Pb2FV4PBbd9zHkHYmascJ5Huw7BwrPSALQywCobUB1KSvY8WJ0dsk/Xp9SceU5/LusbfysBMN1pnGYtiTMVK0S07SBZm17O7s14c2gJG7kTJt8xMLMpVwllT871E6iH0YKKLElcmE2kbvXX9n7TvfxUBmDdiqfAXmBhdq8S1DPVpIfiEwu1kADe0vXDCNVzug1JvgNGx9nCn5Z/+oRp6SSjoAwkyVIJJMcsO076VTvyIMRsgNivTMeruCUg3bvcTZ9VfOV3f/og43etWEdTT+kd7KI4h09nu2yLNL8u2mdiJrxuaZfUMdKojH1ZBUACt+n2wegZId+lyGgIqoiI8r+NwIVWsWPSuRSnCyS7M6r6joiF/Vs5Z6B2LSG6Gwb0PEjFvJe4DGkQQm9Zwi18WUaHWvM3XHekRhfPIreD1xvkcIhDmPk1+A/9Ht6fdceQorgZpRJBR9ozw1Jr2EpLgFPjJKIUeSX9Wo9I3PwYNd0HyjVqX8mKJSTJIKgQIb2xW+Nrw2rZelHrkmvsUojAoGsLoRIANUBQPUYVuY7lByUPq22GUQ0OxhbhETuiJNRc3BLzuW+TET6WFYAoNw7sOEVYFRKTjZRtrUlf7xrFCRBEqXjpzPElUaszvAbMMCjfrONB9thjTdBBl0PMGegdE6EDV5DAXmlWttw6KXsHnAAeK3DNaLjJriQQ/5oNOd41MJC0KJ3RgrzoX4bA1Lr93FhU7oXdVkbMc5VdO2Y6iW6u7hbWo+K6Rqj9KoiU7UNANO0WNh0xfjZo0mTnDFT3d2GutdtA9E4EiQAqoUp1TRDw/Z0e3dkB/TL/PUWc+/Zj9A3JzFxCNCXdF+eRRKAXgZAQWRCKLesmJcSwMO7G21ow268AR2M37ozsVtzcpD3HVM4Byksb7FHsvcsNtHGn47XDAXfvrZaMzOmTPDmRVgU6Sb8UxIluy+oPPs3gW49CG0G05jcFE2APUxq+j3J12rn0xGLxuMWFDPBZUJd9fU16P7d9Xg/0Nm+Dbu0NyROcBe13t9m70DouohK0oKvvSJvmvA+a72GpolCXkKzryv6MCcRtI3h97MLhAgnJjwLoerumegv2ina2uhdGmyf3jL3nKLxY3OclY77/Po6/eCNJ3BB9+VZJAHohQD0TZdlVdWqQl5Lr04GHiA2BZaMTmiMoTBR1KRWzElT1ypiFfZYkqLhBBdpqN4RPW59kvfQGNpvHDUeQEPYQIn9703KLruwvaJtESOiL4UKIQxxqJCXGYWbRj0lo6C+6KmoSI1XjYraf9q4g9KAVYDv2LBeN77UiTEv320LZtEyoFyB8NzjZNqBncr3mO+U0To8QxZ8aO0W+jGTciEvtHA28nXDq6rhwBTobRPM+miheCETLZ5XqV8k9wDeFDtlSh/l62vv3OhdOqaE2LhbCC9zBGoOzPQAoFMjGgzk2CldXxKAXghArSnLLMuLOitrMjl7uiPgE7wgIcjocRNdjz8OZ6u6SxWP8bEJoGDF0JYyav0HMH74mPejbbQlZsMf4foRgLbKp/cotMpIC6ADPKYaqIMWY0wo4RfCIXEPub5aHe1avGMqRRJ/HdjoTQQx0yEt5RM+Q06kff4+TaYCKGhJhe+ICCO/bPcm6vZ3iPYM3KXSg5ohKc9ggo4da+mo5I9aeSHVc0KaXv6md1l4xfbVhnRUYyfx9whfX8SzH6zdWyiMGPt2QzGWoyJDc1d+na7LN/lSv5j78iySAPQyAIpmPEVW5PmmLGrGXmIsAxel1j6hs/VyBqeeT2iHzqYMQ8Cm26QdPgazVCBFUnUGvOsYb1GrR5rAySDE+zfXqnYEoO3VdaVMrCv3/Y3dsy9RJ08IahiBsqE2XROM6yY6w9tbjDr8HMkIiMWhsIe1bbxswHGNURt2Zh0SPkNT6W+vU2QqfmIY5fNZnP23T1+8De2vFsYZ4vXNm3fM+Bi9vNLYdcT2AJShq6pSA0pZP4YT5W/y3qg2UvX9bfjKGA9y0Ye9h2MCtzq89HIMbM4iZ3v2l+m6fPutoruUBKAXAdAGeYd1vtvt8qyqVaSpUEj6RCCp8m2PGy1WJ76HTVmrhhAgedchW3LwfMXAI5tOKWW6SFGfqY0ucMygkSFYiWTNBTOGJry1wWqVoFjETZUNOrS+rKff+/GyjpJuGVnx7YiUOKWN7Sow+ZaZAnE6jpf19L7oqtTdVJlzpgYN/Xj3Xl/expvTioMZB/jCyBLXnmkL7V8T/pYHFVrFxoE7X81SogyxI1pfFqhq170WhFSqOM0YqfuYGHWr97dcBzbb9+6Gzw9ywYcD+sTUq+NYM30JcLYys6nuPmQ0lgSgFwFQ9NPNy7LcPOa7AjXGVP/JCFF3FQDyTXJs3sTx58CuRKRAIXTuVVAbYUBQ5IyPigSfomJU2fbckF5jsqyyBhW0jasaMrL32PAhiGTJlDRSyF6zSkoAomnr29eNV0EfdgggTZC73P+or6X/ITVWLbWmjfWRIuC14KoyUbwsArLeKwUvhbrMdgWThTSTh1QAUO+zMIH4SgTEMlRayzR7jr7h3Wgi474NY6kAT40kvDLCXksubVmiMJ4AaNuEzmeL9XoJ9m8dKuxVlQTZZVhCo8JJ9z6L/Zf0vg/f+m6Q8UHHoaYeubIPydymmhvt/UoC0EsBaFmVRb7LsqesKt1+6NcuJxy5rc6yPizP2zZzZJE65LsAqiR2g3x6HWkKgRvYRlyMUR5tBEB7RCbZiPTPIUGxq/5ETuJsMKOjMQGLoBCxUhHP0e7/vmOi9al5tPU5PUI5wMVUl6ndZjSGUbI0lZYZGAmli3auQuHQOKUgpPqYniPX3TxtyqzKsoJoLXmf9vn1rdPr5Ob55ALyOqugKduR4foWrjbUjFqfiw2IynVTdcVW1mAAVJiyQqotCzlJlQ9JRBqGs4KGKncFThLDisyigLb8KTHh52RSfZvV6fpu6FO47zynDEzXy1TG9nU7u6nuPGQ0lgSgFwFQtx8KlQFAn7bbuix3RWfsQbBXUXASCdkoq6bb51wL3adS3NZFhQi+U0hjsDFtRWFv7lpfI52xljg20+GnoJiAE77zqpgd+OJiCUT6tnExTFR4+aA1q4n8pbA9/LmN/9MXZVOxLh39tFVASTBXkqvZtPhJjBP/BGu1RQNETCYQT4WgaNmNqCyLbLeTlFZu71+ogXol3fPTGSaxRFhJFcMY7Li701s02Fhp9FR+cUH7eoEKvKiyrJgrZQigdMSiPKyS5gT+xdELAfF+cSUtaw6Ir4XpUQKgNgDo3u066UCc9SoGSr9/2R5jrcc5ElpWSE07goYjbNFxflPdd8hoLAlALwKgbyi56/bxdvuwyfOy2G4r1Qtq+u1cFihO4fTNkP7CopPYPXXpdKm8wLdtqKJl6QgpU4o/wrj1xcxqnzU+YCoRpJj8ItRTfBWR2webK3qCv/eOxKBqqswla2jOqTdEIV9BQziLPklfh6oqPbdbG9AmSAA8/EE+bF/XOvxemRhArTgUtPDYfY4CqizVuyyvnBUvbxh3l16ebYhta0mXbXw5Vk2HpOQ0MAfWjkL10Y3sWd0SCxdV0q9dzSYEqLnnhqQk8dOBaiOuBdYTeJuACBtydvmKMHUhQTB3sNdN/cvF7N+u40E2I9puJEDpY1CzX2jQmz7ET6L9ArM7et0u2lSrwNIEoJcB0Ddt8qrIss32KcvzvCiKspfT3tCthzADHKSqrMLOFaCDIqWLqq6yHF61DqcaqnLifpPkdGtKbk9VkLHfi06EZ77l2Jg29m1bC7sfDoptqLiZJU3pGtCpqwoB/WYceZdItY45922dYo+A7Zug+2kAUBNm5XNsRG8l152xoR600ctKXFLIlPdA4TYzISyH/1n5CLaxL99aXy4wnNarIqLbmoU/BYX1rE4+flP0Eo1CiNCduxQfqG58RW2YGTT4dVwDb3h2r2LXORj2KCPLeiXax8KNUJfMW7ddp7CliTr5tavfI7bJr45Azd8PLtCeOqQ7BCYHAPQQ2MU3ccmmWoc1nwD0QgDqdlOR5bunx222zR0KZlBMugCvZXcPW8GIh6OsaEMkAqCmsuzMU1YFy6d1rrnAGXU6KgMz1nc4cyAcIkhjegy3Oas7d1mFI2Yk7dDY09ACqBi7YqshilzVOoQ4osO9EuhRKPj5ghlKm7k9PP6pDWAuJnarFCP53CnVyNthqf0Iw7oEIakpYNvM8UqryiF8WVV8VfCk317a9CL2vADuKdEIrTae4+/1ZmtjDOqWi3dB22EimITvAzTUDLFrEktBQsPS1pZekACgkyF+cgF0VTPeCO8NHRk6sNe16PJNu12nscVGTs0w5qazXs5A4OzdjkZcuoKfCyqYxEu+YFOtJJ6UAPRCAOoe8nrnwHO7zZ4cflalLmpmuvvkzVBjvZLkFJ/Vjj2v2Muz0aiZzr5zWRVYzXJewQ3JEnVmeykeMo2+df2SHZFQG1HadBDmc2y6jRhDguzzYMIzPI4drS0bR9Sl4PAEL1XQSeYSih8FBdP0NOmhZiSlQ7SK+m0askAdpDCWHYG14JOVGieKRQR8fX/FQvNoSqzpaOS9+vYatES50VbUT4NCTygNKhWsIrfwRBjeh+G64E/3Amq5XlIyFOW3gC1YxloLI0vwkz+femSYMIDlLvF/LOAF5dWjtkTLeFe+tys1gS19AI0ijudDzv6p8boPFvy5AfRcjKZL+wESgF4KQN/qXZU/PeXFJi/rqtA+JdNrgD4b3BTsBeaMPiWxAhrx7DxHvjXj8WUlEWhGSlCNAj8sqbui7WdZ+Si1FgDrJ4iHB6hja3YM9lDx/S0Qj5hq2Gmlfrvi+IqMVIat68qHrVvfn+4gUdL3hSjqL2vag+KNL/amjVQyr0x2TX3eoC/iLqDkccxCEm2WZVoQ9qY2qaUqsjalw0+UwWLQRfwJr4GPBY8k7iVrvrORum5J6l5VnnsDNT6WFRMBWs3Tvxm0TN1DcAP3gDB8hNGl5xLg6YFREKynaQAAIABJREFUcI0UFdw2ikzbKnrfhAu1XukJbBmY8DjozMDZjjeCQry7SNI7swk/G/06Ti7uB0gAeikA1abYbIvicZeXudvTUN1sm/xnWNkSQRO3y9gqDdtYeXQTW9iSPl7XRV0x+kMet9QXdmpODlgGVNRG2PimtuNt1ZKFvPTIK72ogKhT2OeqVXYjACWhij2X+FfjGxkztCQqo7cYOQ/oYV5dZsQ+XCd+nJkvUAfblN/CYLe9ULdVJbRJVi/qWEjSdY3RLO0UdS2Bt8qb3w6FVC2lp3xEywGobaRAtZbkAfF8Cs0pYGbT2ulTq9pMGPgdhbVpJ+/JTVSsnfbcqqu6Lck1dWrSa1VVwP2gyrxiyN76sgNRvsCrX8QpbIk/XoiavgzK25GKWt8aiHtlLfnZsiDSCQA6MYfL+wESgF4IQC1Ux7IocqYjVca3CvddIYUXiD2uask3ovYTkqAllKPqEtGQiuUnYAva0LSjKvOiAM/U6SviyrNdHnw0lKj8uf8gquIRPVw2QJ/x7SKGJrwXxr3gdaBJ+kYADbVOPHzTpGbKqFzOs9Ul/tXEvHta4ca0hVZI9elTFRBDYozNE109C0nqjrILOgz8kg4MlGyRgk8oH2BjvhYAlHgm+V9V7Yu4BJ6ozx31cabphhhtqFxHR3S+QOtfIpEPoKf8jFaif2q2wXYzcRMqqHEr9kPSoVuT3FpjX6KrNk0/aZ8fL1Y2+5Ntx7oISIf5X1Na3tSJltCYZq6xQCaGcYXMpgSgFwJQ2JKl0yeqfPfo8C6vyNXu6JGW7HRJJRTXpK1N1HkCpT+yrMx3G5iqdS0VL7zjtFBFsSuqvCpZpIhnmmhSbltrOtjEpq3f1kQPV2DLUM8TU5UbgIVNPcGK1E949RDm9rVMJQFV3gnWI2jchqRXdi4aXROUbF/qk4Yt2US6FwNvWHgDifBGl0LloZodihKj0hXS5QUWEdzyeEN87HyVry+SEAAmAQuxij1NdbRX8t1XJZha1QCgPEX3QoqBp7E+O7RXzy/MZWALRBAj9xfzpNsmeKqd2V/TP27EPYs79Sw/DCsXLr9Q4QwpwfJ4dZWaRy+CQzKc24TqN3miw0T62Wvsl46w1Tv+VD/AEfp4AtBLAaguK5Cqq01eIRUpY+8N8l5s4JcL19sHc3xUmJuUpZdNUdTljoQcpLhICR5u/NIh8q7Iip3TQ0OQu6OpiDTWZ10b3Ta6dWcuqto7VKOHy/rYDxuLK+s7VDbQdwQTBEANRwGFuISpLf6EWlx7rQraFs1sQuKin1Ck7/pov0RcPNp6po8WFdxPwunaFfGzrpQN2nETamL6RNhKiVO4JMdK/KNax4VVX14DADJ0pBDNk+ImPr0p7LC26tFYvAkvtP4e1bLHGmL4vJeh2kwcGg6XF1VIOGLfErC4TChj7907OkTDzEuXhLAQNDudM2TYt2NtfSdN8GUruxBuYnyc1DUP4NaZaUy2LUM9yOc/DUCPcZwmAL0QgNqqAI+z3G6zjFqU8rUj2yYRktgYIuIAUmU8Eclb8KqAuretJCUQoEuUrUsN8Mx22aYuBoXJW94Sy8OHnJYQt4EzwFngqs2A9AAqflFTUeOhF5aQ+toSjEKAG0Grqpb2nIZxaeWrmjotU+jVtiuTF5U5jfAkBJt8pzqBsFAbCjxNoRhyxOD2VIARFu7UvkWQZEIxBRPEczA+cYel+xQM9cHjz55IMhNWdqppIcsVbQiPvx2w+GybVDnIfm1aYm3T+SPm9m6LNn4FpEdx0N19C3kO1r2wSHGjuzY4V92KHNEtw+mctp1Pm7fWRb+GhCefsTtToGt6HpNo07Nupu7meYn0wQM1ut+nmfBH6b4JQC8GoFXpIDR/2GUFcYy+Qu4VMSUNA8hhdbnUymtg5Nxo1iBxcFUUoBaypBPKEhmw77O8zLe7fFcp3TnWIl4Sdzt+RR9pzQoihGT6MJn/GFVv84ndyAcVtLQCqd9Cl99AnFQYDIjeFceoQ6+5WhqQyeijzdOVOW3xRGqjSoUMTc8wR+K7DhlTx1Y8+0opZhUoT9uUfE0aylpIqYrJS0j0R6pSLf7SXk2ll5dQCcWhLgx9pvngZYF5sctRLy1/prxK17Kk1fnfIk3S5xv4RlfT52rRxic9+VXw5WKtapV5+mcrzInKNu/PMcgZ1wjhGDr+hRWnb4QrwYoRgoINZa8XySTadBf2fu8hFB69qfZJEwDUju/3CQrocaibAPQyAOoWodyV+VPmUI5dalUlwVk8TYxxkC9IvQhEP6kA6tMKNRJZqrIuUYsZveWRAQRtjUWY3ek2VY58701FLv2ImGjF3jRoycRicMQHugkrh8aluBrboFNogKN0iCF71fHFd4aE9kldVpVlpnRRSH1j0WTdF7Wy0QmjYFZX5jRsKdH5RN+yhF6jfZk3oWJVbf19lgohBZW8SFEUtehRNfclwVMJ61yBtUB3MTmUEaG8UV+/ek8tmZmsV18zNd+dKGfKuu2ITPNxJObKB49wULvCbvO6OmP8vQYhEyZlq5u3HljbGQ48Lwlj2lRSv+AY5LRdidJ+tkL4u277GERvXhm8MjYUflr6sM9k80YX692t3h45l/gQm+2n1fnvjrDG49Mtht0EoBcBUDr16s1mV+62u20ImHtdU2qoIUAimhR2vwSg0WSChEsUnsuzui6UEOalOhsI98hdqvIqL7It/KO1avsqcesLZ0i0LVvS6gbtnVQdltZUBXjmYghH6iq2jw4sgAB8Lz6JFH1JmA+lsrJ0unCdO/ysWT0POqOvFt8ahqbTOlq/W5vxHsiUbLNEBx/IW9rXYnKXCf44TZPWsACUlcJJYEz5M8rLqJZCoUZ8H7D0fck+oQxxOdxFvv7CIp0YFlzAzBBCySRrKncHi8IEjJecgQh8h9JNw7+o2swEr+B29VomlJ8WbcIbSmnvdhz4VOnA1st1zujsJpgAts8MDbBgA4DGzt6gPRvxLpt9tnNfm5xGmzDRoK2PPMvnB9Bgwy9hAyw5XQLQmwKolCuusmxbbHOUtCszpw0qmnpGSesHUP5U1VrH1ILgKkUWksOkCvTRirFZqQeHbxBRAcuxqrabXZFtaER7vKJWxwwb5iQBUBzwOcCUEk1K8FOBmB+UlM57Z0PrZcaQPcv/GTxNpj8aUwDvHdjUcEigwglVPabjS0X30MLcn9e/+tsecV5NMD5p09eUkipvIHhpKVhUhp2nLOmviB0FBiaKpWjvYuXATeCtE4M1s7KYmNBxsZBopJ6fGewiAwp1V2okewK4MRO4JAJB3npm06znspsG9SufsCrxPQkLei/G25TyEylmgqB1qBQzYBAtQs6WftoLpfd8gVFuUpuY5LXNYUVnI/Vp5AWwBzwGs5pBm3Ax/0Id6YZnNuFlBabbRJ1wuvAYLzk6AehlABQqE7rCb8pqt3na/rRzWigCrDrwzFGsqUKejdQDYrwHWEryPD53aLDNnSGvrISrkXFDjc9w15e7LC9yqIG6fValDjurF0v6OiMmBoWdGLQWUqVDwPiZb+HAa5AIZ3p7+pszd6UBnrVO61Uqx6hBSnWgXOW11GsLv49T3Tv9qyPr+Nh72wgvaCn+ulQdtQRUaMAqqWJPYJNMUvcCqv1Y6eP0ijIxFkRKJHFWSvtoviAiXlRf/wxVnT2j4RupqpKvJqsL1G4C7LYAqnwTv6mA+Vtg/+huwsZ7DelcDPhj2yysUdmlFljkDgthVVREXmQJcvqWnK2HsXf2XjJunNwZY1pYgm5ovuOJ3Lw92tdQr55DGxmZjS7WO+dZAfQttkrOICmIdHsAbTQrtyunJDoE/fTl6WlbAfe070OOwhHcxsW2Ztu0mhY9UQO4V6KmmcOosmQ+okFVO5S9I9rCEerQuMwzSRxiQEhbqVinyOUx4hYgwpV081kWmuQ1q3b7iU82AILsLVESoQPrZ9Ip2VUYGT8Vakfl0ECdJlrgFQCiTdtMqDXhh6nuXlquXohVR+EXEIBqX0GDIEA0hYUuZYgxKyF5+pQDSczyLlZhDtT0cOhaLFHhpkKnqsu//3NdFcwEc6Bbgx2hWIkVFePBXa+rYMLjleON/W7g3Yby7B8jhrFUSdKhMbIs7Aia3uI70HTAR6Oi9k7nZVROZxOI57StatUnrokh0cVSesmdnojalSawE0oji1vt0b7G6zqHNhzZbHjnzCZ84Bec64RHOE4TgF4EQIUWrnSW7/Lt03a7eSxIaGQuNixfFFly/7ct4FPU9HKiRgejyiAMuY3t/pfX0nmyZsC5pE+zgr4E5xlDTGjsWdGDiPBKzUC6IVvTOtULFnKeExSgfVoQUovKa4xCMRRI89mYbRiqho6sXgwJ3nw6qffWecWmFeWupmu2AGA0PeWmp4AOXWNCa4z6irTeObwHykpKljY+XlQx152eRUkWtx66/Jb06fRU3SUyRIdoV3dUALQq/ggALWoxauEERq48VPy6YohOlUEB9VXnTDh5n9wU/iKOBBPou6GLCgpshRyFt0nvWxdEwp/ITXOjXYCc7e+/WQk/6kmtLw6wRZcL2C89VLq33XBwtolb2E/KxLruRRvxDsUFaqI98l5pbLs+XX2Hs0gi0t8cQBsCmSp326fdZvPl6TFzCEr3JXd6pTJnpDsbHK7F2ldNRmo3QABxcod0ucPYQmJCEm2q4BStwSlvgGL0P1KN0ojGa1j6rGlXO/DEuYynQUFRBHyjykaFL4k+VId9HnNbOcmEfudE9K+ERWt8kXy4bB3GO/BBKKlCQLvuJfPZya0bpKHiTfJWm8oTVCIgV8Vybm4Le04s6+sLf4kp9+KcNBKwNx7RJB+0EU6T9alEtfKhcnouqvKPfyiL3N1q8U2zOgu9nyXUaKeaOj2f4zaS4EkWRJdTFNyeLUFL+4QwT+rXHZ03ZuJPAkv7ofvLEp2zu0vy81eyt2qfBDt88oambLQKkaI4i3hNYInoyb56s+u6D20iA+fcQaQwj+OCPueWBKCXAdA3kG/qcveYb7bbp4efnrKiQAIRqi8xWlyUTrIihzJUKqaXuw/g6mRKYoWoU45qmFSjoJvBZgd8Ghh+iNMzcl4zz8kpWDTX6wLQSlUUVmzJWBSqTLJKLxqE1nQzshAxOUj95JPOjwY97puPDUl8VklXI1UVZV5RoXZI7+fcKgNh6457Y6B0pMSfahWu58k/vCDKIBduIkYsP5YnggZKLRfxMBYTiIhQxAWvCjIM79NWtVAd2UsJPuG6+uXvi23GsqIs2xGCYJUuKvZoLz3kGP+qgK+6y2q3jc+jrIMCyqQhK40CjQ2ZWN2MBKbMwBMQbtQS4Px9rCJGLtgX4Yoqqc4/oq9HATaJ4gXduWd679evxjmnvUtE51kkUUAxkjMAaE+bTwB6lKwBQA2clEX2+LQrsu3D7zZFmTnYyckhQhhGgz+zK8tcQW2EXuqwFbV0WbjJKaals73xd1bwYL9KQBdYnWUtVqwUl6tZc9kdrcjRwW9o8qMcsSrzncMHB9OMoaPUpGGXs7dGlFqlfAyq5ZK2JrL74xvTsKUBnvbd4KEf11lZsfRvrXqbMQoYtRVM29QoQ8SFtq20DckxotHxguWO/oWq9kpFScznC4UhNqQEkKMZwLmRCiHG17bzVHsfn5dsfYbNyvoPf+PODQeBlLvybhIWNq0QVDPtGG3IlQ+pPwJD8vc2dqS4JjR3rQ43sOndg6g1cSuLkFN3FKOIJBFW6KVf3H+Ovt4L4hwJMvtDKEcFWFq5AJF+5uVwdUkAehkARSq7g4BdsX3a7rZfHh+K3dapiaWGc5Mh99pZ8NAOtfTIqEtpjgRNFbmLjNWUTEcRe9xoX+usVLWSMACqT5SkOxVFRfMXrsoSvgAmNUHnddoiC52DUco4krdLlQQxgKyq2+eRd88B1bOmax47NjQmgo7mhpcDPVHv2frmOJBO+2q6OE9gzaAUZ1ECx5XxPKGWLQhHp8pzAqjDSZ7KML7DSp+mZjIr3bs2rivqMxQlsOIdqIGDiYvCZYJr/s0fCvpuLdyDLK6PmsU13YlYjzBuX6JUtbnnXgUNYKqDu7bNrxJ67oSqqbufL0TOps358hQjzwDrzfa79cn+U6zxCYv9eDN3JvwXEZ6WB1gmkNN/8H4AnXZPXF8SgF4EQN3zB+ekyrJ889PjU77bOqh0IGdgcFMLdTveYVuOyr8ESZRchi2+y3LEixVNeWgapfbuxwrlIuEXrYSpCJXO9//J0MOihHORTr2qLCQohShJCRQtsopxGCOJgUySZB5ltSsZiZKht2hEprt+NlJ8omkTAK0oe0bUQ1U3Euj3P/bPceO9hrotUmwsbkbpbkFZazbpMN2uFjI+GpC6twd8FJLyI2U/yCyg+a5M5Svz23B+UfXYu82gYhOLi3gOAMPyUHfdPf7lFxYj0EKKUmLCa4mAaxW56NqotTYdAkrmmOQ5ELxq+UrbN+OV31ENUZ/Eugg5PeqHCJ4k/Teh/qntYd938bJOMYOmlbIo0LJMSzsYJmqMXpArH/8yJrj6U50VQG/aPSkB6EUA1D00yJss88fNZpNtHI7mIE+y+GdZs4MDG/do1jAzCE8jw6hiIAWfojk4M80zalaMKFVFrmiSsjIT6yOBWgTXAOj1RcU8zyJjL0+Ao/ucufRZWecEGeEpsloe4VPVWSZlOjhyAg91MAKU+dqVP/MlKABLvD6iSKyQJEH1t4lgdSPGP3ME3cSdZs3uekqXiESpEJ2hs9ZYvAEA+HgNSG0d4a4CQ2G+Uz8Xjg3D5KG7hq0RbUI1UM/n8sgMHq5UrK/LX/5IAoRRpCpY7e4jKy97P4iN9FluRSP8VtEySdGWC7OXp66Dcmo9ULOIVu8RWBQgkoR3qs3ap6gxKsV1EXKUDRHsDkDDLZ1qYL/HYu9pafucoAd+ehRayS/lhvVPdV4Tvs2EvYEkAL0QgCJY7SDvabN9yvNdhoBRCe+mJj3T6VzuM8P6HGJ7QvVy2mNRZrDx2dEB0FTm1BsVu3M6o58NgmojTdvACy2czrorHSTA6IeBvHM2foUAFL0FOD7LSxYhobJofJkNRHScuppBu2MmeZuQ72viu/O/jlQRY52mzJ5ImnWMpaQpOvdGieT+JF6L0gj7wzkBHdyhe826KA40BK/h2lVsYFLkWQmFWeqtcIbAfxYSqRn+r0NqPls783K40fCRSsF3b0sLeaamq9nNrvz251JoDlAtWYRAckRFmzMxYuCMmtE5T+nUHtMIBWI+G+Oj3Z2r1JNfjwmtS76maWtTQ4wQ8Su0HNABQHsmvFRmbnPoJ+nrh9TIvRA40lUHHxxhL8svPTc/zoayzRmDSLdUP98SgF4IQGFgAseK4vGhyPONU73yHC5MqIbKB+IdBCFWjBc0c4TcdzlglgQkePAMXJdk1yNjCSz6nB5Uz+VGhNnhbr57zJAZBHeernd5vi1QRBSkJWioqtzVNDPrknmhof4vrldlNTPN3a9hksbhbVDkewBKY9KUjOlo+BWaN9+CGRSjQOcU1qZPgJHYNXyXtaH9jjKmeS5lO5m7ir6bGKP7ZbV19ygrVClMeSYUOLWU5eqoPxrp70xsbbOfoLwzKISSU9ZTN7lRNWv5s0DT86uviwprkgWqauVTwmxgPnaYIC8QX+bJ90AmyPtDvRuyISRXHkCPQc4g0iLF6JYCTp+sYqkEpUxA0BiyvnsboR4zg9pFejvgyDwAgcOv+2B8TMSGh+o2Oys+1floTDd1gL4lAL0QgLJ2MfTJMnty+meRb7YoTg8zFLWQtFSoQ7Y3fXg1O3DmkJI53Qz0VruC5ZcQPQKiIsUTqhTTRWDFqooN1LabnJk1sFaLjbscUcppoCyOWRUkDUpt0VpqNktjIUSQWBSeBUeU1W11+Uas6FfChYnqBLHVJNRP3zbNGE9gFwqpr1LhnYSKFZ0VuxbpEuWhS4fsu1BPXpFKDq9Fhf5pJcJIzK5q2P2NvIGS1ZZQKllKQmmvkwXFjHogWwnbyhej5mDxTbVD9inQ/fm1YSYCbFuWFKjIGqX72UTpQQRf4010TdNAC1EJLtQWan2JDAf+7jz1Imu9dUa+9UtpyovCPziWUF1XEnPzRjxqUVPn5SGvolyLr6Kja84ljU6zPQ9A4N5s92M4Qxyr8lp1XzE+G5H+tiH4twSglwLQNwtAyNDUKHewts2zCj5JACU6vou7EuWQbQ1rmKxQZ+pvnUqoKhJroJICYABQBeIn7GRci3aEzrmsGEoIRRBJFLa6yDZ5sXVImSP+wgIctc+uYW27Upr5woCFCxMIpVnhia3bQlc3ASf7rel3d28aCfSDnkrqD1L2a2qAVjx6Ys76RkO1VJhD+pSFPohyKkYX1sepnE6nKzdnFMcrYLdiIvgHlC8w6BWmJzWgS98oSBupnBdKZlADLaXGZ6eBgmTg5gI9nIb760ubhsN09ZpFRjUJj76aXsghpZtD2kTrkDQqLpbQmL6Rghzu06U6J8nkXf27CJ+ibCdPHCCH10p6Kn0I0O07AH1pISimaw4gb5p6GeQwBAocB1DuQ9QxACoumvBY2DOb8Etnc2FJAHopAHXgUOS7nYOyEv8HPEQPDtjM9CFqqaxEXyUiPQXyzJ2uVZIq6fs0QofUjMBr6SiMfewT0I1FWQxQlGjDWnQWd9fcFVtkORW+tpNh4wsryihU2cqnO4ktC9oQOEkGJNMKDFUT8qUb89xV3g0AajzGoBWTexFkFevbVcqHP3zFfRP6ash7AsVMqlwxeMb+eHTAAvsK6NyFeDbQ3gjlA2p2N0YAqCx1KEBFthH9qaEUXwBQHpjXPiLkd5IUBSFXQEHfCWjAnlAGNwGKtPAKSPs0dZiBCgULai1qnndUWm29c3eRzsnapXweJKRlGLcaFYOnCBgywQmviFr+KzkVQx5owIvo08kozzC1oRVPYeho+NMhpVFWWYg/HaHxWQn4aa9JnzWI1F0iAejRsgIAbZjwUuSANFSmd7t8m4NzBBIicsgRoy/KLZihOwTkM7j/mFIERdGXZmQzC/A+aW0DSGEMS/KQQlJiUWRZroRh7rQ8NEEu8id8XLNpBbJ+3ljKDrnsIEPm0icCTsESMMKmy+7cOTKlELyomjYe9FxLx4nAtneQWUjGJOEGIFVkFby2ktCk47p24mOkClwLEb7U0uYHKiBUa2NV5i4KRREVo5myz4IAdJrCdAeEsAw+09cJeL6Apla+pxFDTLg9lW/OJBnvXm0sCwTI2yWUmncI3ClGaSTS7gvc44bVUl+fEF/R16DofiWkLgHO30M3FH5U3UGOJHaF3ifNoHey79hppFmzxI/EmBdGQgRZr3HoxH+6L8ozoYi2VIthQ86exGfpHXGUz9F6ioJo0tGpzgagyYQ/RVYAoKxLgTSXbIuEJGdn57kDR6S+O0UPISHUt9ihMiXqXAA3S/gK0WkT2e60vMniAeQBdTMop1KXiU8MSDpVtivxhdcqJEU0z7aZAw4lkRwEnCRxkVmLNSPyUvStYh82tcnJ2Xe6IEnuqvHOK2VealYTQR0TIZ5qjWJ2sJgFw2D+5yVp/p75xH5Fos0RNaQ8X1EyBEQ+Euozw/8LnazebclShRqOjCxx8iKQUgFNKqYhVUxkLzMp29z4PypWqm9siSnjdxUj8T6IxF4Y0nSp6bYroza1lg4BWlpY+CrzvFfQzMmTYOdoQX/QthYhZ0uAJ4Bq39xJbqbAuZXC1tR7e509PU+/DtEr0gNsLQ2SekGu7y2Adp9ORHkI028zaNfrvTwDiH1c6umoR0W9qVfHpZLORqRvh3O0AnpEpZAFkgD0MgDKRHXQhLL8aYe6Ss60Lp26iBx44BAQtagypzqhcRJNVFXSfqtKXzqeRM2KRZsIJgVCKYjBQx+UkiQZgu0lSt2LVuI0rjJDGL4UupR0ATGM5kANLuscmi50QuptwlCvcgbzndaKyhqGTHhml3/VQT1jQw8SiUqp4W4ali6FH5dF3g1BnLoa/bZS0hhaHHVepcQloVhAX9UCle7lsXV3gelHDJcjDIb/FkLDRJaULkHuQn+p3NcxZbkmwqDMomRyAuNNyK98o6ez1r7bnX1rt2sTGp0AIn0HeyullYgpFSmYTJNUzF9wA1qAnE6V84RQqQTqGxppK80CqJqL+inhM6tMh1/0g/pwu1BPfSwveA6b1vUqPNC2bkuoij8R5QmQNaOemdCjfqbu4Nt+y/hIALJxslpvj5xHjqUxnZn2lAD0kgCabR93TiPc6d3uKSu2ThPNCvLoa4BpkbHlhkPBAvT5ElQiJDTWbHau2eIHBYyhBwExakJQKX3YrKlIDUJhTtCAsKng5Cxy5CYh5d0f7wx7VB+B6ums9Szf7hj6YZ4klEmrcqZQ5rud04TziiEjwc1nLV06xTHHcHdtKtr6Ej9WALwq6H78mtCBfHykKSESVpCBxdiSbzoKZCiYtgrczna5tLkD5qOHCc9s27YnFXR3JFhlpS/iBlObzZVZUcCXs3KXKaUjCPMo4S1mZ49I3xH3AplVFcsiiybmeVGgRogTQUlrqoPIqXx1vhB083qlFa2dMTwCq+fy+L73vrOnCVa8aVNDQ0doKxn+IRNKma5E5/eAXxEIjqI8AZBny8V34HugovxZXItTgHvOeqDHAfq5aU8JQC8DoBbZQ9vtZvv06Cz1p93myxb46bAtM4x210ggYuzbgeAWHKMMBdcLBoVI4GRmEuook2QkGhaSNNEqThMGShZ4Kok2yPgAMLvzFGyizC4WUHZL+BK0Q1uHjrs8Q3GmjNqf1MJH0SP6EXbIWEJ6Jp0BwMsXE9LwjfsJvZQlG33CyEbtPKdIA8FZWV0iP0qgQ7IqgShkKVEDbbvxwCVAr4F7g7g3BrL/WahOwmvMD6ipQQJHMOecnZ3ctMOuZxSsAHRDHZZE1rqW1Hn7xmxIkra0Z09yCSVPAEAv/mH9z+RKAAAgAElEQVQpUae96xSuaemp5C5/wM3pq8IxpUrRuSGbUhjxvviIoRdBvhSNnJXkmYovWigRFDaudxO26e89GEStqLZcXuvMjc3wQZSnK4OyAB2jv8dAdGnX4nkr0h8hZ59YAtDLAGjjrPTd0+NPjw/5xv33aZc/IQln5yxWLbXZ2GLIAWi2RX4OCquR8IPQBQ1r9888gxqFFPg8dxZ/gVpFBZt9EBvhfqyQqEmui/QFQXI8vI1uh+EaldTEQxq5zlk/ryA91Sl1bPhBtIIi6RB0h0ShCuQjuBhRKOQF6iZj9vAj5CwCiqg7HQMOkkGhKlCwuRbIZraoICRgg4mPJSkECjAr3TeRoy5FTAs4LlEdhahNABI2lrt8xlQgJlFWbsTu/pQOdb3xxUacePGwGku2LSunxhYFG0g5a9GytwncAd5U88xcH8CRlnq+lBOzjgDMTAZVar+bM1YGccMVarNa36k5UgI5S3ouxLXC4k2+2jtDayrAH70KeAFJWDziDvmySz6rwqur3hchVafbQFA/yhNU18bOoEX8cZSA2zNtj1TUjvUr3gxAzx61TwB6GQB1KFFsHh4ef3p42jxtNk+74onpQTBbEUmv2LyokNqaDygPR1Ym09tr+kndpiuRCF874zovsiegBAP6JPWgQxJqLgNZ8qJ582mBFe127h/tlE14B4qCaTospwFvYcHcTgnaVISxmtSqQmUZA1mKCZYOovUzoK6kt5Q0fIwS7kgU1mdlOpjWu4LxHGaEauYDhZ5ujINp49XHPFdiQrOuspZMH2Cge0GExKKGHCP35iglQ57V+xW05nwH3deTJlm7ri4zMAgc6BflbpeV2a6UDlNvJMyCXVvZbkUYbY+TmHgqIazCSXzIWNdkp3ZN60nj0tLa3ep+IXdWDCXll/rpW0he8gz8WhpqGCseUiaX6hC09+JVUEnaAnALPglDTlLGIipSD798FZLIPToEi16I3f99eOhRrsKj/YoJQG8q9w+gKNH2lGc/ffr08JPD0aenTV5sNg7RctTvKCvpK1fXj1AinV2NRkUksqCqcu6OQMklts2ALf+0zQETRbllJKrSAoqV0ygliiQhESVV6uk+NKbcbDY7XKuopdFvA39kCSp7iQodEqcqdw4xs5LdOiomz9dMNkLkXv1C7RRhbnRSRtTLYS+VZWn5gQgRcQ1OSVG0GB7SbRF5xp9YN4WJrI2UQDEFQ+hurJg4LXOPQEbOUbFEP5qXwFdIpbmgc4MaF8mSDvmLHAkI7pXkXhROia/AdQCMG2A+U7p0WJFGVGPFDPim5UE2h8lJyGUoaB/AB1zgVoe0bhal1l2oJ6pYJKxbxQSyOJFL/hQTH/oopw0lE41WelocjmJNfhuCU5zJW4ut42pM4eKm05NnkC3+ONBGY2W16aVOHZTj/YrJhL+p3D+Auj2ePzx+eXz8/NsfPn3+8tNuu8vz7OmpRJuk2sEQAr5Os8yd4bzdodoHKyfD1QmLFa2SwHfS+ZYaJspsZNtaOUBELB31kEB5Qg13pEei1gXLFQH9mGiPOnVIbNpII3eYgWRx5gC7UvnEUG3h/QSsgtGUkcxewiOAkJHD1z+zDifKoNB1ULlhZNkuY9mnupSwkjfntSQg1k7vZVFkCQRb6zuAIE6m6pClyd5tMPjZbF7aKYfoMpshMQepknqjGr5kFGPJ+Dahj49YluOjzP0HJIcqK3FlFtzHzHg1a8Sz9/oMbiegCDZ+48PUB5Dz97+nC9q4O48SJ7kRmlXla7HQcwk92pvLto83qtKi2euekih/QiGV9knaey6QvFv3C8E3JLmGmiIdgAqv1Nq4UlZfYjybgcG+v9M2fc3sSIXyBFC6GYCmIBJkDQBaPu6eHr/8+Nc/fvqLH7982ex2VU70Q8lLVE020Om2pS43W2efZlT8SOQEYafYwNkIdNs8bDZbBNZzciEdZCAgXdFRCGUUPknFqBM7YGhWigOd1B1eOMx2Oiu+hUKJLV8q6TXExFC4EdhpE0xLsJxgl2clA/3UPf+eJHLltE7Uyqc7oNrAjVqxOzxLHNVSrYxI4v4JFAPhyPp6SkYcu8IxReliqaMkMS4Qt7QkSjdhTytS/tHyE8wuh67QNN00dgVrgxSVb+pBvbRECSeOB9co6V9m6WYy66WdkoPsX15Q4EiSewBaB6Hz9yQNsE1oXWcg0KLcNbr4+YrNTS3dTzX4rFO6oLhM4NqYekSs1PdnP2YJK5lApY0O8lxar4Ly/nwPRVs8bE8/gScwdSYCS/1kqaMq4B2U2wFoojG9rQFAm6rIsqeHz59++Mvf/O7ht5+fNrt89+R0qN0GjEt0dQf5xqFqvnX45BRNNksiL8gpXPAzQs8st9nm6cuWCY9V6bRRxqwZlYeS5dSuAvFqZxNL4wtsdbRrRxePIt84w3+7g2LKAnrQQ8mpFLWG2T7IrdyVcCcq1JKrURePrdKJx78UrKJJpr+C70EaWWIsJArUQvrxjTCBOOR0srZ+KPzGnKuC1EsmgfpcHLpPC+spPMZXiCI/R5OZVKJ6NOM06GxSbbfQ0mEYa6GbOo0tZ+dn8LYK5IIiEsZKeaBnEUGl/ZIxz88sJr2IEB9cCVKOlOWu5OR8/dV0LyKApKQoX123uZk9ra6S5VTIxZwQE1X79AwnodL2A+HW2K69CPb999C3zhf8n5FJuGsT76d/0WqRY4WSFWXmUefiAHpe6nsi0q8AQJ3eVG2eHj797scf/urzw5dPX748OCjbFfXWmaPg/mRPsEAzp5lmmVM4twAl93i7zQodLmdxz0qRPfrkDskQMEHaODKWxLaFFzVHwSHxXdJwR5ulHHVHC4St8qctaughd1Gx7BtK2gFBjXQDtmwzzJYfpVMpC9SMz+FARKIS8uK/ws0IJjuKlCpWbM4FnUpGgQpmAEhyPFW+epvV7PSBMm+SiKSYk+jLoNpQjw5pqAjmd6TvliEOTRmTKhVpXkj1dMgI1wFTUBH3bkjXzFnslI3d4fCATsr2z/irm3eZl3DUYhzfvi5ATsWWeV7XEz8jpujwm/WnynJX+ix5SRvijHwD+mEU27J/Xij010pUh8mXFKXpD9JE18s+HBw0Tc0YvAepl7cQjJIqWcc4Km1oMzr99VAB7YZiuw5XPZkuN7JIjtpUN674uV8SgF4EQLG/HXz+7tMPPz799OXx8eHzEzPUi03GYnPl7uFxs91lD9nW2e8ZK3gi3gBOJmx80JMcqG23G6efbrbZ06bMHeRuK2idDpAKD06Z9Mek+5I9PModqUv5Zrd5cvC6y8gkVcIXp8LJ7mokrVtQR9UWcSxob8BGH6lHB3o3hD+Q8ISYU4aaUqg4wvpyoC9JMr/Y1dDHHGqCJ4CSJIrVkeRjekolrUr5XMyGSi3LS8Ep6tMOOzoN3AK4CaiUUiE4BPpUttmCe89SJNTZatrI6JlCyGbjeq8TYgpFtslKcsEOImfFkD2L1rGogHcJktagSoTc8J5x98eEbHYr4AoyQKjH3ItiM0LP4lFtxblBhSTfO0QU11qqMHURfn+I3CsrHT48gJqe+X5Udfg4gbOVuLaeP9cQQAOjaoiQ3cVD1Oq4PbJUzu21PK8kAL0QgKrdw8NPnz5/+unJQefT4+PTJqsLp28imJQ7c363+8nB6cZ9njtt1Fns0l8Ie9lt/00JfqSz7p0NXmabB6eHbgqHp4CnWhrOVWKwb0lqcuoY6OrgejrkybJyt93k6Ei/y9hrDrR2xLcNq4sWyBNioTetCkTqkc0kZYtVBqI+SPcOM/8mq5htj9gW4k8oZOJT9FnYmWwh+EDhPWV/S/QXQQHkQpMnhUAKEKCU9FHjg0t1XjDXX5VlS8mM+IiaafswyKF2ZwWyCwo3f8K78vXgWRlZOnmWGBFUWirmNZOj3K0uDmEni7GiQAFeC5JtqTwyNZI+JLkLQEK6JYyvH08lWktRweCetE37LuDfjVRsiULdcXv0ntLWiH+aGqLpmfBN0DQDqL34EJgxEdQtgZaYXx993K+tN6lQNgF6bf9Kkcq6X7ed2yML5eblQvZLAtCLAKgz4evd7umnH37nQOxhu91tH8ni3DlxutR252z3xyx72m52j9scLtGy8TWDlZa4iAOyzW7rAHdXbL/k4DoiKoR8TKcJNuDWQOGsthunqlZOkaX/lMEOp37uys12487+uGFJe58HI0pT7YsxsXhSsaty+EkdgDILm63wHNgVGNUf3LclIzQIb5EuSYXIlIUmCVRqF7FGHKiiztx2ujTo8Q7T6FhgthMUw0LiUUi2YkweRnGOEJiWROlO7WGp0JqxpIJFpqGdU3uHdi4AynqmGOSGCUjgnPrsA+JaWe5HTu3reWg0u0M2qfghWLPF846sdBtBAE5qreJtoHxxy1C5k5jbtFFsBq10qzv63u1yNkaDojYcPezzHNU2O0mkO6Qtgtd8k1O0KU8taB+SXpvRiUv0j+0roCEpqndgvwWW7dqSLN4jC+XszM3zSgLQiwBo45S6/KfPnz850/3zJts9PcEadxt+kz18yXaPm3y3yTboOLdjd2OAIh5R7FKEltl5LnM/2aIKyeMuQ9s4BEsKIXY2DSiQDqK2LMUMEg9iPxsUxHNonD8V2W63fdhKcQ7J0EH5DkZ9NNmFLFPPADOKlpYFi7w7XCRQlehgX/4ZkW0EaAwDVPDW8cfshBdCNjVj20BvFtfbPpXoG8pKVCW4mGXIYuQFDXKeSrbYg2+zZiK9ibYJjXoQx7WkiTrglDwtFOpjfWVRQN0ls6LMnhDikTZ0DLfsN9aBtrVvqcT/YPoV6FDurBU1TqOMr+EGxZovjJLN6ViIGQSwoJOh5ojvbMfxEz51l4LOXFYqeFJsUOu4EdwgewgvDdulbPYOkfYAPOezjdDENpELeZ80oVzKAEDnlLth/bq48dNb97GIOUVDTAB6U7l/ALWq2jz+9PDTl58+PX5ymuDTBs09nrYO1YqdU0kd/D0hUf4p2+So1ib9LbFRavgfq5xkouKR2UTZwyZnOaKsRGTFqaGqsZKkidxQZ+du3dkd0m5h+ReFU0DZRdmZ904pJFkJyT+wmFlzE/+TKhqmYocOuDIrYhzM9zKHbuuUPQegKFcibExip0WCDXLJUTUqz0qpvVGzR0ZeZgz9bzY5XASK9nvN8vfg9iOuLc1JQHTNpGsTK5QizMM9TsoR6w5DVTUo4wT6aYaCLO6yBt2UUPyE6T/iVnBzLdBY71D6+u/dC8KgTyogVCjwlp3sUA2fVFnhpqquRVHjGUTQy1HOmuntZWGJRo0Ui+kQsfH9oTQZ9QFBg1JNvGUz0Q4I4viPFDqN8kTjQ/ihb2v3LUarTjeMsaWzxGPvJvlXQxN+EpuGJPpepam38W9HPaWW7pGFkkz488saALTIH56+POUPP37eOIMdEOeQc/u0QzqS03jyXfbly+NDRl5SbqQRegM1xml07MCJKvFISnLqq0+XRygeBevYGZ5JljXY4xmAa4fT5vmuLDdPT48OcjIoj6RHskKGKg2rJ5csEScdJy3tb1TBdBAEaGQfT1bW3JVoQPJHp5zB3idTkRYpIz8s0wZ6JghVyJXHT+odmAUVhrJBYWdgKnIB0EJOkiihVyokBmRZXTmsR30+Om5ZbldabahKUnQsK5wouiTyfINAjpZWmj7yxD57JRwcB5Dz979X6itSqkCThf6rpKUS976wXitpOsL6I/AfmBZ4vOblq3haJqazZzs1XhtvbUm7kgJ6dqCb6VBDRYej+9FzH3A3k0DkCyBr5kC19UDlmylQ7NTWXkV5Y8ZBpCkAHcelvKI7cHIO3xIXA9AURDq/3D+ANqiiXBS7z3/52dnp2912++Bwbvtls3WAiNSjbLP7/OmnXbYBEd54C4+k6soH2aUPp9MuN1uHmMU22xVgFVXsrFRVpJs7jXKXI+aTOeSElrotnraPD49b9L9EpyStEPWvBXPd7kfftow0fK8SsrUk+6ehvqiqpdxyjewmVf7BaX7WonadL5Qp+ZA1txOi8HAeEEarXeYwfFPsQKPfsZEdPbQFaf6kM7JIKMrfg1BZuvljGuzERPWsUTTulZZqRVCTYbLD/Sml6cCtkr3EIvT45WHsZP5A9fe/ABc5R8J5I+q+0BZq2vVARvYNcBfq+Du+VLxmBIitjqGqEu1G2TtiwYs6GFI2vQjZNQDoW4RSBFLJvWwbGI89kgJ9qA39vZ+FOXZOBrSJHaheUzSjUM+EcjeFVl6DnWoNEnygx2qIicZ0U1kDgDIB8/GH33x6+LR9cv+XbZ2xvnFK6OPDttg85JvPm5/++oenXQYNiEFdI/ERRR5QDdohHI6l078qBe3TabFwNFaMrWQobQwfYu3U2Wr3BD9AXe0cZD88PoJWigRxEJwyh2hbtppn9CjfIkLF9kSN9OxG5d8ipCvVTMJH/2TU9PhDlonzT0mzIPYa0UaqxrGHnQPuHWjs2Tavnebp3gfFDlQqNnIqpD8JStn5ds7kSKHuU4WyAJXwOmnfIn6DaiW1t6IRoq93cMTuaknyhx0t1ejhyT0EnUheh+eCtUP/+GcQW6UZKA1ptHKG05kmPF2bDiZLye5nExCRhg3e6Ak11hNbay1Jqm8DBc56J6w0/+mnR0p/TbZziolC1kMDx6X6QaZOpAq0L7b/va+8RnVD/IiD8mtaVIuclSMifTuQ/ZTO/V2TTtEQb0mkP68kAL0IgDq02W43Xz798OnHz18catKEd7rZdvuI0kxPPz3tfvrdj18+//iwQWkkPO/EGU0WpNYZGEGFqTSqd1SZLlGOiLWVoC4h+xJGNryVNZIrdzs4SKFPPTx8dmCNLPua+UhQWFG0CLa/wtkynKowklX+xoJsNRC1AN/eHb3bspwo0qCKP5ZFCf2wYY4924ey3rE2FTOZnKK6QxCrqFjsJEcQSYJazN4BlbTwJHpTIPeUCF2jhjIct0zwYVYUuxRBrVTkSRnpqVHDRC+lHQiyBiqpHb8fOeGaZGFA3yreDbt6/koSkpZeG8qKKwCIVbODHzsJSzsABr6MB0C6SRXLRfu8opoVVH20vM9FCuqgRKPFkxjUQc+bb1tw9qxfILmW0tVTQOTTkaCA2mi7RrprhHcBLYXpJCAdw/zIeSAgOMsB3SvhVCdoiDdM5TyzrHIiKwBQU1Wbz7/54cffff708LR5BJsSRdcypyjudo+Pu6dPn376/PC73z48fnHqIh93RbOYdd/RpYI5ODukee6IQ6jkVEHdhKmLqp8IKCGNSYrbb3cOw+qnB3EQOExDtmSxyZ0lvC0ypsbDRMYAALagGUljCF3UJBWVzHbP2doDmZhOe/xjJVoRlGNqkA6M6Q1l8XdRKMFgzVGW04G9s+BB1mSL+qo2bEfCuLtirpIQAGDBo0Af8LZAvMmy+YmvwV+xUUeh2NSNZehB8zSsC72/Bzurr9TSUoRJkSwbx/TW52dRpOmnKFm9mfq4s6iZqokQkVNVixwlqpH+Kb30RG2rpKecsmxZVaG2KjTSftJ4E1ylPgLVs+Ft4M13xCD5XCrstw3nfGOBoUihQsnC989im1vZG0HEF/U9nkW5jJXKIdjFqvJUFtIiOV5DPAFA71QNTQB6EQAFH2j7+dOnv/qL335++Onp8UvOGiE5eT6bp4fH7Y+//fHH3yBT6Sf0nVM074BirMcOA9ohjcPFHYJHBboHoyQ9lLdCEihVSWv46amsGUVyAFrBX/q0Q/5RsWNNDuiDCDtB4WNcHjzNDSLgiMtLuV/oiugmjPDODuqj00ZJElXqF2mKAXBHFjqY66V0u6tydoirgchlDpI/cS9nITohfyK+TccBiP4V/0KiJYgFGTJ74CLNC4aFrPtNLc1Ha5jS0uwIHmDpJr9X53QzA08VnmD4H4CZdQBAUUe/PkujNgB0WaKDMfsd0Ysh9ZQcdIAxsM0A5JYh+tCZuRJ0MzVb1EsZKrQGjavF8b9SStqDaVA9hWTv2fb+AfHEyVAeFO3jfOf56Vx1XYt3VQcAjXIrBzGjgJbKF3GKQDUKKI2ykTp7P1CtLoxVxwPovTpCE4BeCkCLzZcf/7u/+M0Pv/vy6cfNBlXnit02e3x83Hx5fHDK548//PYvfvjxxx++MBOo0KxV7mxo1G8DgSerVP7AAso5y4DSLK5rQmpdi52sclYjqlnvztmfm+3uKQOY5gWT0IVSWvJrZ7hnzrjfPsJpwPiNAzv3UFaIl9eI50MvLNB/KFfoxKPVn1kcj13O0Lsd0fPK526ybFwOzXjjIPvpCe3xtHHKKxFLSX+jnAlKtUAPEith+dcZO5CSD6ClFrtTp2p2N5EapcZz/qvqkKcTajpO5bAQrFLcLMm18tU3SGfX6o+/sJtGbWoUAtDSsQ4qn7d2mzffh45RfzqjAWxKSuPVEl2HUcBmAmS/thlLEURJNDxibYrRbj2TMiYGSVMr6SXCZHgkw3r1daRqBe9q0EB7uZW9EQSV1OrYn9Bhz7SLs1M757Lezy5Hb6q7DcUnAL0IgCJPJvvd//CXv3Fq5m/+6ocNdrpT8rLt5ulx+/nLl4dPn3/869/+93/120+/+3FbMdG8YUMLlOnINyUUSmd8b9Ck2CmgT6hHj6h7ZUAAQiQIxZMMizbRFM7FkN89wE2A7p+1dFACV7KEBlqr3Q4K7dZpwNsdPASwkQEa4BKhpObjdltJW6RKMQ1H/1J59hCOAqUezlepX48sJr1DvH3nFNCszHesQyr4J25MxTIftWbKUoGUfMa4DRLdqxxxKxM0K+J4LTn0pLIfQk7kYUJBRJop+5wg0QCzQB4pqmtaIYCTG2W+/VIxEoT4HKmrUoGPnE1fBsQXcSKtio0+wNbS7CQqAFpXPJUuc7LAYlbk/8/euzRHjiZbYqVrIwXJeOHZuBg0Bo36ulHXvp3qa+wKhcLItJHJpDRsEonlaCWCWI22N7FiyKSNtEmOaTV2Lf+o/LgD8WKQyXySbIuvO7PIePMRJ4+7Hz/n3tJlLxy036Zyok5n4ZPcQdqlPNHvJRGkZ/f6vQn+/i/UiLf92AM9sVu5zyFH8j0uvI5XDweZ8cdT9unSaU/0+zO9z31TvVwx6BlAvwuAomlY+F7oupa1XnsJR1PCKTnPkjhxAxVG6/Vy7bq2HyZlZioW/vD8uyq7kqOJ2xajaqrZ80zDMqPi/mdJVXsOJNalaMCJMxJ3RGaRKZlGohtaYWud8zsQE681QKXMiaLSQyWJSQtUxvR82IBCL6CDjVOelqy7J4TZ8Kj9XdMJntDBsj1BLjRXNQ/1AatQLdGLQacAScotbzliYM/RHJw5LA54CASt2zEZA/pVeaZeGC6DDhhx94k+pxwhVx1vHbAAC18oG6WgR8JaeekZAkPQPnh/jYUsyR1hl2KpcMfYYRkVsRtJwzYqrYRq1hyM17H+C/jJ/ldsqdxP1bGcSWi5DXITu2OB0WFCpboBZvMdeCyPb9NomsphUCzUavsTYtBNP25ZbCZHeqGkO/nSPjBOAtX9ruvhKz0G0MPR/dB335/nfe6b6st6sz/inAH0uwGoiSPfmq8ty46ytKhQP1MtnYVeHIS+ia8sx1kFTphGqYafhYx7wUFrWHIQj6xNrY1WeZ6lDdfqkFUWWWaoDicqi7kUR6ZDo8+7RoA4TJ3ykqPXW7bbyLIkyeGATOUpL5OqOEOhX0nKEcYzOe+JtnWhm1asmgRArwGBPJaBmwayj7ATWjOhpfoX4Rki5MdjVdApcgE7+jXzrTkCr22xi1rUG9FwshlJJgaoeC6pePsnGCdxcNDAfsrcoJTVKmwncVIbYbXOuZ+MgAye70MK0Ly9JrK3YdUp2/B1Yk8lgnhGjo7lUy3nPUEHKxbRrTjqc3kvWiOe5h9v/4w6eEa0cS40iO5JNPCSMddy+kcndxiNkjkAnlecuOOCOdpkObJHtXrukTJ4CID2oj7b7Vbu4cvYMDhN2B5Pgf+inaIvO2cAfdbz8gEUDcI0je3Li/nC9bCTlKQsNdJGxVGYBGkc2L5juV4YRykQCDJujK6JVhIyZrrIVN4URUx3S1MooGpTFXWDabuKVIa0Do5Jwq5jycFuEvKGVmXF8hxWBRVaE37Cko6qXCx+K5WxDCDHOnrOM2iYRPHovc3GUAy8fnqM91A78YyH27PoZHKHFpMdzisaNrVB4xQZ70Urk2cUxlxBc3+Th0nYfteGE9ZaMXEuc9PwkqesVH4qX0NsoLFvz25H/ciKew525qIce1bI+dBsniSSAcl1JlB685b38GVIJQDaysqloDEjGIb2raRCYfjVS0AeHpeJ8ugPSrx5Pw+Tz37IRjehaS8gysPznut1iXneLrGPhspoU256tsyrJcKjP0KKjleg5J6SV8iqKvgvH8s/t6r27gG4eaCVeCT8f3kAei7hv+l5+QC6GUodR561WHmuF4QRIVaaajjM6zjJNMFnloeh7ztJHEZUA+Ntz9FpdUs1OOyVkhhwmcWaSCMMRTBMwhyKcFNnY0QI3ZBTPY0WIKzaUlbUO4FTwgNC4rJgvgmVEz16zkr6LMsxtSlKjOBbgvWKnZLbHK6b2EzntfBrTHp4ZWfyD5FIOkyzuCRHsoapoLeCzf6m63ambdJX7GRlqEaPAUbOaEWWYiICH0/wxseRE9Io+KZ0Rdk2kOzX7N0E51Q2ny9MwY4mg0yuYDiNJmyLbaual4zoRby/6UczKl7c7wRZma914liM/X5w44oRGf0U7lDy2id3W7nJIIDf3/MeGnYxb0M3ju+HcfFHLJkG/mInCrq3Xr5V4fMLE8On4QDE+NHQWgZ2sEKuHf/1OCbB+2tBB2P//Zd6+nJRlX4uSn25sug8RHrW8/IB9K6t0tRb23PbDh0vjPwwz4KgqlNtYNKZqrhQKkkMoWyaISy+yZHkwbqkFO9irTENypNMpQmhJU/Z84r4Z1aBw6rUEHDqslL2hzQAACAASURBVEeXsyzFGgkDHR4DVQwnmCkXacnWHSbHYhNCOMuK3eF0zqtCBnp7NDg7dkmGOqrspA4nQH2LACVRA6Esh46+QZAymC2UAhXkmkXNr4FQu5LpCgBGVOEQyPN4veIED0H5uqtYI/D4MhHr3gHTJa+pNhzzxGZMdcfvJp45dRU/Vof9Srazo9cvPU7+shru8zbNzXtOqsd2AIdCc7wJ2gES3NHxgIlt5+ta1PIYaTUjJN6NjVJMnVgvuhf+NkLIdnrNG5OsmR/G5XP0g+lvnnZV/baGF8o6oRUelX3vm8n1botMm45l9EB5/G7xS2YC3h6A+KSI35LIh8DtCeFGT0Wpr1AWnWVMz3pePoBuCLWUb89m8+XV0nZ8B/nGcVYnCRzsCqNSlWhMdKgWjxXBUZoRuTTEBVWS5UZrrWICPUU3yFKdGfgUIwGp0nR1GsQJ1eUl2zFVLCxi+Tn3I3WJXCJYsFGh3MBEFL7uxFExU24xrq/RMUCkXYWJE3CVUKjuawkTRsEodKtprllBPoaZc3q57JSWnKjcsPq+bzQ9hSkgW2rFk60bzTXHwUpDrwJq1FIbDXFS+YlGJzQFcGPG4hLCROgJAc1s1S/LlOghcrENBQLG7rwQyXv10O0DtvkVYC0BdnnvrnlWhaRoaPvHPSSst4Mu8v5ozc6mYnyCRayWTVaG7ZpOt08yd4s/07uaYXUjrHMaf0+5R2ifcrgSd7lH1T0z27HaZ+4nToH9fvQ8byG1Eg2Cih2/WzKC3zk/b8+hkP4LqdpnodTXkMKzkP5Zz8sHUCJaZeytrmaz2eX6wnKXcZykSaJ1lMLTjoBLIWSzqNDJ1Gmuoc9EagdBqY6yIokyHWZFnoCy5mUCBDIN0b8siVUWpEGSFYVua2jvGwiDCHMQA1TwgyOPF+V202pWdla5ydhUqYHlSI1tm6pvi9IoZSqgLnsXg4E2rTQxezauu5EmJi+9bNqKp9BGFSxOrXnLvcTw3eTciUTdLPrQUXreCS2DLyhSP/WnjZN67Plwnh74ZM2WUzCXZx9oHvBwYB5ACrJMND0qztMDzkli3cCCedl9FOvSrr9+17B/E6939qOH0SCzK+6MlqzxF58U3I9n+sz6NtMWUbcjmUfOHQKow2hx124n5tvcI44exRoEyPHdNOaRKrubmCP+AWAvkm7HcNnCqqkFQRsG0PG+x+6c0/naXuFnoNRXPdV5lfNZz8sHUGxRZvYF4efsYjG7WlmeFyRxFPpBlimVw6ANY3JZkUe2XKHjFCpO2NHlaZplcZyWeRpHRFFTaJaQO4FN9TynAt6PY22KqgA/BBssitzkvGgEAivKfNAqSJtgjlyYDO1L8YCrWD1K7C0zlcGwquB8EOARY04jE2QC2+txuM0Iwo03wjNCaKgESsQe4Vl484gz6bk2bjsxZmf3N54QfdohHmcQ+TdDJqcgDbwVD2mSYY5NOAxeCU1pyfOeFn5X+MeAvUe2aiKIKmuRouJFQZ5+846Qif+hIRibrJdZCcXiW4gRRO86cAopOgFsoSJJ7lOEyJZkbqtrGRgx05ysm9gThNVL0iuVLie+IViyp69qsyNueytL3AQQl9ZNv1Nt8nir7sSAYALQ0+FG4xlXqH5ArftVZPcMoM96XgGAtgRlVwygBKGz1XrhOt566SSJ5VIpbwpx8i3AKk1WxFqnwNYsIeCNMOhJQ9gwJ0mgsOmD4j6ndyG26dPMKCKgGTY8JQ0TgFlUiPfMYpVmRDfzigPZxC0YCK2wrMMOeH3FPiV1Ba6K9KVMs+Ad6W1AY8n+YRfh8m3TiA4Ub0tIe0BtK12y7TxTULZbrjl1jd0+2ESJd9C5EfiEBHbIOntRtKMBIIZQMJkbOAuEHinXmKzBmERmUryvTuV2jY6vKTiBvdtsJehsCsILUaN5UtfefKB/DsSLH2mh01q8oGIvm7NdPYigvR/loswEJ9E7bj2RTJFJbhhg9yLeNiLt77vRN4Rd8EaKxp3QTgLx9onbQZjwsd/caPcpQXqdmOx9HGVXW438vSMirx8LoE/jrfu3OgPos56XD6AdEcn1bC4AOr9a2nNrcblwXMzkoyTOShYa1Qx0piqTKEljRB9jkSjTKjNRlhKZDOI4ylWkClg2tS1V6TmEnLCsU5qNj3gLE3L2vKpSTfAJjX1GxBP6zhbybQJoOjUH/sJwo+EFpbqkJ4ADnia0hY8TcKlER7Qa8y6p2H+Xl7x1xCbx4HKsHUXGcqY5DQNmpk3Fow8UwlyFSlP2CbtEfwMnxnZkK8NtFpvjuTEVQw0tHn9ozeactyQuSwWYKBoSMJmmSwt2LOmHMeSXB9wc294O4lzf9TdvR0c8TnZGWhw221uu+DvJgwZiDywYasdaetSp95PbXjvsCzKFLfd7S5WjeL2TdCORgO645iQe3Rdb7qKOJoPkA7+5aeGoYRcWQdyPd9vFpgdN5vrj+Lfvc/ZjAJ/SOT241b031QvtcH76nAH0uwDoplTRcjni52y+Wq2v5vOLlWNbcYIqPudsDqxm1x3xRx0kGMqnUZQWea2TlIr3LE6SKE2iDMP6HAQK+NIUKgnDKFGJxmp6BVM72GhUREHpIVSmiYTqNAOTA2tp80goKTfgioJxGzBojEYHFL6kOScpEcPTBbvgISCe+GVZ/VGKoZJMlTkrqYFdfqVTXUDWjwq+4eCNjlC851X2+tO7RGy7WYz7nsCbupP6tWN7TiCzKRu0BYkN0g04ArQdGK2BmTXvCGCA1PACfLsTtmPIwi8D4ne0D0AZ3900Y7Iya+g3bYf8vaZh1sciUnxlsrqExmc9xRNtBEBl53TDs28xlRfcZJPO0aduGOko91I7EXONlkl3W3P70VNZgGfYDpJO492UA8dZKmOn9eMpy/n98wMFk9MzPW2YdHir4zfVS52xf/qcAfS7AOhdlbuOAOjVbLZaXl5drB1C0NXaVXGI0HbsrldFiXG5yYlqKqPSyCUeaji+OI0JO336vw9Smde8ng5xTU4ImfhxqqPcFNgl6uB5R1CCuBAisUlKyEvlOG+1dFDJM9hpqJtQs8PqDpMZTOCzPI4zwlyIpEoNb2YIUgl42a2kq38tZcjdi1KSQAYjeBjkFQayAV2ypR39I0BoBh/NTycT5fS1Fcicq7de+MwXRcYjxXdVwaUPi0u9xCKz1x1EBHXOKaHyp0FeKFaomj0fTkKdWlyTZP+Ri/HrG+KoFQ/k2xJ8sWYrlq4dg0bwjwBGaJ1EP3Vbm807LuH7cSjGq0TTlvsg2/TjPhFvlko9zxYkrcDFzkKEO6TMs6fCnmft/X0T5S0X2yZ2oJnA2fDTLvyxx9LeOdmZ/E70bvKaegpkH93q6E31YlWenz5nAP0uALppq8i9WEoTdHFxuVzOl/Tf9cIOXM/TBHG5UsjXgDm8MWkSxEQgVRiqipCxKPI8DeMoCBPXiWIFgWgzbJh3aZ3pJICSSRcZ0bAsh4cnAtxzrXQQBxjgpy1ERTASqpAoRLCFeT8Si0yB1XqMxXVOT0toqzXHMpVsuAf/4rZvyzpHqf8H1FM9BJ7MwsD2YAxFz6QRbY8mQiupnN0njJOq3BhQZWLDvD+16erRooOVU7x/zrEaLPjhJDtC5hGpWJPEOR8DwkKAmlXZgyTTM6ONsQ+gPZvfd7Dqg6wfQ6f2+rqXKl0CnTeiKhInE4yd2BgKa068UDkq9bcGRr1gMUz9Jg+Pbprj85BNLt0N1/spe+QgBrgbx0sj6ezHlaURqXd+HzsuNtXwm36q9Yft7+KDgZonAPQEvfs2kHrou/8o/B3d6vBN9XL3jD59zgD6XQCUysDcXq1nF6xjuiQyul5jIL+4XNlOHMdRgsYmcT+FRiLijaMI7cs04xC5HKnuoZ/EKZXrfpzBjwOjkqrFprsOM+UHCIQnNEI7AH5MGMUXSRApBWl+2bSlgbEmGgJJCvcRDiiCnXKec2YnbJkwjCJgxZ+8JRjOQejgHs+T6ea6kPChghEJzk3YZ9JpriABQPZnUT++wI5avaRHZfkoR+QRdkPyzwlxEC2J9LJrJHWJjaVLDn2CfkfWgETUyeObTccReVTFQ8Zfs32VhGeOJfzA5X0jTkfoDUDfevO+73Af6KDYDVTyN8E+gS5wV2XcrXlnk4vlHcKwKkp21rtp/j1KPNkJenvhZluTb52SD02PRq9NKey3Bh79KUv4nYyJx0pbhPmwfbAJkPpDKHxazNG3rJi/AYC+3E33T58zgH4fAN00OgmBnpezpWU7lr2aLWbz2cXl1co3SRQRdBmIl/IUMZuFjjVm5ZkmXmiiROVlnkZpEkf0vwR5cmCEHVCxTMJYG50GWdYgyrhAJHzBAvmiTAkVFbE8BBPXZVNUDZaZYl+VKkWMZl2y0RNWm+iuUZjCqoQuiBT84EoDV5GiB8uDKKl7i5lT1+YlJjZi19mURhnYouTFJ8p10f4QbrXMaxEtYqDA50XQqpO5NPKguA6GExPcPxpecIfOFAgqOz2yVgT8RA5exatNTTkazHccWtdOUZroWzRj9EbPC5nELW/eY40+l0V/xB+Bxcp6KiAHCXsseaowKppkSeMZZK2q34g7yIiVoxafPUrabS7R1jl5GpUfgNQh5m3HR92+JfzOGGnKCdn3RN5sbo8frO+OoPAeXJ6E1FNWTV94vkEJfwbQH3xePoBuusGocLmYzea24wWWFy3QDL24vLhYR0kQqCRTMXvHI9Kd4C/DdpLRuiyjSBO0VuCniUqCJCFmSlwvhR9l26f0KTFQqtLpUsQjc0iyMMuqJiZJ98U6UsO2ImLGFPuhyiBToluXpclUaWJNLLeIlakZU+Fzgmw69gkpSzbNoAf4QyzYG6QxQYbKsZ1l/gnkJN4J5IKovOOcz4oDk2vxBsXICc1LscJvxqiinhnumFgEG30I+3n1HpP0RrSe7R27GIGM1yza5ED6nsfhk7hIzJZqiA7YcoMp9PV1BffnHG7KyOtA3hJST+kp73jvX+ZEnNXRbufvfLjARurxZqy/RUAkOUUtMuaZoQ7bd//YoTzhTHwIE/uIcs8LZOSl9++6BdDxlseL83f32eV9dNpKW+95NX1RDf31Q6RzCf+Dz6sA0Dyz7OV8aQUWKnZveTFbrBazi/nas2OTqDSJNOFdwonuWax0lQW6KotUJ1FqTFIbQjqq7SOq0Ut4FmNRscqRhJ4nXpyaFDahrIXUqm0L0zYFOyajsyobmi13OpG+FEcpRi51AXP6gmCaLtYcNg87UarGCU9VUeJ6egwIezCkaW/g2QnKl/OY6glWnX+DLLSop+AklpUSb675UuigoD5g+dNwB2bHOiLRMPHMq4X1Eybt0FUVWGviAXTFPYQB9xGVldguY6cKw6Up/udOsjHxpSPNiWWk6JO+fcs8ummrmmtsCV8iABfj+gFrAABQiReZvN4ZaTqGTO4gTHW5ZAuxOz2r5Vt+/ccu7/ezMY5gYg9Rdhg3TBT1EHzvl/CTnOm++d0xDt4H0GkT60hK+sV1/ZfKmHYv9DxE+rHn5QPosGlVFLnLtWsvvCDNVLSyFvO1bdtXc4/4YJyEYaZ0kSdVo2HxSWhIUFoXWahSPym1rwrkc6gswRCdPsRCJKbgymRJ4vsuUcokBaliT+WcwJLqb3b5hIcIyF3fE56aMoxwFAuYcoyAtMl50i8WSljDJCJa6Qy5nhCs82o4mGJzCyaZPw05/9ZgVwpqUIhFsfXDgyws9YzUlSPaOcmJn2MUThJGD41IllDEc7KeUFBiwv20mANo3cAsDg3SGo/eMPRW7C43KtC51mVNP092NrICSTd9e9M1Rcv7TVi0wlUsn207tp/r2aVJ9pPafmeSxLcTgRXA+AACNrzjOsiMnm/QPRCTce+yLbndPtzuxuM3ZdjP2tyfdO/9Lg7D1vrqUei5T++mDu49S6kvBbEvE9LvfzvPMqYfel4DgOZVHKx9b76+cFaB1spe2EvHcl3CzyDKYyeM07gqM8IvTLRNRuQPovZUxRBzUpmuswSi+DwjZIMfHcErEtxKpVUSeanG4qbJid0RFmqYvVXELQvJ76yZrhJrVCoh/utFOimwuV7TfYnPmhRSIeQKG2Mqcbur6M6mgD9HzSN4DMU/PMHj+G9/y9F3JZoMSGpYalU1fT2mwAOZCOLpP7xluUHuXMlTb5EDgcfxeKgVk8+Se5d5ga+GW4/7NS6mTUBX1NrsWtf0siclAk4Wl/fSdcDeEBvj4wbvr3kaXxccxcRCeta3cuTTRtw6m4Y/GgnoRuKFpAnAGU3DwWRJLD17Sf9A22GMptuek229I5jYEyxtMW7YEdDxvqNX57CVMe3dvT/1LAe3OCV4OgmgP7aM/vjx6GWdhfQ/8rx8AN0QBhjXtheXs+XKc90woU98Z2m7ztrz45hYJGZB8E7K6RjwP12ZVIVxEGXwDwkjws40TqAyIoCj0p1uhuUhurEiXIWtZ55VHCRXpinm5rhJLXYhcAyp4T0SIhQUafRUQg8NvEQ1l/lIFa4RB0p315wGj6k+cuQLLLt/Ms4Np+BsO3pCOJyyP/4YC9dLLBErjTpJEG3xnQEkIdGuxuo5+xuJ5wjW09nOQ5LyOhgui/ndxAU3Y8GKEhwGeh0vWYk2s5UCuwPrvEPljscYo9tY6t59uAXYcmwzvJgwkUJHo2OnONHEoyUAZ5GuG4MtBtlGhSM9j+GPdieBZxInIhvw/V7j9CAT/qC47rv+JEzsl/NH8vr9fZ97b9fHUe8hyf3JEv7HDnI+fnzNfc/9cwbQ7wKgd1QXp467mF1cuKuFG4WuHfiO5TvOau04IcbfKiHUaaomq6oM1bqBpF1FgR8EaV7BJbQAtTOYqle6gvYyJzw1eV6ZBI54RNGoREdMHHqYBYcMFwX7KoGrlogGQaSyUgZZTBUsP5pSJ7EGehLUUlVbl10tCqg0KzKC86cA59+wRcVTpZLILt0912mC+RPbZfDku+VKGav1HbZDq35iU0hlq8VxY5gWKdFERPIQvKI4vLkfxfXb3ubUGmSPj4ZTODkkg7M4uHPAUU4QTrZiRNdvdqvrm9sPvTQXSjYp6SSSmc3j2sl0TjZA6SWL0J3Nl3idiTuqzeTkOR2Wh/Jy02g5z2Oovej1zxMP7V21bWwezZfkd+v4fo+A3u66I3p3coj0owH0NU/e988ZQL8PgDZFEjmrq8VsZnueF3qJf+EFrr2ybddz144qc2U0hPSEoJqKdiJxJkmIWDpBHITEKStQzQLtzxTjJE2FNv03VRmcnNLEoPKnOpfd5YDAGsU7yvqC93SU0mC2hYqIyaaErwUvg2PiTlCJFGNkgbLkRxT0T0LOZsCeD9RHNR6AsNOMSXaAcURfyrYP5Ja8vdRyQjPqeXm3Dm0tfm8cR4kkDew5Ed7BxBPjdyzSg1oSv2t34W3SGoSin/uV7IXPaMrqI8PdAohINx2va7bczpSAYbQmbz9s6KUVpqTDdu4thyi3Mmia1PHTBKfbTPafHFoKu4KSLfoOuJLM+OHT300LSBJLPOHWiIlPnJQcYNzJ+ZL8bh3f72FQfoTinZIx/egS/gygz3heAYC2xlj+mheRHC8Kl2vPtS1/Ydkhwanl+UpjSZKzkFBhE7OM84w4KJX2YRxlKVG8Ik3LyhDUgqBCIari1EBen6KIV5AkEYCCVOVU9COaCNBZVPiI6nQFv5EqzxJCakXAAWlSZUrmmgR8DXFQjGbq/ikjIuxC1Y1AE8vasSsEittUqcLaZQO/Ex5eCWC2EliMVJGqFkf1O6lP263unTM0MA2veG0Kw3qMnWrB3m4UOPUir+ReJMSwHZvcb5jsttJp5Uhk1NIbZqK8Y7S/3vPxFnb02FeFogplOUznq3G/aLID2Wnbx60ienVwwk85DLlvj7YjucHK9iRiaz9+VbuM42GYUobv6ZY+dU7Nl+R3695NH2weTk/XdycQ9ATsHuD7925Jnkv4Zz0vH0A3A5XjLpbh6Y+LEbzvu8Fy7fiB6ziWG8SEYi3U40RvYoyFUgVVO0ZIKoywXAngzIguZtj7oY/rFMvuaeonUUyYlRLpS/IOeZ8mNgg5KtKS3TbSHO4hxFYxe+JQ48Jgs70o0PwEj1WmKvMSaPRJ5IQPZw0ZEzKNOyzElyJMYsVoQXAHJ2ggodEAVM7nxJAGnAy7mWPIMGHN+B7tODkZ71OMhGo4nNCjwdMpg0EJj2ykTydKTkYzzmQD3NdyH04axroSt1ubVlQH4ojMOXbt/luT3q5ssweoxvhKfO5aTgTtt4rNbaO1H18o+/x3HGgnI/e9H/LYYAX0iox13Ofc6TP7YTsMOsUlHz+n5kv8lTzhLttXuH0h95/xFEDuL5F+76H4vSHSqz1nAP0uAErlXxBYlxez2eXV1XJ1NbcDdxVb9sIJXWfp2xkV4aagsrPKayrIUx06xC69ONKaCCNU7sQilUrpgjQD2cxT1PE6UklO9w2p6CcUNVTQo/4vdYasJXpAerszHTWxzhJDxHUssGEDWmFORFhcZgXWlx4HTkWPXr9rSw4lbjBir1E/N+wB39Sa10KxnoRdTXBpGDwTJGMM1Y7TafwDwenAPOxpN6OXJaI+R5XlgE1Lw151XUlsujDsaNzfTXZH6I5Kl5HHOz1osFh9SoYHdzNbpsY8yJEOKDPGvfcmfiJw/JRdqpbp4oh+bConpknDRD8lVx37Sh3blcByFF/RYctw51C3Gfmn8Fi+6+TRtBdS/IU165EA/eHbHWPeXkL9E59yt4//3bHtWMb0es8ZQL8PgPZ15K5mM6Qira9mluWt1r5rXVhr21nato8tykxh87xEsZ6lOs6iKA7dOMfUnYCO/kqwMh/rhIAxz3WqEuKnsa91EviRjqme11T2E3xmhLZZ3lC933RUohdYzgzhTJLFiWkIoHIiaoR1Brv3KOIf2yVS3JlN/Zge5i0q86pllw0EgyLmPUf71KAFgKjNnLClRNISBAXwOa7KMUOdbluwPrLhJXfeMxq2hka9DJsRPgx7+7rWdYW91AJS92ZzJ0YfAzzkGw7IFLzrWbzJO/AcFkJwWeXsiYdRD4+Qxh5Cv2/Z/vHDyIfZjlk8j8dMdr5ekEPslDhuiGWYsqHPRk1MoY+GSKPTR8/d3a6f9jm3Gcfd+GfCoi+tWQ8F6Huv9/BW9zFveiGf/ZwHr/T7FPNHQvpXfM4A+l0AdFOVKrCofF9fsCGo43or27UvbMfx7NWlS8iYYDpe6bJQPC7SfhxTJR+FHPVO9TabM8WEZCli3XOVqhgRnTHhbEYfxMRM04jYaERc0ZgGow6qs2H2kRGHTUKVeE6QKSrhIcPEFjqyktWDyJnCF5QXlcqKXkoaJOaPoiBYhudSX/PSEoSURVNjcgXILPAJkpoI4Q3Up0RHkRdPwNLUPRbdOeCyHUljJ0ZFI44SLA9sl9yiPVBkFTQEEthJFXs/2sLVHO8mtvhD144jfoJVHithH5PTi4FycBpBfxOpobKcNP1EEGvMXVk0FBpIoGSINXHKKVuT+56yfIRHFweojhdJ6YkP3+zjjL+RXfStAd5myjgWkB5V+QeCpM/9bT8QoPNT36duJ9F5u0/6mU+6z5W/E008O9I/63n5ADrkZR5Za2s2A4oSgM7XLkT0dhg4iyvbDVXsJeypqbI0LQxBYgwP5ShiL8+WquE4hGuTguy+LGuimanSUawiJ6XSPkuiTAVxnoZBkVLNjsA1BMtXOaKOCFkV3EQTAl2dVZw6TCD1IHYSbJYmS7DGVMLZjl4S8Dr8K8TsWAqq6QWUVYOA4dIQEJucnsjkqLipxC9YMQDHkxJjaZ5f87AHW/XQJdUiRu9YttQxMQOeQUaZY1keEyoNRyl2lcJuJrvEl3BqRm2OxSU0YOlB2JSKxfJAJu4O1NjBaia3pI7rbn6u6QfSvX/PjQSWGrWDCJZE18/X76yQxsHVaBpSsxRL4JNTlw4Oz/ibsXF6qOTcZhp3BwzwUTC6JzWST48uxu/iKSA+3R/YdP2XoPbeg32vYv4MoM96Xj6AUr2sC3+xmM0ulmuq4al2txz7yvNj62K5XC7C0PeISRK7TIxCwqZSueHM4yio6oJQRauUWGbscXhHXtdQKukkCnmxXYU+/YlUZlIfPBDAVnXIKUJiEdHS2E8gK00TpTGmb6uHqnaIy9nljl4G5vRtB7uRTJmYHuQvivCz7tiNjoCwZhOmqiQgRRKzMXnGxprshpLESQZ5EwMUM0/4f7KoSVLfgKnAQI4rYuTDxmddcmeAgbthYVTFzktodWJpSQp2Se3A9B+z+o7HRKNPExXxBb5EHoAz6+N8ZUThjT+Pvr+5wUanTI9GPNtIdhB7f8rsCFRya07X36HOZ9fndjRMxkMdwNm4HzQSv30lZy+5prs50qfXbY7A9SEN/MeHyObpBuuXtQ129/puo/IzgD7refkAWiHh3Tizi9nlzF3CC3S2Ws4DO/Lc1Xy9XF6twyQMQt/XRuks1kXDQvqcoCjKC+BKliD9PQo11eAZcUxFTFIXaeTGJo19kxIEE6SaGMHEqN4NdPFEJaG01+idxpnO0hiA154WKsEbGRughmpwJIPy7iSKXEPgHWOC9bOuAH8IGi7YBB5dSoI8KuExyafnKrkHWsMECul38CzGex7r9DxuKjmKHbtFLce4oQJHZBIm8T1bPgGQecADGSnWLWuOdENxj7VS0FfxckJSfceGy3Cd493JVlbd2SO0lzgkcaYTgZL8ODYdMVCW3IvmaKpNN5IeereNaYMitR2nQczcuIEgXiXCP+9RyH3c2kfHXfux34UUP3aOmN5WS3qMih8fwMpP+Ct/JoPc3uu7iTXPAPqs5+UDKHGxzHfC1YwAdLYQPejMiv3ADQN7eblceQ5BnBP6oUGKsa4aAiBjTKlThXDLMldJqFLPj7LUEBLGBFbYmU/pflnkhxnij+h+eWpgqQQIzXTcWwAAIABJREFUrAvioCVhH0FprFVIgBalWZnrk0U73Ji0wVp6hRDQgv7fFhjg1Ju+1DEhNz39z3AaoUpWBJTsW4oJk8l1TXU+fdgRAPfogiJgNFXGNDz9RramhGvKAJvDLHhpk/mn9EXhcdxws4LzihrZA4W4CqObHu1UFPcV+9qVktPRI6+o4fDPtiHI47lSx6nKYyrRmCw8KfDvuC5nAOXIkC00bBfl+3FYPWCxnpegJgAVkiw6VCnB74HJgwCzW8jsnzIpOcK/navdMSzuAHQ4VgWcBrov62FuCfAZQD91XuUX8vIBdKCSNvXXV/PZ7OpyDDeeO7639ol1Ll3Hch1fxWs7sDxjdEYk0ERUsZuM8NTUfWNSDXl9GMZhQrhk0rwGyCk4hLp2lMLRiUp7pQjFkpxoW1XDmL7CYr3OCUZL0NY0zk4QT4K/ykC9rwtirASI2pgkKzkynojehkryOAiSNI5+Jmxtx9xPeoIaNXxdGI1WK0ZHYI/wu4MbaVEic7llhTzkorgPrEVFyslFMIFkDTkAnJk6JNSx9qhlyITQvYZeqi3Yaw5afc7ZwCY9nkY8lQcWFoEqS1wcW8JDtsTgOEof2z1/Oyw/Ndc3DKC9TMjFz7iTFGHmpHh57ThlGvNBNxu5QbdbeDzB8h4ucbfeyk/6lRmhf1oOmnBrAtA9PcFxGv3uIR54ti8bdY/3Opfwnzyv8gt5+QB6R/wwDp0FMdD5QgB0tVqv1q63cMIoCD07cEJ3dWl5HtFE4qB5oVDSB5AZVQRhCaKP0ihIYux8poWBoXyRRUrpJHG8EF4kmTYN2pOI9m1AJAuQ1JyQtsoI5ow5xs4cS/CFRowSdunZ2A7xbZxxhGFOwwbxLTHeNEmT5K8ZnOewL94UvGJfYss+gycefQA2WtUDBO38tLCLqjoO4N0AFEUx2ratDGX6il9lAWgVizuu3Zn6DRyPxEZ3VcWt2HYyjS9yOMmDxWKmDaZaNewJivc23RMpSawzYvFTP0ymx1vY6Zv25po7qMPdZCVPl4rXHU+2WC3ZCCOF5oqNO4bRDG8nQz9Fx/aJ3z2oejp2jSP9SVb1KIDuGzYdVvHfQRR0HiJ96rzKL+TlAyi975PQc6iERyoS/qzcq8XKwhqnG3t+YK1t1woWS9cPCSsNYoziIPL9EC7HWmeKGGYSrFe+KYq8VIRxdDksnHCxt7KJgWYYjbeSkUEfEjEsE12kGXFF3dyv3ImdYtpDJT87OxW6hI2yQaBcbiq6A7YcRbRZqCRNozT/TRNj5HZlxyFzJaSeBSz0mV1WWOzhwjcvTZxB0VrCNbmj8hdKAoBuyQJOzMSRkFwgfQTrVzk2fBrONIaHsUjgYYRHcIi1JiKnJefMtaWhp+55eo4GbdcWbOuJ0LgNy/TpEUeh/ihe7w9oEwItr68lGlj0mvgHYQ9ABwZQrDlBIQAVKG+w9xMB7R8D0P2ly68Q/GxV+f346SMlPJ5pGPsD319HeZYxfeK8yi/k5QNoQaASui66n5LMOV+u19YloaZvW16wsgLb8l3fsZxVEKXYhS8zAk0VJymL0tG+jNwg8FzYhmi4zSGLI4mSVAV2aHtJXmTsDNcMHWEMnOwJZ7OcbkP08p7aE+ofFNllbTKMjOjDig3xkMZZVXwJiB6cPHoCZR3CwuRXDLmxgQSfJSKQGP50WD/KYRVVMn6WDdXImHLlpq6KqhUVZTeagWItiZGApaBU/je8vYRYTXjntTKrFht5NAMqWWznXOVWlO9MRBlAeauJh+wcvsGp7n2bVyCgiOrY7C9ibsQBDljU3twQSR0HPb3ImXYlPIZF3cCygE4EWKxF2gYZdydL+P3w4QcapJ9zJk+oo1WgU0Okuy+WJ33R+Y5C+n+I8yq/kNcAoHVdBNZ8dTGXAt6xVsvFcuXH1jK0bVfFlueEfuwvr1Z+AM2QUuhEJlGYZKpI0zSI/dBPsX9ElTqiOA3x0ihL0tDzw9BLUwy9kToMjoilzSzPlSYMzu5xT2w3Yd5dgIJy9mZZ6gweo4aTjLFJibiklhjhqBqqm1yZ+g3HmwOuOCSDNUkVLJypkNdZKVmddJ+yUqbIqITPqxYIRbgoy0e1qbnFyLtI6IFigZ4NR3j+X4mtHbf/IFjvgcfwV8LGOlFUuIWweQi75KNR2bH7HYZMvAfKIUpNVXPjQB5rJymSXVB8BTfXnJi8FblzsbwdIg0bdsZjieoAZjuMi/qTmcl09kBLlpn2fuif7BY+DkSjwdy2GTBul56SMe29kte7SX4G0Gc9Lx9A26LOUxvV+zhCulyurKvA9/0guLLDPI7gDhoFnmXP7QD77l6WGk0XUIUfR1mYpp7tE6yaJIqJkxZxnGVpTHV77DmR58Wx7+uxQ0mEkeifghQ+CJJj9CwKTjyChTIymIgzou3JHVPo5+sGDVTCRUMlM7E+dDsllKOuqmt5o7Iontllx+DKrkmGs+cIvgoonwpNfDbX7FEMoXsvhkdlNwbzyv4QXVZwoAcmRRAf1dxwvJOtzZ4JLvvh1UiAR/wcgHWokUcn1h8Ms73QxU0vo33svg889NlikKRg8IgKCPrhthdg3Ntg70cZ0zh4wup+K/g5YWS/daibzhbOxqd6yjz++K4PXL3Z69vitpPK/4SQ/u51p7DxOQPos56XD6B3hUns5QrQeQUl02xpX12tiF5Gob2IYxVncWA7/tq1XNuLQ2OUC49lP0o9JyH2mcQqjPwgzU0aRxAsKZ1EoJgmjTzXD8IoDmNYKncwtIOLvEGc0jF6KkOQW5Sa8I0AL9OaB+kN4WbXGA7NANsDXBamRApcy2KlvOa49fa9vEsJo8qSE4l7bGjiExiJQCDfdhXPnqggZ4k9yz07sYmHcQc4XcNZl5zWDrZYyUI6c0zDAUWy3ykmSS2P7+HgRC8B03lcXOP1NhvJFkZh37GIp5cyu5WtpGa0Wd8ask1+cwSgH0ae2+0cQISg9tMOprQ7R/wUYBq2+s+9qTT/56jgxvkEgH6q4t5HxMduO/0u/rAK/judM4A+63kFANqoVeBfzjCGvwCIAkIdX6VJ6oVhlga2Zfneem55Vhgkoc5VGmKv3aMCPU5SN840YWRMvC4NI4PZEYbxBJNZkoCChioJQ6jaW1xcQpuZHMMnRkUY5ucEnZmBVr7E3wYmpAR6BYevd5iHdyUs69j8EvwQMZ0V5uLX3MAcekQTF9hzQhAldEVgrTl3LbuKZ0uY7oO51rzLA+bXSeeSl5JEww6mOEYVg3uC1sK9DkAky+4d3xqPgZ3Qll9NzxGabCnH5vLiVifWm+OgB97N2+XJcQWeQ+p4tISteWKg/ZibtPWfH91Cdy4g9zOG9ryQD/jjppsiMXYA9jgn/LQ9xw4RH32k7e/iK7cyOgPos56XD6B9nfv2ej0q6CGiX15eriw/Dn0/9ePAX1urq+Xcc10HYvmYkNFNVBxSDR/HYehHWqcxEc8kS2LsvktqUkZlchwGWeCkWZAwq8xTlfMauj5sfeZZkcIIFIvyZZnkLFiCY2eZg89h0bzi3CTs9dRMFmHJWcBaiaC2wH56eyNZwvCQg8i0LolIlsh2x+JoW7Luvuugti+wyo5Ga8UeIfA+EkuNRhqlSDlG05PdlmDiWUBr33Q1G4QMHA/HfiNotPKEqWHf5rrfsMiezZx5Kg0lqNTPm50YnvgoN0h5//yO4aWrxYWEEHTz4QZjLcbKrUZ0nNbsAerdMY98yN5tyhQ6CBV6lBPet+e4h6K7hfyR9vfHy/f8u7X96HVbGZ0B9FnPywfQpk2NCbiEJ/o5v5hfXs4vLGttuZ5nBT79Hawv5vOV5wd+HEVeRgDo+WkWh5nCACkykMFTba9VggENVetUIhOPzE2cFjrL4gDB7nQrQ9w0y9SBvWfBEUpZQdcmCaNrAS0pUcUc5XYOnWXTw+ETc+9Nz5PursceJUIvc7oVpJrtOxT4BEWYMzU5XUwlcNG19EoaRNS1LP2pUMAXNXzwCVrzGukaw5hH3PPmesUmSdjuLGDYhBWiErEgCBmB/LKrpa2JHmcPAxGM82EI0kn+u3RMIXlHx7LbyTzFt37gTHZOx+xESsl7mA3bxfNft+9h1NSzwXO7rxHdTL4hW+uOgxJ+hLRjTjg+7d6A/u7ucU54z56j7+7d+GCcL7akJ363PvN38aWeM4A+6/nBAPoF5931z3/502KxQO1+OZvN5xfL1eVs7Xnun/7suVcOfWAtZpfzP/3zn/7853/v//yXv/7yx9///c//4S9///nn//Dnf/7zn3958+Yvf/rnP//ylz//5deff/nl51//+P2XX+mjv//xx6+//P33v//1r7/+Sh/Sf3/++y+//ryHnn/+y8+///b7z3+l2/79l99++euvv//xK93372/evHn3y29vrn/75c0ff7x9f/3u7TWdm5vr63fv31+/fX/z/ubNu3dv3rz97fc3b/7+x5vf/3h78/bd9fXbN+/++OOPN7/9/vsf7969f3d788ebt2/e0D3f39x++HB7/ebmHd3g999+++36Gg/wlh+Krrulv9/d0AX0+O/p9m+v39++p7t9uHl/+/bmmh4DV7+nW7+7pr9vb29wl+t37+iq39/SU9/gWrrkBi+TP6bnu6W/5Nx+/HhL9+JLP9J/b3Hv29sPHz/Q6/pAz/ju3Q2+vFu6As/AX+XtDb/qW/kx0Yd0N9xgd8H40Hsf3u49I86HG7zeG3rmg5/5Bzz36fNherAP8hF9I253j3f/tu/5JZ2+/oefD/QTeugLO59/hPMCGWhfR2vXubxYbIfwV9CEWoScYbScz+35xdXSurhYrSwvCGNFJXuU6jLDwCgKlR9TWW7yJAmIisJ/Pk0So7DnrvIc5nE5MceiKJARX8R7k3eVRkmcGxjUR4Ey2NhMUqTWYehTag17ZciWqGSuWpZPiqs7kjNrooHEEbH0ZPJS53X1hqODWDPPk3t0SaH5qTmNTupQlN9NWeg8K1Dq95U4ezSY3lOJD3En9ylZFNSzlTyoGvqlZcUO8uzUxAntdA1UoJwvWo2OS50QRyrsu46zkQ/7iZ2YdbC/cY+EummDWyJBW+4l3NxiHNWL+ml/O330EdnN2qfHu5fVvl+fQ0GFxsJ4p6cU04f2HI/7HI9Sgf7U9c/Ad8S26hu3W88M9FnPywfQO60d111ii5M3OS9m86VzMVtaQeg7q+XVajG7Wl2unKuZE9hhEgFEkziNkwQOTHGaYc/SUEVMEBllYaSiVBkCy9ykRQXpuzJVhZw5nZndvnuidK7DLI9zRMcpQuMqV9A+qRwPWGQ5V+mMXVBP8oQHEXB9za513VDj0cvKFIifq95CsonhOuKLjW4xRhpYFA/XpW40ueRFz4oenHfpy4IerxYjN94uatgSuRmn7DCoQyQwbyUJrEq8ZccSzl7s5jHegkxf8jv5hVac48HPKFjEk5zNCF+4DIOpptpaYPQDlu3ROR3evx/4K2172Zjf/qjG5aWt9/I2x/Og6r5v9YHJf1P3032eMM45sOcY8fHBjunYpz1x/Y9/u251C9/0Uc8A+qzn5QNoX2axtZjtn8XFyl2GQeAFi4u1dcXr8cFqvbaDRGOhM45TPwzjABw11UjhNMT8Upc+S5KY891zmB0jDj6vMFyHwH5vdhSkSRrHBKKG752ZVCEOiXBYZwSnWsWwA+FstVJDcdSKz1zd1ryoCY0S+p1wJIE/SF6+g08eAjlbLB4hcokhjznrZNGOcQdII/bs8xwoy94eHO0+DC3Ar+qEfLYcadQUyDbCmjxhNus8wTIl1m1oRtPPtuwR5gFZkYQfc7TnMKXLQ/UJ7eYWuVg5KRmZW8DjERLQur99zxEjvGt0CEvb1c7pUbawdTD3OSSgmzFQrv8cn/l9e45+36j+xBmlVS8BQDcH4oZvds4A+qzn5QMooYOOD/Bzdjmbe2vbdqzVfGXZXNpfWvRpmEVR6HupSsIA6/ARau4shC6dSGjoR4SgsZ/EMLvLKziHELwZ+NDXxBS38JlFsKlPCWZ54IRNT5OBeBLOaqNgD2rYtZg4Xo4oow4VLZtyQoRUEl0bOL+ozjmunhCxfMMTeZT8ZZEaBA/17VCz2AgRGlLqYn+ooxsQKtMLVohQr9mJmLeFBinQgTlNx3bybVUNlfQMGtlIn6Y/HVM70TzBMXRA+Abuyffr5GPmm5343vMlY56R7GZ2zCanVXLeeKRX8eEWLwSjqu4QliRbE5Ga+OxIbHRqniR32qlJP1/SLsZLw4Or7NP+6enrf/jb9aTi4OvPGUCf9bwCAG1qZdnWikr3LYJeLWeEl8v1/GJlyaWEpEsfJvSh4ydp5Hph4gUxrOepmDe6SBJ4OkVhGNEHRWY4uq0sEpMnqSqMrnaaT50lBLwZlo00hugVAtsVtJ85xPR5nGgRw7MdCMRLA/u8Y+28hRd8IUJL+h8sQGDOXOnfYTUCfK0rQmUeiwtDZJCTvXPCoAoqp4YwlJ68gD6pQLwIj7zZK6Rjk1BWnHLzlPPrWxmzi8EcJ2o2fCsYKIt3Eq9W9sw260ZiPXtulEqq0mj5PvYst+Yf9GQ7wOs5RQRCeraq77pDWNrwg2+p7WGvc3+j/qDPuYef+5bDzIif8OvB/PnBpKJxC/UhWnsG0Jd2XuUX8vIBtK9VvHStmWjox7NazGf2an25dFkfupw7V+t1ogKinl4cOb4Lmzs3DIlKpmmQEaEkQpqoMPZ9IqUmK+D/abTKijBOtdJ79DM3eZamjKq6qHK4M1HxreAfUiiY3cdawYUJWfS8C4RlHuje0d1sTMXLktBQboRAwovOqJ91WWNxni4wzQig7cA28NjH7MZVc+wciXtdCzEoP1jJMiK2J55oYs+uyARjlZYXAVNkWVtk2TzPe1opjkWrxODGfG0M9ZAHY/Yprsnt1tZNdEqywD4VzLxLRAj74cNmP2N4+5MaNiMY9qeCh6eN+nstzn3x6PY+3ZNnLaMK9GTjdOsi8sD15xL+pZ1X+YW8fAC9Myr0rIv9Fujl7MKaLVYry1otrOXywloRwl5ZKaI96Dhe6LpJbDlsBq+TWKkkCa1Y6ThO3DQuMJbXUamxFp/EQbZLOdJ5glR2TIqIpWrQRXYzhgA0LxQaoilk+QYDISxsEj/uxViTuGiuwE1hqinKQzY5quC5XPxB9yzyPMe2J4T08D1GJd0RFBJJBfBJfCWbL0HZWZd1UbLrJ8xDCu5cToi0YZsQLC4VLXQAYhWKp+O2Z82jpoHT44Y7SUZmiAYwddKyHUbnkX7KdW+342xebWdd/bDXrGRoA4Bi6HQPtnbeIid3gGSj/gQX7Hdq/OkGUzL8U3na6dH9fhrR45tIP+ych0iPn1f5hbx8AB3QvZzv4efsYnF14S7WVuAtVw59ulpcOevVKgwCxRMk37dCPwxdx0viME6CLFVpGgUqpCI+DfxE5+xSr4s8jEPfjdIJPkvMiYhflhVTTdhyFga+cVnd1DkBKFT0WLPXBJcorWFYDMs6jJKwj14YkyE8o9vmWA5NB3em6pecfZJzgruuqulR6X4wPeI4d+yrwxYeM/VW5E5sboIseVxLl0Bj3+0QiYkmgpexS4rIuEqAQsbwuK4CILZcp7NRSMOFOfFM7htU0E7JBIYHRpLtPk1juJ6XMdGRKr6//bCZupxH0ZdjuPuweSB4+IFuZL/n/CHXt9+EqH3SZeksY3pp51V+IS8fQKngTdeXe2P4yxnV7nPL9qhMd2yq39fzK5vqeTeA+bvJAj9w3DBwIs+J09jxwzSKtAqzOIrpqsjXKlVJmjWGwDJc0UUTfsKKviT+CV9PjIqqEpU6tKJY1exawk5U8XHqJ01d5bCQawGfbIysC8JYYpm1yWEPP30FEBPBsu73DMafWVFQWd+XiPHIB7gYd7xHhDANGQINGOFjP76sOaW4bHhI1PACUb+Dg6qFrRNCRwmQoQeQsRB3LukOCJVjkrnpebrDXiDshdezjV2JVqj4vrHd07aCH6GMTfN28p8dGn24fWDGcyy5fDQ1Ts7UHNjekD/svk2r8CUC6N1Tm7ufc84A+qzn5QMo4VPsR5eHc3jHsda+E8Tuiq5Yet7a8Xy4gqRZkJrI8qmWj4IgiJLAtwOXQI9hL03DME7pkwSyJI7atKytdh6uR6XG4DzPijzVkNnnuqzaxlTw+ShKo3SiM7o32CvGSJi8F0g0yhFNDGtl/qSS+p2r4QEI2+hf0izNkPhRsPdcCZ46cLcRe++tWISMy+jwn0Pbs0FfALV6QXyXs4ylYckPDtyFoXyHNDveaefmJNfwXNQL4LI3Mu+5N92oiKKPK8isBomWZwvmZtfWFMopatL7AHrwIzxgoZLhvkOs8ZXurj9CtK3Qfu9RNjuXvBMA+lk765+c6b/Kt+uJcwbQZz0vH0CbJk60fYifM9dzbdfzfG85u1pZbuCu/ESZGOnGSZJGceK5QcgFeuBFUZr4xD69MAz8ONVJpmPcWNcmcaJt97PhdZuSMLQoSxUjCgnOxlXFnnCgew12mjKjYshDS6mt4emp8xyDIjYkQUpc2dxt5yYgmE2ly78AtHWpK4O5UNNCvDkAZBpxbWp60WdynMbAVp4NL7dDZs7u9DwVl5xhRiM0QeEWUmG7Xsbo4pLUsc9TLdaeg7jYd+xl0nOop3BUdjiWPfSeVfH9Ibwd4M9mUtz3H/Z+hEckc+ddfOLKe4g2HMTV7d/uoVnLiUd81Fj5cQL6Ot+uJ84ZQJ/1vHwAHXJFRPGQgTq250Rr2wuXC5ug9GplL4h5Jl4Yu64fwkY5WXvwSlaBlySKwDUInTRk66UwTRFvHKWZ1um2fM8rziUugT0VvJdyVOtIOSK6yI7EFVaP2EzEYJgEp5C2YJl8BYkS4W5G9TuQtSkroWJ9jzUgyOLNL0rBKJ/dP4G6oLsdgQUHbSD+resKrPfwYIk1pQ2V+DxKZwLKk5W+ktFON81siLj2ddU2I+LwSAhWd3C7Qz4xS4d4Pi6DIp7CQ03aihFTt2dBdwRQ9xTvony6vZ1uMIVhnIa0Mc/4RA0/Vet7M/vD88Cs5R4gfmpv6RPXv8q364lzBtBnPS8fQDdVltr26lBIf0lkM/Qsi0A0im1rabtRFodumLixj33OlIp6oqOJir1EYanI91Uc6diPEh/CJWOiKIlDe7u5WWA4DldQwkQNS2XM0xXESn1bIDCJ6uSiqxB6ZIzJ4a2cl7VBTh0s6iHUNwTMOfCx5DgkdnkvAcx0E/V3pTFiQiY878GzM/1mg3VMFNwVAJoraQKOrZ8xxkpYca8qYYrSuJTpOKNiz6X9NHXhTLe+Q7amrMy308ajJL4BrvCgIKlohQqE7WDwkNEd4enYSr39sN1inyr2UyxwMxnNP2CydCAAPT7DqL46nlIdluSf3lt6nKG+yrfriXMG0Gc9Lx9AiXd5jruY7QuZLux1lKS2i3RjP/BD3/IJUH1nSXAZeTER0fnKsXGFG6RJmPpx7BMDpFvAgD5Waa5N4Ebb9messhypxhWc7nKdETDmbBpKpTB2JWveMSoaTMWLPNF089RwfHvZGAJTAk5U6JkCCYVjXMU7OVSWI3fDpFn2a5TkuCXLPLGQydJ7LBPVGAKVZcs7naxS77Y17HbOwxd0GPtj/7NtxyXInrdBuXjvYMghEnfEcWKERFU7vonALShT+3HHU0xFx4DkqdN5IvTisIm5Ebr6/v3kFDcyyNMQNvkkH165e8Tx7ttbHD4ziwnu66Qe6TF8wXmVb9cT5wygz3peAYAOXRhYRz3Q1Spy18v1peOuLCew7Qs3jlZrz7aptnfttWVh0TO0Z8t1nEZJFCdpGKVAUD9IoyjVVZb4zgSfoefGimp27KiXFaxHtCkhtTfEHzt0QIlGYv0TbvIKpbpOVVYaLufL0niJLoqMqvespAug2ORNy35gqT3i39Ps59KkfpIXMDkqSsx5eJ0IK/PwtkcoPCxIADzNBC7dGC48jJyMsztarv5h4LmRFabNGErU8b4Qz6EKVurvRXIM/Y5pbiSwndGTF5d2o6JjznmIYHyf29t+NFg6UC0dnVNG84fz9v0dzlPV9v2C/QhAPzll/+Tv1hfe76WdM4A+63n5ALoZ6iy5OMTPyxkQcr6+WjqrteXPZm4UWZ5tuZ67WF1dwlfEX9v21Xxl22FAdXtMhNWPE7DPJA0SU6Tutv25DmLPT4kfxgSZdZFBI5rnZZZkhJtI6Ki7hi7IddkUdQU5kslzws+CYNNUWVmmQVwUOiM2SvBKrJWQEYOnbuBmZ0mfqPJthQ1RxLsTS5SpFDw56HrMkHLMrxBR3HBfspcCeBsuPOpfxGMezYSejY26KYSo21bT/GnLEchYbdpTDO342tZ4rmHZVDv5iOxh1i6SYwdP/QSg/d29xaPjM0yj9H2f5H1M3AHwU0Wj96yYzwAq5wygz3pePoDe9aU5cmNaYffdtReL1ezS8r05gajre+vVynLd1XwxtxYL17Zhvryw/OXciQPXzzTcm2JON44T+mTCT88JokhFygRUmeuiVCozykDHhHFPy1L1il08YeSZ5wZOTioi1qnokowqc60MYSkWP4mAJgprSWxHN3AiJ7qrpnhblMBYrF1iEM6BmaikORGeIBblORPXoRM554iJe5AhJiLIU6rkwp28nUVHAyezy8idDUAPREb76CjAzOv1jKPHFvKy1HSEYMcAOtXwpwBsW6HvBXEeIuCwZxV/oho/AY9HKHsu4cdzBtBnPa8AQNtSXx3LmC5nV+ulBbZ5ZftXjhUEtmtbC2t5tbi8WLuW5S7mvPR55S4XdBWbiLhekqSmTjSskrf46YZxFMV+FAWYLWW6TKl0j+G9BIF7WxaEalWdU1lcZCVc8HKdhfQYaYryXakkog9ySPBTuplC3mcBdXvRcTRSToiXFe0btAOKHKJ5gB0LNiGcwrpmXRL1hJ8SrD7brceb/Ne7AAAgAElEQVRld69o7YeqRCryFDw0YYisYiLyGGMiXkbqxSPuZJjbeLd2akP2+5fyQpPYxB0i2HEJL8L902p3EEw2V75PQPfW40/4hT5w4+OvYO8mX6y2f5Vv1xPnDKDPel4+gG6qLvAuZwccFOi4XC6c1eV8fjWb274TYPeImOflxXK1XAXW3LpYAmav5rFrz0Ninb4XJx7UnVWVFJNzslr5YawgGXWtMNSZ0TpLC5OhQq85q73M4RPflIVhK7qCADT1MxX5RWWqQvOqPRX1dHmZQjVqEEqP/fWKY9hgv1TlTfeWfUQ4ig5yTzh6VE3XlKzjpGeie/J0iNOABZlGojiMLkas/eSeQsd+c/j+jGJTDhUalfFjwDvPl2Cs1LaHccK7u419yokmbjGrnwD0UKXEr2VviMSvrnuA/w3y0h/bRNrD9vtoeZJfHk3VvzJN81W+XU+cM4A+63n5ANo3tWvvhXKCf845HGnuWuuri8VsZfu25TrOCm3RuU3gaVtX9sXy6gIGTjaV9nEaeZEXJEkWZ8Qbt+Z1ibKR6xmGfmj5SRZFptQ+YudqmB9ztmVdYlsTUcMAv4rK9CiIVUwUNCuKNC0y2NVTxU/lOxzvqNTPieUS/xywI4n8Taroy/aadaRlXeqm7yrsu1dtTRU8btFSRU8oW2G2I351SPrY0bhxII1SvQPs9uIbh2/QaOohO5yMu2KqzFubfAeA6b3vK0NRf8hAdw0B+fteVAabj+xkTI/D1zC95r0to4dq7lPXPIVffl2a5qt8u544ZwB91vPyAbTrs9B2XLETWQqCAk5Xl5eEjVfLtedYS3vtetbc8daB47q2baMVermeM21drJ1lGDpBoIIMhp46q0f8jCKW3fsBsdcgg1e9NnFMnFIjJ6njGAsIknJGTixztlWhsiSIiahmOo0weS90kqmCbefhmVxTqV8glbhjiWZL6Fv1df2uQn58ixiQrm7KbgASgoMWOdw+EZ/UlAh478XTEx+MtkTtVEvzHibyN0efj/GbxKJ6sUDGBKkfOFAeDLaTsPf2VKrvblTeHRBBPOtmquGPinC6Yk9I/zh88dVH7skPYeKpa757WvurfLueOGcAfdbz8gG0b7Nobs8O5/AL4pdUn9OF83VoB5dL1/MWa8sP/CRIAnd9Zc29xWp5yY1QZ7H2HY+oJjY4ldrip4kjLwuDyCjf8zLImzKl0kTneZbUHVXhsOQknsab68Q/wUoLFWdJmqS4jU60VkVeIFW+0pgVYXxUYn4ENyR0IgmBEHrUl2+qFiP4MseKUG1KEYKKnTL9H2lJdcGyeJbOc+k9sHqzmwRIsjnUsXXTnjGTDHTafnQU7TkJiUOP+hFA6YqT391BVKYHwqWum+ZHwmUPQIw++fA5P8IjYHwYE09d873T2l/l2/XEOQPos56XD6CbMvOPZ0izi+Xl7AKYOr+0nMC6XPlrOw2cte+BTYbumo67nF1dXs6Wyzmq+ziwbDjZqW1wXEUfE2DGgUocj2DREL6qJDBFRgQTYiSOfm83XdW3cJMvaujsDSRRGUcoYYxkcg0HJ6rSsZSJ4DjU6piCN7CO6+EeD1/465r95YnCtkRusd+J3EvhjWy9RM/BTswYzvfsPtfx5vpYS4OXoranR8TN9oBpw2L4ns1DZBSPAT9Y54ifdM8HmJzITHefs9MnJ3cIgp5IG3r4R3gf8O6V5g9j4vdGyxPnVb5dT5wzgD7refkAepflnr04AtDVCvC5uHIsJ1zYl7blOF7ix3EarrwojsIoCj1nvZxdOG6wvlrTtZG99EOVaTPhp2L/JJXnVJGHUWLKjO4WUIGeZKk2KYzikEXZopCHHIkwjpCuzA0BJ+Fwqoymmh2bnBW7z5XNQDV5Y6Chh51Sy8abY2zc5v2ARXdo8tuiKRtEgrTwRAKxbFueK9GDwZhTNJydyIx6Me3kZmgjTc0OjLbfTnB4x7JnL3peWsKeZoMAuM2dxCT1ffegBeUxbk0ZcuKYfKpp+eCP8JTd/IlR+teeb4e0r/LteuKcAfRZz8sH0N6kyXJ9dYSgl5fr2cK9sJzV1drziXFavu1HaZjEfpxlBHJRYK/Xy+U69K21Qzdx/DB0kmTnvpQp2H/meZwRk0wyKOeTKCAmGoGnJgZJwA1TyW4EIhG9F4hZylIVGxjCV1lRVhx1WaF9WcE4CZyylpj2Gg+Buc+N+HbUCDyqOEoJbk5CALlpSaU9PRIm6ZP1UtOOfcheti5lpZONPvkzjJJ2Lh+8XdTjxcKTpMWOOdvY8d0+J6ZNGqEnMty3P5FH7vmogd03OA90Ab4EVl/l2/XEOQPos56XD6B1FUfry6NVpNnsajVf2t7SWq3cpVq7ge04sRMo5Xs6TwtCQELQxTLwHY8g1AvcIPK8KAy37iEh3aKiKj6IjI4NGKVKkzjxkyhSWhEHRegmbJCgXhcih8qcYC7PIqMChMpTJV4ao7Dg3lU1jIoJ7BrYu3cwKIZZHcbm0Mm/R2MU7iJNCYNPSEzLVgAUNye0rojDlvWAm3DeUctBcqNPMitDOS8OdJUnS91oOc8z+g7dSqaeNW9qUr0PZGYi2z3dmfgA8j4HQB+QHT00d//S88Ac6osGTq/y7XrinAH0Wc/LB9CqDN1DMyYZI0HvGUbOxdqyLD/yAydw3ShJQi/O8wzWSIm3ckM/8P3ASyIvUoEb+9P4KM+SOHYSYqqhilRRpqy0j5I0CGMV56kibkqlNlvBc2wxKuoe8R0EmnRnpH0QGy3bssCKERzgkR7MeQ2j/zsYJ+EkDD/btnjHzLPtW5guFdjx5CJ/YNXQAL0oPVfBXiN4yhpBSAzEm2kpHjV7y17LTG4ZRgc2pRt9k9lRpOF9+W5knewt8hkZEvuQtzk0Gtn7iZw4O7DdJ4Nfq3V/8OUNw+dKnu6fV/l2PXHOAPqs5+UDaBsSqzwkoBcX84vF6nK+tt3VOlhYduL7/tJZeZ4fqyRQOiI0TMIocG3Xt50ogXddHGzdP+MgSpROIlvpNEmo4k/iLI6jVBHuBokKM11g+b0sOFeD0y06tBVroqNsSFdCj1TXVVcVLWd65CUbGQ+MIIgekjhh5G6wOWfxewlP5qbbdEQ0W7ak72Q6xJbxhMqA0LbOCSQ7tgjtxCwJSCGJc+yWDCs8WQNlBRKsRXpZW+pZTC/qVTQB+Bv4uRkSWwDFKL7v+3vA9CkA7R41JPnKMz0LXAJ2D/uFRPdVvl1PnDOAPut5+QDa+cqzjhjolWtdLK+WztpZh6EdYPbuWK5rOXGkCAgDQkyq3aMwiGzL84JYha4XxRN++oFt+7HOUj9SKomVH5o8CY0Js0wTJ/XSDBEdBaKRKsI6zhHiQpnT2FsqtFEXY3RUF23f9E2doy4nejlITjmhD8I0CQuhOGrbSue/MePkBcu2k4GU7PrwAGiASJTAGKtL3CqF2/1WYjRab/bjjKjjBxUzOoZ3MQtlAO1BcFvWQH3Z78MUQNyPbnrH+PeJEn4/B0Qu/5bT9fFJRpXAkb70cynoq3y7njhnAH3W8/IBtC5s114cUtDl3HYXi/XlleVZbuZ5Tuh50dpZWr6f+DCwSwJ77cZeEHgurEOojFdb/umFjksFP93SJEGS+kESpypVWnvgpSrXOq0xDCJYLOEH2o3ScuQbVZJfNLAgE07xjIolltqJbY7eckRVseBO4Dq0HMNRVOVvCCqm+4Axsotdy35zDDlAK7QDkLRBNxr3Mhm0x15kP0Jax6J7fhHD6OyJoTvh8Z0Q1p7FUSjsvxS3ZPw+dl2He/z18SHS0H3rrufRa+MHn4SxX+fL9CrfrifOGUCf9bx8AK3KyFosDnRMKODduRVY1tKyAy9Yz107BE1d2K7rswW95YeuFSSOH4UYs6sonebviR3ZjuesCHRxSy+O/Egrv0wzuiDJ0hJW8xim88C8Zhkl+8sBHNC7xGgbzA88sOFgohI3rJuKF4AIFeuGYbaGaLOFq3KTv0G+JhY4sfGOaCP4wgudYnhktRTdllufQz+i69ZzSbY0N5gZETC3VcF7mJyBjNZANc7l6zG1+Ov6jo+ZfT4uYzr2Pzn54F+BrsMeAd1bqj+X8P8Q51V+IS8fQJssDn1rP9d4drlcLxd2qFzbI/x0vfl8tQxsa75YLz3Hh1gpcuyV54JqorUZq0RP4e8RpPZr21tZjgoQMheGThgrxYW/SpKyag2P28usQsuz5Tg2hjSmWNgxxygIGIjwN7Q+ias2pSF8ZATd9HwtvJbYlb6pmsr8jp13rHj27D0ndJI7eSNa8R4nhj+trG8ep6XDFxRT9aoZZaYsaeqQyInugSR1sA1Td6/u/swzUt5h6D8DQO/2lKOPAOhXdkWHsUly8CTnIdI/xnmVX8jLB9A+0qFr23tuIhdXi9VqHobh2vXnrufBPNl3FvPFau07BI1BQOW869Ify1m5qfYJHqf9Iy/1XF9F9try3ZigNIyDyKVCPqMLgygxpio4EIMqcIg+MRWv5Q3Lc3DOteQpOVNROHq2HbRMBklHWD7qJS+T9fNld7eB0WeZ17/nhKBY2OxF7SRUSuzYxXyJVz57tmTi/05Asw9KdKOao+Q7VgagmQrfEZ74T+6eRyPq0+dRHviYW/LjP8JPksGvnsvLBP7oSc4ypn+I8yq/kFcAoDrwvNXl/jI8bEICwr5oDQdlQkDfctbule2uHIew0w849dhx54urlZMYP0niEUDzNLTp09CZu34QJ0EURgSiyEuKHcyVsjIvKgy70dYs2Uy5kVJ7M/rEIzAO2k66EmtFoIOFypGlhPkPoS2iNhpZR6/xZu+w417+ViGPsyxBEQlBmV5OSCf5lqyTl5jORuRLAhAHoDRgzwmLn327QYeVlf5CfLtxs/0phezjiLMZ3UXvJb59ehf+EwD5bZSh95/kLKT/Rziv8gt5BQBqomgFC+VdCxR/AoJOx7aDwFs4TuyiEep5luX7C9dLiY7OndVsubq0fdbPj/FxWmVp4sVx4PkBASl9FthemASuSnw3SeOsqooGA56mQpQHmyqjhN9IEhuPd6qazejqBklwWN8sTEkfwq8JvBC1dtNKehEXmwNvg96UOjeQMoG3sl38vuKH3YUbqJHER6Qd9uzkD/Ci4ZglUcpzYwEkmZc4+839JOEHzqd4IBPa9ijRSGD3/c3jUPU4NH+j3aRvoo56lW/XE+cMoM96Xj6AdrlyDhc5CUsXs8vFYr7ClqZlh2CegW3bvm+7a98OHQu6J3u+mK08Kuojf8RPo2JtNOFlHEYpPJXSOAyiKAAXDbTJka5ZAQKRpokoubqEqxwak13f5BX7yJdURFclJuEwECG8g/UdttuxQSTh7JiEtyw1AlbUmPVc1wBZGM/XXZ1Tnd01ExkDVLLzHNswta2sDw17PnB7eNGN4NyKZX3HS0voqXbDk7HpUzxQfEi75uh6Hma9vz2G1XsP/nhz4FsA6DdRR73Kt+uJcwbQZz0vH0CbJpzf20OaXVxcza4sz196lm8F3tqlg2zjeEWU07HW69WcCv0rL1rZgaunBaQsTusmC9wojg1BqaFaP3E9lYTRGBWXmarbACBrzjNqajaUY8aHXfWWUzqogofBHZaSMLJBclKDRSIMnZhCsgVTXUs2Bmd3tO+gKEX8OxT4nWzXM5SwbnQYppg32eFsuoPA4B1ebFhZiv7qRjI/ePLUSYb8U6vjgzD4+2cz2ckfPhJvOnGkx5fD37df7vzy8yrfrifOGUCf9bwCAK3d+/gpNNR3bcd2l3Hsr6PA8hx36Qco7F03chdEUtfB2vHjbX6x1mWh67LIsH+kc23SyHO9KPCiVOk6L6nAJxBF3EaLHaSWFzkH9u8g1KqAmTlTPlDTGvFuBehiXfHWPNX0PVScqKXvWCs/yDgbdXb9vm+49G8gzhfde7+zjhvGKHisfnbsYXJsBz+eASMq7DeNsCsA3XH08RO4nSCxZH4+eNsHaKLsANzePhDE+bTzrZc7v+K8yrfriXMG0Gc9Lx9AO33sxCQAejFbrWzLWXsr1w5Cy/EITa35leP4ru96Pl03W9ue46nJQKTMTV5huF6oGKmbhip6nr2nJlV51eQm03lRlx3Si8uKdzQx6mZLZKrXKza1A+NDBY8ooxo+y23DY3u+msMwx9JdxuyckUn/ez9gvb1BRhJGSzK/hxSekawX83mWR3Xc1+xOU0SGzBqZnrhy1JW398PVT9e4uzWjBwOJ7x4C0EE2nW5uT4mbnn6+u9H8k8+rfLueOGcAfdbzOQD6b//PcwDoxl0tLk8g6NWFtXSoYHcdKtLXczdYE24ul66/XkUhkU9/ceG77tqdDEQyXdVZrHNioHmRw8xTK5MkYZypDJ7ydY4uaFkbwsSqwJCdmCabcSAYHnvqhJZdiUIdJX7TS/h7W8ruT0OFfsXSegg9RwTqJeWd2OhNz7pQOIyiAUq8lcdTnZjLjwBK0MxP2NR9e5qpjcHv3WgRcghHJyM49852W2gvkv3EeSjQjQf9N++fOKh66OxD+zPYKO/Oq3y7njhnAH3W82QA/b//x59++qd//a//w//8//5gAO3D+eKemZ1A6NzFxD2gmt0Llis3DALHWnqrte9ZC89dLxdLIqbTAlJelmVGYIlYd+BkkWudaULQJI4Mcc40K5B6ZCqZsDdiZQd3TZYWYc8SfU70QDspxyvWE3XYPocwdOAUz05G8SNWVaOpSHs99GwrwpFGPDACc+0a7l/CaZ4BFPfHNTK/P0URx64A9wcEJk8xzZOF8uSWDAEAD6oe+q4/4O3JyXXvb/pv1sJ8Xjb6Kt+uJ84ZQJ/1PBFA/+3/+OknBtD/+NO/+9cfC6CNsZYn8XM2s9zUstcrz3dXF1cXThC56/WcCvm1H3qeby2JoW77n1lRGGVyRaiZEwOtTFZkJlNxEMRhkNU1IWeO5GINJ6SK0zVYkNSjeYlpEtSdZckxl0A5yOxr9vbA6Lws2qGD2x3GTOhgju1Jto8H4N1ueD7Us91xx6iLLkE1Woq0YwmPq/h2xxX8FilHZ5Fp+nTqu/bAqGZnxcFaqUdc7h5wl4cS9ub6m7Uwn7kf+irfrifOGUCf9TwRQP/zTz/9u//pX/7pX//tf/vpp//2KzjoZ786AtAyPVXB49iO4zru0vHX89nlcrF2vfmFFbpL1wvD1cIKnIU9bnAWHNiuSw2zEFMURUaASpV7GvqB58fETglfS5bHFy2vXCJYY4NcNSBeTcU6WGdbifMRgWsrkMrzchTgqL3rjheD4DbSC2OTuHbilrcDN0M7qenZBQRGT6y178cpEts2S3uyO4KwPUgTC+VjS6L988AUaLzj0Lf7acYnzwP5RnTX69tvRRqfeyL/Kt+uJ84ZQJ/1PA1A/8tPP/0vH//rf/wnIp//17/89L/+UADtC3PfThkFPP1xIi8O3NXac5cX68vLy9Xyam0FSz9wVla4srxgdGBqq6LQhhhnUaoqV6aCr7wuVKpCN4wilRtjurpuyrpqcuyu58QuG8iKhlHaTlehoJfgjBaYSRy0E9/kXlC17liDLzkePXsssYUn//fjphNHEqaXHRI/OL6oltg4tmEecY0VRIc+nvtkbdqNHx6q8u8DqEQMT9RV2O7wtJ2l4wd9f/utAO87BH581nmVb9cT5wygz3qeBqD/+af//uMIoB//z5/+ux8KoHeVck/V8BeEllYQJsoL12vLvrxazC5mq8vFwvKcyI941d0e6/calscqQqYcZkc5kc88U1ppuk2KfOI8z9DZRO4wFJ1NUVS8sy576T2ncfDQh33h2fGdTZHb/fx2cE/M61vYcoqZ5rZf+fGOTeKgeRevebaPb6UHIAudg3gvsYvd4XDowBt+M1kSDQ/BzzG3m4ySxKJuM+58fi5yyWv6dm/XM4B+m3MG0Gc9TwLQf/tP/83/vgXQ/+9f/unLu6Cf/eroryG6l2qMOPjFfLnA3CjxXcuL2O/uYr5YLpbzIEqDIMKK/BRgXJRtXmZporWuTZZlaV6kgc51ZtIwSTRSPYoC0++iySs6LAMdA4Illm2QSI2ps8n7mFWOwLhhrLvp0p5tRFoJfBsTgkdPo487X09WwONGlXgjN6fUnnvIMrobH1LQfsw6Fpg9KrmP7j8KAkZTvGGYHDU/hVxHj8qffru367mE/zbnDKDPep4EoAKdI4CO//lxANqHl/eaoFfz9Wq9sqlI932fPlle2peXc4JQa75cOmkUJam3nvCzbPK8aQxPkAwV8irNCpUYquGJeEYJrOyUKWCnVHHYG4bxTV3Bnhgxl5xxKe5Iwxis0Ql9xLwe7pujRrIbJUjs5jmaBgm6yi8HF9HC/8TLs2n48Sf3+AmwDqFlh7sT5PHL4BAkXlnf3B/6HEpCd4yVTfGeilwnh+Rf93Y9gOTzEOmbnDOAPut5BQCa+1SgH4+PrMu5tVq6jhWGIRX4S2th2avZ6mq+cj0rijKkJG0XOIuWveWNzpA2p3JNgKmUMgify8I0VdhBwvS9BONsqdznNaRu9D7u+611kmAg19/imsxZSaLwARJ2MmQfxjIc+NAxZvBX3o+OTj1nDqE7QBDKknZcuwWsg+J2M5rLMf5tFzqH0fQYiqmtDfzeN24PqYZp9t5OtPNpyHX6Vl/1dj2C5LOM6VucM4A+63kSgP7bf8LgaETO//I1Y/jPfnV3d10WWPOrAwS1LOdyZrvOamUhatO3lquV4y3na/rAulw5dhhH/z977+Mky5KVh80Tu+qZ/lk/KRVFUZRqKS6phTAk+bBkcnNzjb0gYfzIUHjzJeEI+1lYCmqLUPgB1iK8hUJ+vYCkBcJ6sywLsVzuP+o8WdU93TM9M9Xzo6v6Rn7z7p2ft7trsvJ75+Q55/siv+sAjRjFMHcJbUdFWRZEh51EfxAXGOX6oyhLC4QJ1km7UeuUiinTYEThLBOUi3emHteg3GHyb1DibGWQTIyojP06fHAjRbxLEObKO+1kzXvwSWX4bzsTdENYe7PqXfx4V924bl07m+1U/YODRY2xEOmmj/ow1z1x6nO26x1Kto30LwBLoIOiF4G2haOWQDWZnraIxEjo3Soief7sahUtQHbJDRPXdSPXcZz5VejMJ3Mdg4aBk8ZdAT5JMdfZOhOSYZg4IlT/VUILaAE9oajI0hKVhHMiIeqsGwVOnCC1JDhYIOms/oZtuuNIUIYHGXgTTgLjgSSTbPmh5bR158axJQhz5et6U2k3NNa1OLWjPTuEVe8+RNW1lB4Ql+vml9QD9aTrbQrfWc813dceZa57ajzP2K5DH3rewllu1wOwBDoo+hHo999c/NxfGAL961+5gILSCQmU4mS154g0mc1Xy+nUBdVkb75ykjSJ9bvlarW6ml9OPcdPIyfqJuDnfhAiShDTcSgxeslMkjyDgSRSFNDbxBnBSIenROkknnEOB6EwxMlg1AhsOrok/Hor1Q52laodp2wFjGE6HeaWapNZH6zQvDOs1Yan25y9m6lcb+faDb90X9b0CqebTRtg3rV3azbGG6pp6gcI9Lrt4GxMA1bVm7xenkCHLrvfwllu1wOwBDoo+hGoDkEvLtCbD778M/r9zz+dP5/kylkEV8FeCLqce0sn8PSXfWcepGDL4bmut3KhDr9Yeksv2vDnT7lTL8gKqqkRgVUx1fwpSx105iUrCsIwM6ejVAoMffKgeQxSdjDurjgG9TkIM7dHj202XZuaUmd23IBtu3HGlFXrQ9wlyPtR3rvWzkdtO4gMUZoafxuUbemlVadvKlm1Jm11sydtt8XW+q1+oCXUwIjldXrLvcnr5VN4S6CvAkugg6Ingb77kzcXHZ7Dn09qpI/SeK+T/mrmXK3ceOUs/MBxnTDIIjfxHG+6dFeTZThfgUad3/Kn/tjzAoyVDkA1MbKSMo4xTtMkTzEtkVRGJZ4TGNJUYLrBuSCQQoOjh2CUGlm69tVsZ8nbViDVOhJD/xJMIRl15bqt+9ytjL/rmok6h3lTYjJD8lVHKVvCqrsjy5by1jeF/NvYmg8/qO55bV7QEXLL2wt46SKSTeFfBZZAB0VfAn33gz9Amj1/5Gf/6Dn8+bRZ+NTZS+Gn+r/QWbhzd75y3eXK83zfc1erxSJYLuar1TL0g66AFHhh4Kc5gSYlogmUUI4JKNmhJM4oIczoe+jUnYIRJygwCQhIBbTNA69qOiXgONS+mi3FQSIMYR0Mcq4byY3CsTHh3LLD7UT+8xsljzZN70JLExrumsc1HdOabzbd8OXhzHvbIHp78PMujiKvjvtfvI1p4L6lWzjL7XoAlkAHRW8CfRkc/equr5nMb0nSX00uL+fL1dVquVxN54vVbB5E7mLpzlauP7/UH/idhIgbJivI4AkrGIFcHXL4guhknmgSLZlSjFetuTuMsSMTjSr91nq+g2oyBJZyN4XvWKjLs8FPWMLoPIcD05tUe7cOZPDZJkE3/aQ3vUkmVW9/ZJv63xwUPHK6aU5G7x4XHMIR5LX90UOP+pJtTB0GqsWf5XY9AEugg2L8BMop8Sd7enYQj15dLrzF5FKn8KvJPAgCLwH9pZUOQZ3lMtp4GK/8VKf3lNCMgwQTLinCVNMooQyhkoOQPHRSgviHpkvKZdvdWZnzQgE5PAFv421LJfTQN13C3WrNgxITKJEQDqZyplH9ulUf3u882hBo62W8GVIylZ2tLFLHJNvo9MGB9/1/8zh6N10+HKy+YCP9sS/shXGW2/UALIEOiiMJ9LunJ1BVRs7irpzIfD6ZzS/n0L7kpiH4bDrzReA5Sx2BLjv+9L0gSfK0BKkljFCaYVwSqeNMRhkpMWLCzKWDSZHmQh2dgkIdqIhct61JkPJLTjcp/HUDrUvSNHHeTB/BAQBQqI5BjSenodd6o9ex+aef354uavvgq5ua/A2MR2e9m/E/Y4G36Eu1D9d6Xny7DpbXn+V2PQBLoIOiL4G+/YN/YoaRLk8yucYAACAASURBVJ53CHr0q9M7LEod966rx1x/6XKyci+vnFUYJKXrzOau74eB53UFpDiNoiDKCC4IESWOoxJlCWVgqqE4Y4hRHW/qCBLEkwUod/ISmu11Tm+euzIKyuDZoTZnoHUbc4J2kpEIMcLIOmplmDJsBJxUZ7Vxw6CbK9kjCpPCw+FB575+RzuuS917nG52P/9ySfBpCXS4ytJZbtcDsAQ6KHoS6PfeXLTTnBcXHzxDze5JESjyVou7kvSXZjbpcgqVIycpM3/p+UHoelFcdBNIYYqLLMkwpYgwlJc4SxDmjCDElWTE+BNLOPuUnEumoBmeUhCfb597DRZwRom+I9CdNnjj1VEZiU+larCFJ8QILEsz7LNt0dzGrl0b041TsRleMlbz97i7tQPv3QTpwzgqCX6UbF8zhb+L4XqbznK7HoAl0EHRj0C//6bTUf5P/+rNqRvpBU0PqDFtaHS+iqMwCpMiXAVx7PpBGncVpChOC4yKAoaQZMnAxdj005cQLlLCTd1IgZmRolBur4x7phByS3Jts7zaVOG7qNK0o5su0KqpWmEm3hq+azau2sHMtsSkI9SbK7mtpAGDmKKb/zzIHtsK0WM4KgnuQbYPPp4l0LHBEuig6Eegn158YZO5n3yUU5LSP+yJ1DY1eVGI8iSOgzTxoiJMyu4ANNC0mrOyNJ3xBWHQy4RYAQWkgoCiMugh1Tr0hH4lzDiMHIGdUdeleQ1JvATl+KrrItoSaGX621VrvtGaIAkjRF+1s51NN/yzq/l++8pNdydYeJgfXR+sruzo1T2A4zqU+rDVQyRrU/ixwRLooOhFoD/82k7UeWo90IpkzgFJ+o5Tl7PLMM9xFkV5lsc66uwOQEMn8pMkhiF3qdmSEU7KosBpgYgOOilBRl0EmueBPzl0zDet7OeN29AaROvMoaehk20KbyREIICUjfE4AmUlo2RXt1n9+hp65Pc5qJ2Fv6uR1GbwhyjLTIX2mL48JobrSVcPpPm2iDQ2WAIdFD0JdIczTy1n15QouVtDuppMZuYk1F05aVkkcZZFcRa7GxM5P4zcONMMKplOlHV8KXQyX6QuKH9CbUj/ZTyOQKoeho4ol42R8dx1G2rWe5OUm8pQJ+letwJxEHYCjYKyHfgV17IxZfR94jN6oDs02fFG20d/kET2pJsewA2B9u4GfQZfvfx2tW1Mz4Ml0EHRk0CHjEBZHh10ldNfnF9dziOdwmOjD+LHsd+ZeIRpuAijuMgxkabCLktUZnni+4VO5Rnk8VA6UhKc4KGGhIWq1U3zpZHwuN5qeYA93LXRT4KPOue3jXVm64lkVJRBKFTtycdvr+RWrLXeMqg5MzgQFzabI4NHQtCbGdDex5ujIlDbSP88WAIdFL0I9N2nO+een574DFQx5B04A11cTjR7uotFlnglLjnOsjxcOV38GfixH+cZIQRzpeq1oIRkaeolKQZJO15S/RUdfmIG85rQMg8GwyZdrzs3OJ07G02kbUHIkCYUfUAKGX74lpCxCTur1jbjDh++u50+79DpYVpbV13J6rHwrPvnO6/mXkp6/omj3a5jg12RQdGPQL93cfGzf24++sHvXZzYlbNCKLiTwl9ezmeT6XI+c1azpZ9kOaZlGPvdAajvuws3THT4iRnDMCBUYUbTKCzLNMd5QWlJGOeaPSWYdzBKpWlphzNQKI23oZ9Ri+/0kIwLHDhlajZrDeZA7uMW7TXt/Ga1odb9M9DbNHmTut4TF24I9NFwsWm6+LPjxgeS4mefONrtOjbYFRkU/QgUfOEvPkAIgSbTMwLQJxEozmbz2d0Q1JlNlu5itlwsvKRMMoyzKOtE7CJ/tliFOVjFYU6FTuAl4zrJz8qsTFCRlwWDhlAJzfOgQwdG7pU5dYS6PJWmFsSNIWfTOh4Bt6r2OLQyYWYFRfhW6uMmmjMKIltx+kcI9CZOvCcuXLf2Hz3CxW66vnuUfZK87Tf3zBNHu13HBrsig6Ingb79/Y2a3Qf/0zP482lnoKE7vZPDX02uPGe2nLvOdK6Js8hypFl0k8BHiyjws7wsaUEl50xxlucYlXmelCgvciIIQSWDs1GY5gTtkDVU2RVI0wHfah7lyiiCtP5wtWr13/XHpq8JKFbWt82B2w761hTpsRR+F/fEhZ21R88Gzw2B1nvPc4cwn3niaLfr2GBXZFD0JFBNoX/2dR2Bfvn/fLof0lMJlAcH4s/JfLrwVjoOXS4cN/GjIk0z1BWQXH8VB0kSI1wmlGA44qQoxTp9j9MCZYRiyjEiBOaOlISOeAW98pUxLAa7Ya6UApkmw5iGN1XTGXDUxjTODCKZVL/ao7eNQOjeGHx7JQ+mz/fEhceEi/t6oreOV1+uyN17CQf1O+qDs9yuB2AJdFD0JtCXwdGvTnNAHvsHakie4zm+DkGnruO5q3lRRDltCdTzkjgKszzLUJkiihnjJSG4SNIwTBBBVBMnkRxBO1NrWtx02sjwiU7AZevQUcmqreEYl82mNRWC1B0+VFKtN7X6HbTHoMb3+JYVxvWDfHgP3RzDQnt6oh1rvnybet8lHNZxsw/OcrsegCXQQXEGBBqUqzv8OV1qAg0izwvnS2d6uXKCNMMtf6ZulsZ+VuY4L/OMUpBiyjVr5kUcJnlZCEYVpxKmNrmoTG0IhDxNE7xp5jTz7bIyfZ2miait0Ri/TeMVD++kPBDcrY2+CNCqfozdr67vNNI/Gfc/xq6e6HqrWvrCIWjPJRyXdvJBnOV2PQBLoIPiCAL97gZ/flIC5cid33KVmy5W3sqZBkHiO8vpbDpbeHGStvyZ6eCzyINch5qoKAgozSFMdDBalDp9RzruBItjZcbg9Z91DSPspinemL0bBjXkaVw39fvrjamQOQutO2O4Su1SU8tqrf5H60GstnPwLa+91M3xUGS3oye6n8GfnEBH5t5xEGe5XQ/AEuig6Emgf/2vLm5w2kZ6TKO56ZrfPQBdhI7rBGE8X7n6O8urJN3MwNMCp1lWlATneQnqyZiRQpNpXOQIlRhLKAcxUziimkd19KnahN1Yw8FQO8SaFaTqYNKhmq6x0jjJ1a2bnDkK3aGIltW66cyuR3SjJNJRyWcvs1xHzrIPlcIPJxHSH2e5XQ/AEuig6EegIGM3FIGSMlpc3qrCTy+XoZeE/mwxWy41u3pB0onYYcZpiQnV7AnWHVgTKCFlWaYFSuOUUCErY3lZ11JTJ6UKejqBQEESuak4mMi1Npe14gpaQdth9HU3f7TeSHzcifOarpNdGpGmjZbdhsI+exEKO3qWfaAikiXQ08ES6KDoR6Dfubj4wr/41gZ/+PRK/NGv7vpa+ml0p5F+MVvNV95ytlhMrqaLuecnLX8ypAmUY3DvyGHWiEKtPdfJexElKE9IVXEzpK6MDB3YHykQBJUcDDkRkVXFeN2aWFYg1tR0IvM7mfPmw+2XOid44/ZhQlBjXtypKW+o5PMXoZLjiemlizk2hR8bLIEOil4E+jwJu2cSqIpS724X6GTqzDR1Xl5dTpYzT6MlUMFhVBO3fzEqKCVw+FmUWZagknKuRJtZKx1/SqmzdC4rTaOES9C741In8FJve1NgN5Ocpqdzd2jTZPLmgy7Oa/vdob+p9Xivdv08nkOgd+tFT4jsXridyBaRxgZLoIOiF4HuiYmcmkA5C+9qiVw6k8VqdjXxZppDHW/ezcDnWan5klCSFoTpoFIIYNKsYCSPs1JAoFlX7bFlxZlqpFAclJCZTvpLyggFRbpO/bN1jatN15Ksbwrbt0O6VvPDuCp1YiRbR7k26X9qCn8geBw+srNtTGODJdBB0ZNAn3Hs+WwCpen8Fn1OJ1dzHX6ulsvp1FnNZ6tV6wOfZEmeoxITUJ8nBAsO5nElKgnwKgWPYi5bn3cILSuY5YRBT5oXhCAEnnKGBuGpu8ZQ09RZ6SC1Tc+bqrkVWpn6kpk+Up3B0dbT2OiKVj2KSAejxHs07gaO7Gwj/dhgCXRQ9CLQt58MGIHKMlzcOgO91BQ6m8yChXO5XOg3J2wD0CRJyjLPUoRRWWKwgqeCoxzhIi4JJlzn6iAbojphJZiBh0l4gQtMkACdO65T8U1n0rpubTerRv+cKbsbKbtbRsOtrh384M1kUnso2qnaVY+2MR2M1u4JNoeO7Ox2HRvsigyKXgT67jsXPz8YgdbZgUGkyeVyMpm53my59F0/3LggBWlelJEPYWiRY6rjT1XhQif2mlIRATZlolUCWUMnvY5GJUSpOmDVXEsQNkX6G705iCsl9DTBwJLpBK2bptkXCoETTyg3VWrHxaPrCG0ZsNk20h/G4ajyvuPOO5HdaUM9u13HBrsig6IfgeoQ9DeGItCmnBzQU14s57OFt3RWgecmHYH6UZSnWRlFWZ5GiaZSQphkICGCoQNUf14iLqXxLgYfIy4k1zGppk5BudFnImCKtNX31Ok4KIcoaSbkYfq9bZJvdmitlT3WNFvtaYDeGBN3P3r/ld8XavasF504JLXbdWywKzIoehHo29/++sXFB1/+1Q6/dtI2pjpb3BETuZxPJq7rOStnGedJV4F3fDfLgyjNijgMowSTEtRACUVRXiBc5iUvcqoJU3COiWmkJ9D2qRSXnBQ6XqVEVorfOGgYlThZGeM4Mya/Xm9C0BuibCtFdXVHhb7pSaD3MGXPetGpD0Xtdh0b7IoMil4Eut9Hf+JGelHE090QFHrqF9PJchUE88UsyNNuBCnxgiBOwiRJ8zwO45QxRjRxkjKBIU6gUwRt9dDwKWjJJdPRJyKyVpVEWAid8nMlhbxRATG5MdjGmQNOsNxct4X1HQ0745pkikgHdON2GfBoAu1HjScvy9vtOjbYFRkU4ydQSorF3iCS/mThOPOlF7h+HAZh10Mf+GEahUmW54lO4NOMUIYQtICiLCUE5VRSTjCMyDN4R6RO4QkXmiA1peoglOvo1LR0rnca5mGAs24rRF1RqN6YdLY/ZNjLmA/fOYvcY8CjU/h+yfnJR37sdh0b7IoMil4E+nI4+tVdX3OcubfOPyfT6SoOwkUUp0m8sfEIs8ANsygqgEHLNEc60CwKoZNzlOYgYieY4HAQikr9SYmFNNacUjEqGRWCEtGdcO5IctRmprNuS0Sbkc0dqnswAtxlwKOLSNe9ykOWQJ+M9+VC7IoMivETaI3m/mQ3BHWml4vAC0M/cZI46wpIWZEmWZZmSZxQDoFnQXRaniKdxZcl0km8INAEWpbQFkopw+BmzHUaL+s2ANUfsq7/fUdJs5WEB5HQvenNGzyYaO8wYI82pqeU020K/2S8LxdiV2RQjJ9Ar1N/cTXdS+FnCy/09VsQpEnUEWha6mS9KEDDjtIiR2VeUv2lErcqTBQxJXWYicsSyu5YJ/hK6RC0kooInb2bolLTORLfjGBuvnBrenMHPavgD155e9r6pHK6LSI9Fe/LhdgVGRT9CfTtRg70z/7Hk56B1sXdMrwbxF4cu1FYBN0MZxLlKM1gIhMmkUiRlzmIMHFWZIggQjiSteZPQcCOk2gKJVzCECcXlcCGP6EVaeNHvN5MHK23Hu8PWAX3Cf8evfKnMqFtY3oi3pcLsSsyKHoS6IB6oJKgdHGLQGehG2XhIiqK1ofTj/0oS3GJEaecmhgTbOYg8iQ6hS+ZgJZPJeG7mkEZoYoxMO0QslKSKAkadvLGFaMxMWcbgrYE9Ww3y0e+//Rc3DbSPw3vy4XYFRkU/Qh0vwz/xdMSKC8Kf38YaTZzwiTyvGXYqYCGaRxnWQbdnNAOL3RSjghGpQ40oYGpxEKA6KfgvK441jk715+ouhLGIq7hTNZSXu8pI9ebiaM2v+7i0SeT1WNX3qxbC85RCxhd2+06PtgVGRT9CPQ70Ef/9Tfw5+JZM0lHvzqdwvOyDHaPQBeTmbtc+qGfuW6bwevoM02LJCl0/s7AhFMTJJMcY8oILinCTHACFsZSMybXTArexTXoiFRGOKnRP93OYJpSezfKDkZzW3P1lj93vnTslTzyfdMKdcsleYyw23VssCsyKHoR6NtPLr74F/D3/wxc+sVnOBsf/er0X1y6O3JM88nl5NJdOfMgTXE7gxSHfpwleRbHmCKqOBdmSpNTipmkGLef6zQepo44CIiAepIS9bpWVafdufOk+luaWff6lZpN/Fn3jRFvJ9aPXXm9FRHt/9sZAna7jg12RQZFLwLt9EBbSZFPgUZPSaDrJNk9A11MlsuVs1y64FpsCHQRREVaRnFZ5Igi8CRmmisZZ5RwzZaEQ5s8SH/CUJHxjTMK8qZRHmbfa0NbG8prdHxata7F29fR9ct3BNqD4+4cmT5y5e2MKLyUI39Dp4bdrmODXZFB0ZNATd3oe0aX/nvPUac/+tXpv1QZ7QmCXl5eLQM/DtLQ73zg/axIoihMCSoLJLla62BTGoXkEivBwIdTMUGxUKYnvqXBqg0q4Qx0vdPjaaw8lBQ6qb/VL19vdESqvv3tOwz6yJU33URoPfIM3m7X0cGuyKA4jkAhe//h156Rwx/96jR5Ubq6JWi3hD76wPEXhkBd1wmi2IvCHGGGCQFlD0k1MDjMUQq6ydDySRiVwoy17wgdg75ns9P3eV2bDF4n/UzdUgbpAlDzLx6uJh0oqT9OoG0VyRLoqfC+XIhdkUHRi0A7QeXvvwEefZY8/dGv7vq6JoU321dUXvkBSDG1AWiwcFw3yMIwyTGmFCrqTQOMCfNFIL4EASUX+jugH2KM4tatu+bOZGazbQEFaXnJNYUytaettOlsqtv5+PqhatKBActHU/gTTxQ9FXa7jg12RQZFLwJ996k5/WyPQlsaPR2BKuaF89m+r/HSdxZTt5NR9pZzJ0ryOEsR0fzJqQSDNw798qZ2pNlQMv1O6E+kmcq8NtZwzQ1lNdV2CKkGm04BasuqabWQW3QKnw20N3XJ/L0MejyBDu/V0RN2u44NdkUGRT8C/f6bi5/9IyjD/zyQ6WlTeEV0tDm5jZW3mLUtoL43mYdJWhYZzLlTJhCFyXaq35gOOSsq4ROYOKKyMrTYWsPV27HN642op+FT0E9WUKoHEeX9UlD3r26Lgt7B8Sn88F4dPWG369hgV2RQ9CNQzZowf/S9i4sP3lw8x97j6FenU/gEX11e3ibQudNVkELHmXlJmmUkR3mGMMo5K0vBoHmJSV5BTR4oVIJkiFKtWl2ze/wJfNfcCDE1wrSJqqpRt9w74Cchbq13REcO4+gi0vUZuLAZ2O06NtgVGRQ9CfTdn0Di/vZTM4h02j7QOk9WkzsEOlm2KiKeHywcPw6SEpG8SAropUcgFUKJDkOhHVSCFLIhVAk1pPpGamkjEbIxO+qkQGvI32XV1udvn0uuOwJ9ZGro2Dams4HdrmODXZFB0ZdA3737z5o33/4pQr/+DP58CoFW1LnjKjebXTqdCqjvrYLI9wuU4ywD/yOSgjE8F5gRQSiCBlBVKU6kEkzIqtX63J2bbA9At5aamkErAVbGcmNrtMeTTb+G0GMb6c8FdruODXZFBkV/An0RHP3qNIESZ9IV4bfOHsvp5aqtIIW+H3tJkiVpHhZJXpIyRaSkRjUE54hTTKAtSXID0U5s1krV27nJbf5+Y+ZhfDYr6KU/UNnZPz7tfSVHXvlYYbfr2GBXZFCMn0AbP5tO9tqYLhfzSVtBitM48aMgyIvCiTNWxojSHBNEBAOPOCjKM5BhUgymkwSk8HACCi7EVTc3uc3JoWS0eV7w4KwrKUyl/naguW42Ek3HXMmRVz5W2O06NtgVGRS9CfQ/fWuLPzxpFb4K/HC5Z2x8dTmZtwFoHqXxyssLKCIVhGEjppwhnbxTxjCTAoSXGOjYaeig0uh+thZHOt40c5NdPampZL2vHVIrKMbfI+9xVMUHfvgsb44DsNt1bLArMih6EuifvBlMD5TReXjnEPSyrSC5Ya4D0CRP4gQnMHoECqAZMqqfFHPT/El1IGkamqCyDrEnKIhAgFnVbQZvsnHNrjdZueFP0KiXEKk+91dsCkqfPfdRRgK7XccGuyKDoh+Bfm9IV06eLQ/z50+FThR6SeqGoecFJSUlwZC/kxxzncMTKqSUlWZPRRk1vZ2VbBrVVBB9Vpoxux6mzRjlNl03kvQQpQLjPre3qGXoz8ff4tkLdruODXZFBkUvAn37ycUH/+a7W/z5k/nzSYLKqJjfJtArw5/LwPfjIPQD31uEUVYyXkAHKCOUGQVlGELibf2IgqAdtDE1LXnWN9Jxu/LJXQiqebTN8utbSndPwHpDoGfQ5NkDdruODXZFBkUvAv3h1x6UsPv7f/ubH374L//j7pf+v//1ww9/af9LTyXQdVSmtwm0FREJFvP5MvaCKHSdJCkQhpo7kcLMb+rwkUuYSlKYK/DuYECglWn5hBC0qTcnnpBidwYeNzl8d0y6IdCnd7l3PfWf3zlKPY/G+duw23VssCsyKHoS6ENZ+9/91oeA//b/vfnSfzBf+fCX/q8XINAKR/PFXhFpMm9bmJZXi9lytXKWqziJCpTljCGuk3WdtXMBR52aTyVFOgZVmk5BJVlWykyygwrozeHmuulsPG4q7ibFN/xpeu2fMWd5H4GeyejmbdjtOjbYFRkUvQj07ScPEegff/jP/uO7v/3dD//Zf9185a8+/KX/7R18aZdUn0qgXOS3z0DbAHS5XM4Wi/nMnSx1/p5nRVmA1abmzkrqlF1VQhBGOaUSPOOqWioBFh41tHHWRlR555luD1+u4Qc2AehzlD4OpPA7YlBnx6B2u44NdkUGRS8CffedB1L4v/lNQ5N/91vbePPvf/fD//2d+VL7/pkEynP3EIFOXR16zlbeYjpz3QQTsIQHMSZw2jTMyc3wppFGlpowGYcCfDvxXt3t5LwTEYLCXdtb/zytuTtFJGO7VJ2JfN1t2O06NtgVGRT9CLTz9DiIv/zwv+ve/y/dV/7ut7rI84+3X3oGgVbEW3p3+TNYBU7gzOe+N59N/JToCLRAREIFSTMnRYTrj4SOOgW0L4GinZA6olRm7P1QTHnnTBLOQW/KTMfHi1uPkP02pgNFqzOC3a5jg12RQdGPQN/99dcuvvCrG/zaXiP9H3dh5l91RLr3rRcg0GvkTlez2/z5U3nkeb7vOKv5cjH10yRCKC650Bk7oe0kEmEMvJGUzup5pThrS0dm4Oi4mPJpBHoT0u410q83BNpYAh0U78uF2BUZFD0J9Pfu7QP9+9/tUve/+c2bQ9AWO1n9lzrc8/AP4qNgvlzeJtAf+4mf/PEveavZYuZ4K8fzfuwX//GXfuGrX/nqNz765a/88k//4lc/+uijr/7iL3708e/8zsff+Oijb/zORx9/U3/87c8++/Znn79799nnHT5rn+Lzz+Cr9+Hz7scf+pk7+GzvCW5/Xb+Mbx/9kBYWFuPG/b7wTyDQv7yJSZ9FoD/9j+4k8D/6E1/66S99aTadO/OJ+4++tPJ+/Kd/QTPnL3/l469846Mvaf7U7z765V/4qubNb3zl44+/od+++Tvf/J2PP/vsm9/8dkdeW377/Jvf/ExT6P2v4D4yfAD3km739Q2BHv/rsLCwGCseaKS/ZwB+h0Bv1dz/6mXamK6ryAsWtwg0y4s4XQb+YjlbLvIiybJSp+4wfKQEL8FADgpIiOm/dPouVA2Oxjqdr6Ag30rNb1P4jZ/HA9n08T1Ht9P+Wyl823lq25gGxPtyIXZFBkUvAn2ohnRvBPpXv/lLt2vwTyNQjsLY38qJtC2gaRLlQZgGwWS2cIMMp1nOOWWUGjd4RCnnxghJCGNkDH9ML6jompNaPbq1sTE2/Z4gpnyEvOejuJdAt/Ur20g/LN6XC7ErMih6Euj9faD3EehfHog/n1aF5zJbGe5c6netjJ3rB2ngplkcuMv5IiiyGBHKCCsQJjoKpRhz4+hRS2lUQ2CuyHyk2iFOVakuAGxAua7q/Dxe8Pd6u0y1c+Vn2kLfwm7XscGuyKDoRaAPNtIfrsL/h4P8+aQ+0EoWzuVkspi7y6uWP53Aj/15kMQ6NA2j0C/yBGNGOc5LQgiU4hFYInFDjtC4tAZbD/0R+Bw1Roqp7szl1jDY2c5svmxF/Faj1O6Vn2fs2cJu17HBrsig6EWg777zgJHcpv/zL3d6lv7+jz/8p7eHkJ5OoNhduKulv/IunVYG1JutvEC/xX4QeYEbZTFGWMeeBcmKkjHMJcUU3I3B1ahuW+fBJW5tqLITA+1a5KFb3kiEqvplWW0/0DzLm+MA7HYdG+yKDIp+BPr2kw9+4z4CvTuJZKY7/+vBHz761ekUHkVOODN+HrM2AJ3MZ95qGQdh4DuaQt0gyPIS53mMcQqKoIwJikC+rjLt6sacWIKwUg0jSJ2gcheAro22iM7vq/r5yp/72As0z/LmOAC7XccGuyKDoheBvv3tr19cfPDlw430f/+7H/7TW7Pwf3kffz7J0iPI4okmz5se+snlfLGM4yRZLeeu60Z5EiZFiXCaI1ToFJ5STaEV+BLLyvjHaYYE0XmYzNzILLVVd6Oc3EB4Wt+nPf9COMub4wDsdh0b7IoMil4E+sOvPSSo/Lc7akx/85s6Du3kmQC3h5OOfnU6hS+TrZ1cy5+TyXzihV6RebPZ1C+LMMmyNCuTJMOooCXFJaOaQJVQTedNbIJQE3U2tZBg7NGV4A2D6gBUqkPuRy+Is7w5DsBu17HBrsigeAECffe3/1ZT5b80Mach0L/68CUJFDN/rwUUPnBnKycBHdAsyLIyTlCahjoiTXGJiizLc0oYsCLwpOHKm9FzHYXusmUrQ6/Uq4sjneXNcQB2u44NdkUGRS8CfTkc/equr2m+WK32CXQxcVbucpUkYVxmYZJncVFkQZEXJC/yLCtyzIz/EfjEVaZ4tBk9r9qcvb6RToZjUFUfM5n+pCL6rSs/20K83a5jg12RQTF+ApWe7+3z59XVzFsGUzeOcx17ppPMqAAAIABJREFUasIs9H9lpt9wlqK8xBiE6GVVCehfqlsVehOC1t3f0AzaPcXatNU3bVLfh9Se1sa5f+Xn2wpqt+vYYFdkUPQj0E9/9o8GI1AVx7cy+IXvzhbLlZcmBciAlmWuUeZZiXBZEgyW8JRLBqbEdVUZPfqOQNsJTh2Vqh2qbMCTs256FpG6ULU6MoLcu/JzVVO+ttt1fLArMih6EegjnkivS6CSL/b480oHoMupu/D9NMkIIjr4zFGq03aMSIkYjMNTjpHgnDdVrbhQSoITJ5SSqrZotOvncW2qS8Yxvg+hdWp0uzFsvyu58xhnqKZ8bbfr+GBXZFD0JNBnOBk/l0ArPHX2AtDpfHZ1tYzTMCzSAhGEMS6xplH9F8xwgvsmxowzVquqAick/beCXvra/Km3c5vtQWRjpuMrKaq7z3/3qLJT82z6BqzbK7n9GGcagtrtOjbYFRkUvQj07Sf3i4m8OoHWib9cTHdOQCfT2Sx03SBaBUmGC67DzazIUJEXWFAmNHOCKpOoamNlDP30mh3XG+prh+GBSjtXDxNMmknPO3x24KjS1O83BHpEBGkJdGx4Xy7Ersig6EWg775z8cWXOQQ9+tXpCDTNF6v5pod+PplcXs6nnrdwgySOk6zUdFmyUqfwFBFSCRiKLzGVda1jSs6kEWKCSnxLW7U0BSPNmkq/a+pW3E7CdFK13s3rm/XBo0p4mC6GPYoAbQo/NrwvF2JXZFD0I9Af/P7FxY/cM4n06gRalt5yvj0BBVWmaHHprZw4S9O4FIRwTjCCgpJgQlDKCBThgRR1Al8Z/U8IO7uoz9hxQieTMgZJUFCCFF+BAdKW0Zp2xvMQzzXbDP7JBGqLSGPA+3IhdkUGRS8CfaSR/nUJtGExWnZD8JPLmc7gJ0t/OlvNXS/PslJHm5xhiEB13s516s4YkzBtBG5I0DXf6tltoj6du7c5uCbPyqTzhms11ZqMvn3aLlitD2baN3KiT03hbRvTGPC+XIhdkUExfgK9VnkWtgHofAoB6GK+WM7nc9eNogyXacE5LxChCOsAlHLgQyWl4srEn9APCm2gN3lz3YaQyqgwQSSqjFR9VW2pcpPt14cjRdPDdGwEaRvpx4b35ULsigyKXgT6cjj61em/Gu45XQC6Al3QqbNauaHjxmmU4yJNiWRFTmlJuI4+OUSTqhJcAH9qCNG5uzfdOPw1HGDWRsUOCFRHoiAWCq1Om5ByS7X17RReB62GNY+PIM/y5jgAu13HBrsig+IsCBR5mwx+Mpktlws/WK18L46yJM5RUXBGMMFUk6f+AyOcteSMc2V06yA5bxmwBj8kIMA1qDKtjQwoRKKaTzV91jeNoJts/8b3owNI11em2+noCPIsb44DsNt1bLArMijOgUAx2qqIXM4WC1+zZxwkSZr4YQxdoJQLQbCodC4vlQANEakDUWhggthyDW2e0O8JZFptfZBM87yJRKGoBF/YEuhNtr8faBrvJE2hT/o9P+UfjRB2u44NdkUGRW8C/cEfoIuLD9Cv//nJCbRibQuTGUhyVgsdegZRlsd+FAYFohwXVDBMmFBc1Uro2JMrcO7g3DSAtlp2pvPIVM+NPKhSxuLDSN1BN1NTQ3F+E1Vuzz73As1mQ6BPqf6c5c1xAHa7jg12RQZFXwK9cYa/39zjdQh0XeHFpAtAJ5PFarWIgzhMURms/KyA4pH+Q+HYU0LHkpKaTXX63sAQktqOwbcN9KBmV6sGQs9Kmci0o9Zb2frBM86OP58Wgp7lzXEAdruODXZFBkVPAgX+/JEv/+rXf+aZDHr0q9NkJpLVjSv8ZLb0/TgMC4TLMM4pKghj1LBnJRvjeiQZF3ACCk7GVauoDD6cLf9Bvagrv7csuQaKvlNvP3TGeS+B9jkQPcub4wDsdh0b7IoMin4E+v03m1Gkv/7k4jljnUe/Os1bxHPcDX3OdQwauWmaJyku8qxIjI8xZUpqFq0V6CopSZmQEjzlpCn6mLkjnc2b/ndw6azazvobG85+o0H3pfC9SvJneXMcgN2uY4NdkUHRj0A/vfjiZvro7ScX//CkBKqy2FlcbQjUWUyvgizLizzHKE8SXMRhwjnjOnXXIShIL+n4UxOq4DBe1DRKrTfM2Qagsh3cBHfOajt51Gs06HARqd+/Pcub4wDsdh0b7IoMil4Euicm8v03XzztKGcSB9OOP92r+XI1c7IsK2ieZjjPoywMooJSKRQUkWQldPjJuOmkr1tDubZ6pMyHZnCzMsNHstqRpKurPvp0N21MN+g52H6WN8cB2O06NtgVGRS9CHRPzu5Z2nZHvzod4eV+sNyk8Ct3OVmFXp6lmj91Ch8nvh+necYY44JVMHqk2ZMzIisuWmJruupRbWQ/wWdO5/Yc2uxbEXojG2KqS4+/nk0j/e6X+kkrneXNcQB2u44NdkUGxfgJdE0jd74h0Ol8fumvgiJJkixJS98NgjTOkyzHuCSsgTFORqmOQSGD784mzXln3arIryuj/Sk5yIQCgVZ1Ox7/ZHEPS6BnivflQuyKDIpeBPr2kx1F+u9dnDaFb+picVOEv5osnKUTZHFc5GnkO34U6VA0jUqMCixUpTglnFM4C+1q7NdGP75LsqFM34CLMTepfWvXeWBmsz9sCn+meF8uxK7IoOhFoIMWkZoau5c3XUzz1XTmBWnienniOYHnBmmURXGWYiIQYVUtIRYVXEJnfPsoW4prZZBrcwza9X+22iLHmHLehi0inSfelwuxKzIo+hHo999cfOHfm4/+y6+cuo1pLYo8hCqSYdHpYjFZrEKNIFplwcKP4iiPnLQoMKMF4Uzn8JiAqRzUkDbD7V3DfDuVZJw6zaxS3VJn29JkhEaeAtvGdJZ4Xy7Ersig6Eeg7SASQui5o0hHvzpopM81gbqbZnqw41w5URTHcZSEXqoz+MzXf2Ckk2DBBaEEIlCxo09nWt23Ip9GYgTKQRu3YzOJBNrK9faHj3qVtpH+HPG+XIhdkUHRk0Df/embbpLzg994Bn8+qY1JochfbpP4mTubRssgijI/j+IkiLMy9HLEGAVdESl4iTkXjEtR7Z1Mrls3oxocjBWUkhR02Fcdq1btnLyRvXsVseOzvDkOwG7XscGuyKDoS6Dv3v7Z13UE+uV/8/QC0lMJlMvUvykjTSdzZ7lwYj8KEi8scJ4mCckg8sRlqZkTI6TpE8zlqr2jyabp5o9Eq8BkPD02FSBg1Lq1iXslu42zvDkOwG7XscGuyKB4hEC7FvofPE+D6VkEWjNZ+JtO+snlZLbwnZUXp0GYph4hZVlSzrimT4JKwRklCFHBCBH7BApd9GYeXrVZe3fiudUTaetIzWsZvp3lzXEAdruODXZFBsUjBNo2fQ7qC99IVt4EoPPJ/CpzVpEXx2UUZxgTyqRQHKEsKRnoKBOdzhtrY9MHemMTV7cS9HW9MeRov7Xrv2kan3q1dR6Ns7w5DsBu17HBrsigeJRAIQIdlkCbMt5RY7paLueBFwReVhRRiQlTSopa0iJNMUNMCEQ4E5Jgbqzkugdag2iysees7wrN7zZzWgJ9GHa7jg12RQbFIwT69pOLL/7hd//L1/7Bv//uDZ6Rzx/96jS5ce7tEOhyNZ9n0crPUJwTCZl6pSowQ6KoRFKYmU6d0FMuQPRz80BN271UVwqmj+6WiXYklG0K/xDsdh0b7IoMikcIdEdIeThb49TfCoJO54tV4nllEYVpjpiU0C9f6SwfGj8FEkIoWTEKp6KgMX+Twa9BQllJ4+kBc++3+XFbe7dFpAdht+vYYFdkUDxGoG9/b2gCrWjszLZFJG8Z+bEmz7QsskxUSlRGhZ7D7KYgVKp1xaSgTNaq2eFB0ExuhASLeAhAm63T3BbbZk7bxvQQ7HYdG+yKDIrHCFRT6He/9e/efPCvv3WDPzzpLLzC2XK+aQOd+1kU+EmW50meI86FaJpK8UpTpv5YEq6aRkowl6v2CLSpWxUmndbL9RqaQdW91kav4tl+ljfHAdjtOjbYFRkUjxPou4GLSBXKbpqY/CBNnCDPsjSPc84J1jl73WjuFJRAK70OMlUNdpytWt2m0g7Vdx18dlLKIK4MbkkvHmY+dCUnfK7XhN2uY4NdkUHRi0Df/vavPa9//jkE2tDlVg50sgiiyIkCHX4WKWKCIFFJ0UgmKNSQqOCyMrUiYEq1CUBb1zhjZVyvjbsHGCbJ+s5B6CviLG+OA7DbdWywKzIoehHou09/9o8GI9A1dp2bIrzjRImOQpO8xLiiQgmdi4MjPMUIESZBJETKtmm+ghCzVWACTWXVuRo3OjgFqGonBH2VtH3vSl710U8Hu13HBrsig6IXgf7wazt6oKcm0BoVO66cbuQmIcrTgtCSUQkq9JJypRglpWlpkpWQSqqmlkqB1DwYGq/NEahx4lyD3XHLnzvq8q9TONq7ktd88BPCbtexwa7IoOhJoAOegUqG3ekNgwaBlyaozHMsGSOUcy45lrWgjAkgUJ3Tc6XfKdBagmnOuo07TQhqNOhbXyQFPaHd07xS69LelbziY58SdruODXZFBkUvAt0zlTs1gQpRxrOtFtNiFrp5SlCYIkUYRlwIzonmRC4kSNhBZ6jmT8WYVK1ASG0CT1AQqUwT6HVlfgAORbtn2TbPN6+XyJ/lzXEAdruODXZFBkUvAn33nY0t/AAEqliR3ESg04kThEmZJ0mBC0QpYZwgsIjjOh7lOnmHAlFd69hUtkGoSd+N8VHdeXysa4hPdQ5/KwA14navlcif5c1xAHa7jg12RQZFPwL9we9fXPzIl3+1wzNK8ke/Ok1vJHevrrYMejnzvDRMUozSvJAcxOeJDjuFTugZFeAO3zQVZYIxVYtNBaneS9DNQWh1Q5Udgbbqyq+UyJ/lzXEAdruODXZFBkUvAv3h1wacRFoT33dvzkAXk6Xnx1GRlwkmCDOYOoLakeZQUcEop87DIRwVYHGsDCeC/tJeZHmrZtSm8DeKdi/yi719Ja/xoAPAbtexwa7IoBg/gTZFFt80ggKFOksnStOiQAgjwoAzddwJtSEJtpz6A6YzephFqkTLifXts81bXUvNTgD6SiHoWd4cB2C369hgV2RQ9CLQl8PRr+76WtIsnu8S6Gq+cqME5ajUEahQitcNtMabTqVKR5+aQLkE33eoFj3en2T6m5rWId4S6GOw23VssCsyKMZPoFyg1WQPTuj5YZbhsswxF1zn6TCX2TQwwQkUCoV5AfPwvHq8Qx7os6o6006bwj8Gu13HBrsig+IYAn37fGOPo18d9IEWlzcR6HQymS9nfhj5BSow0Tk8VWaqSFUSTj0FtCspyoXUFMoffwbjJqcp9PqVu0HP8uY4ALtdxwa7IoOiN4H+2f8Ah58//O9//VlT8Ue/uuvruiyn2z7Q6dXl1J3PoiAKs4IIXiBw4ISxo0oybkJQsIurCJFKsKZ6LJxsNgT6en6c3ZW8zsOeHHa7jg12RQZFTwJtZUE1gX7t4gvPGUo6+tXpGJEly8uuEXSuQ9HF1SRIEi+MEXjAM8GlYHVTcTAzlhKcNyvFGaW0VVveJ8TbGX3Hn20I+poT8Wd5cxyA3a5jg12RQdGTQD+9uPjCP3/zD/6ft//HxcUXnxGDHv3qdApfB9FNI/3i6mq60vFnXqaaQKlQnDIlRFNBzi4U5PJKU6qG1AFprTpbpI4a78SY+wT6ijjLm+MA7HYdG+yKDIp+BPq9i4vf6Cbi//TNc4RFjn5119dKpoGzaaS/Ws4XC3fmwRgSx1QzJQwgCV5pEq1gQhM6QbnksqoEAwKtFIjWdcR595RzL4V/TZzlzXEAdruODXZFBkU/Av304ue3kiLfufiHJyXQBuMwcDWDXk2uri49Z+XOF25elgxaQIWglOkgVEebOvxUXEEBHgJQncZrWtU5fFVVN6NGd+vs1WkC0PO8OQ7Abtexwa7IoOhFoK2YSEeg339z6kkkVKwuoYw0XUwmyzBeuLEfZpwjxrHmTioEpsyI1HGl8/ZaM2gFM50SQlDjZNwRZ9Uc6PRs25he8ld6+Epe/RlOA7tdxwa7IoOiF4G21NkR6LO07Y5+dToClUXZ+hpfejoOdfw49NyEpAUTeUYIQYRiInSsqdmzgklOJdtUnnFZg+Mc1OLNnGa90yp/Uy9qqlO4I53lzXEAdruODXZFBsUZEKjgubOAQ9CrxeVsvnT8IIjTMMWUFCwtES0RRpzqUFOHnRJU5yFxl1Iww59VtYZ3IG1n5EHbFL5Xx9JLtjX1vfJXl8Z/Jux2HRvsigyKXgT69hMoHHXM+b3nlOGPfnVAoKT03MWlTt/nmkSv5n4YRU6QkxIzgkuEQIse5JiUVAq065oKQlAlwXsTHJPWjewOOrfD7r165l+0sb7nlb++NP4zYbfr2GBXZFD0ItC2cNQSqCbTExeRRFlkYVuGB3djHYSGjhMVecEYIoiTsiyJOf1UojLS80CbxhNJv9eUCll8S6Drjp/WfaY2e/1Q/yvp9VMnkMZ/Jux2HRvsigyKfgT6/TcXP/cXhkD/+lcunqNOf/Sr06TCaJanna8cVOPnzswJdRZPiY5AEcO5jkERNTrzYN5hpOdN4agGdzlQt1u3Kfy66TLkTTHpAaZaNwdLTk9Gryt/Wc5+FdjtOjbYFRkU/QhUh6AXF+jNB1/+Gf3+55/On08iUCqKzJuYXvorMxS/XKyWUZQiAiEoLkrKKSayM31fg+t7p2LXnX1uikhbKnycQBsoOb2kvF2vK+9B7EPDbtexwa7IoOhJoO/+5M1GDfQ5/Pm0KjwhXrhyIH3X8SdMdS48x02KDHNGGNUEyvR7xgXQJZBl1ZohQdXdEGdXPIIz0PZhH430GiOw3CnUny6FtwR6QrwvF2JXZFD0JdB3P/gDpNnzR55pEH/0qwNWKbN4Nb3sZpGWi/mV68VRlJUUUckJ5oIgkKaHU09TIKpbB/ibtqWqi0fb80/NiHXbG3p/+1Lbd//gDx15JX1+yKbwJ8T7ciF2RQZFbwJ9GRz96jSrVFXoLJ2Nmt1qdnnlhkmAyqLAtUBIcFoQjAkz1SJgH1OK3+n7BEOPTUZuFJarps3u73vabd9ofeI2JltEOh3elwuxKzIojiLQ7w5DoHWYLa9gHH4xmcyWk5m3CsI0LzBjldL0SbH+D1HjtNmZILUhaHPDR8YXCfgTNOohNwcK7Z7kbutlsyk6PSqH1/9K+v2YbWM6Gd6XC7ErMih6EyjogV5cfDBECi+i5RW0L7WKdp7rB5Gf6wCUiEpzpmBCYELbAc66deZoT0N3+ajl0kqTLAjetbl5S44HOMvo25sg9kV+x+ZKev6cbaQ/Fd6XC7ErMih6EujbT7aWcj/3HEXlo18dUF8RT6ZbQbvZIg6dMI7zkiCuRCVBjYnCMDxnXWgJSbqOReEBtnzUnmqaOj1Mv98YGB/Imte1cVhqtjHqHp5GcWd5cxyA3a5jg12RQdGPQIE/P/jyv/7W//31NxfP6aN/UgrP4zKamR76yWwyn7leFDg+IqgkQoedtWZPLkCKCUyMGxN9bgLQHUB9pmnDz6racYA/VLcxmsxwTnool35ikn2WN8cB2O06NtgVGRT9CPQ7Fxf/TRt4vv39ixPrgdY4i8JFqwY60xy68qI4jKF7niKq8/ZK8rqWOrTUf1TbPw/DSPVO/AhBY2PK6ib6BAY1nLlualXfCUHbGlSlmkPFnKeWec7y5jgAu13HBrsig6IXgeoA9Kb789MTj3JKgtzQMQegi/lsPp1HYej6IaIoS7OCcpjXhLxcvzeOcoZJjcnxhkHboBHONNuhzqodijdJuk7W631KXDdNW4Q6lKo/udHoLG+OA7DbdWywKzIoehHoD7+2M755aj1QiXDmLFebLtDAjf0oCoI8R3GYIop1/s6rSkkpjHqysejcFIHMg2w5z8wpAbOqllGhWg8xab3HiE1XxW8OZfBPbnU/y5vjAOx2HRvsigyKngS6w5mnlrOrUJHFK+PLOfO9xZWOQNM0CYMiDaOMEkQ4GMpxDgX2WoGSXRdodlX0naCxHTDSuX2nKlK34ejulGfLkaaN6ZDKsiXQ9+VC7IqMDmd5Ib0ItFWk7/D9NyeWs2MoXLj+cjKZLp359Gq68pPUD7zIC9I4yzSBcsFlJbmE2rtSoMJUda30jWkjvTm33K0AdRNLEI/u9dSvNzR7KEu3Kfz7ciF2RUaHs7yQXgS654N0ck+kOnWcbhAJnD2u3DyIktCDcc40jtOCYXBG4kzHoEJAKR7OQdthzubanHzenHLu9CBtCLTRP71Hhw/WiWwRaehX8FJ4Xy7Ersig6Eegbz/Ztn9+5+IZGfyT2pgIxd5k4rRSIovL5SpOgiTyHCcosjCM07TknCD9h4CinVBV3cqAmhlOIwpy65TTwDSFHi4WPdipZNuY3hO8LxdiV2RQ9CLQt78N/Z9f/vVv/Tt4/09+1eDXnpLIH/3qoI2JF2kQ+ZP55HLpXC3c6TLLAj+Ilm6eRVGUxwVlHFNKiND8KWWlKilV26jUtIOd+6ecADMdr7qRz9tP+2CvvG2kfz/wvlyIXZFB0YtAf/i1i7t4UiB69Ku7vpaijMPYWc4nS2c+94O5H8VxkaaJG4RRGKVlkuUYIYLLklVCKKlTcpjrvDGCh9b6W0FjpxeqHtQUeUmc5c1xAHa7jg12RQbFGRAozfLEnS4WE8/zVn648iI/yIIgTIOZl4RJWuZpVhJSlpRwmEhSkusolKsb6flm95SzrcC3Xzct9S/7C73vSk7yLK8Pu13HBrsig6IXgb4cjn5119cqL5E/nc8nk9l0MZ0FSRQHQZBleRxGXhbnZVlqEkW4yBBhTaOUps9KQX6+KZpr/tzpUgL6VBuv+JMJH53lzXEAdruODXZFBsX4CVSWbOU6KyNmN3UWTpLkmjURxVmWxpigskBZXKA8LRjFdVNJHYYaAq3X26bOmzy9zd3NpLsl0CfAbtexwa7IoBg/gXIV+dHicmKGOaNwOS9IEGCCizQLEv2eElKUKM0RQZpBK8mkkqKqdSoPo5zbNqaWKruqEozAmzank0nHneXNcQB2u44NdkUGxfgJVLI0d+YLtzU19sJVkuYxKnOcJ6FO35mkRVHq+JOWOeGYSi5BmElJGNLUD9F0jfQtV3ZmR62k3UG1kFfCWd4cB2C369hgV2RQjJ9AmxJlfuRPWl/OiZfEGcZQeS8yVHLKOcKiiNKypBRzTmTFuKy44U8zfLSZvaw2hsam+1PdVbx7VZzlzXEAdruODXZFBsX4CfSaFpHvzUwACq30SYRLXOR5gRAuRc0o4xTrDB5hyoQUSkErk9R5fLWdf1/vWMqtG2Uk6Zv6sF7yK+Esb44DsNt1bLArMijOgECrNPQvgTt1DHo1myxyUqR5RowRElaSCoIIzhKEdOgJkiKNzt+hk8nMIt122ATerFo9u5N6Z5zlzXEAdruODXZFBsUZEKjKi05Q+XI6mS6udAofxyUuCVccEyE5Q4yhoiioEgzmkFTNdQq/GTLa93gHnfkNgb7G7/PeKznlk70i7HYdG+yKDIrxE+iaijTyTPw5ubyaXLlRUWY5Av6UhHHBwNiYs0LHpJjVioPTnOz07Iyi0o2nMUSiayM2AvT6Gr/O+6/kpM/2erDbdWywKzIoxk+gFcdFtJhtTOWWfohQWRgbTkalYByUmHQ6X+BSJ/BKKNnoILQTWjKPYgpILaoDo0knwVneHAdgt+vYYFdkUIyfQCUnaRosO0G72UwTKKYMES4p0Sk71+k7xaCrXCDjbQyKoI3x9Ni6wm1c4ddN/VRB5OfiLG+OA7DbdWywKzIoxk+ggpM48lZX7SnofHUVp4gpHXPqNyYlpwTnOfTQl1QHo9JoL5m3rU5dl8MbkeSH1JJfE2d5cxyA3a5jg12RQTF+AtURaO45q3kbgV7NV26KKVeccyqZ4pIhFKc5IZgz/UltTN/rxhh17HgibZSXWt/jk7aAtldy4ud7LdjtOjbYFRkU4yfQSuLCW06v2kbQpRtGJRGSyUoqxcoSsTIlKEopY8YZqbU4gipStTkBbU8/lUnjgTtbseWX/10+eCWnfbpXg92uY4NdkUExfgJtKhoErukDnUwnbpJ6JaeMw1EnZSUuM1LSIkdICMq5lHWl83Rlws2WJDenn10jU1PXnSv8K/w2H7iSkz7b68Fu17HBrsigGD+BXlc886fzFUzCT1w30sEmLkvwMJYVQ5iUJcEIo4xwSqGGJNe1Up2AiOli6vqXugJSNUwZ6SxvjgOw23VssCsyKM6AQBucB9PlJVSQriIvCcuCcMxYI5hgLEvLokQ4Q7ikVIIMU9NayjWbXvm9USRLoM+E3a5jg12RQXEGBCpZkfuTy9l8cuUuXOBPggk17Z+Y4LzIEh2RlhhxwapqXWv6bM3i6m7avRNV7qw5m0PGxE/zOTrqSl734U8Gu13HBrsig2L8BLpmjOSxo+lzOp1P4iLNyjKD7k+kNH2SLENZFiGCMOdCVKDCpEBqyfi9t42gRoR+00J/yJj4iU6bR13Jqz766WC369hgV2RQjJ9Aa4Fo6rjgCL9w/CiN0yyNMoSofit0OJolaVogQqRklMtKcB2DilpxcIjveNIEmFuWvEOXT/V6P+pKXvPBTwi7XccGuyKDYvwEWknNkYvVdDKZ+m4aZ2EcBkWRZwRlnJC8LKMCCvGCM1kLiEF5XXHMpeBqP1Pf5unmg5usfX0oqX9pnOXNcQB2u44NdkUGxTkQKA4c53JyOZu5WZwkYZAUWZajwlgZozQrSjgSFTr6BBVQHYMyABfKmMPfE1fuhKHNKcpKZ3lzHIDdrmODXZFBMX4CrRmJZ4vLyWTmzjw/8LMk0mFnnicFESjNM0ypzt0FyDBp/tRvHFPOiBRSCFXfw4q7Wbsl0CNgt+vYYFdkUIyfQCtReq4HbaD6PycIsyTO8zLx4hRFnS32AAAgAElEQVRhQkqCaUlgCElwrpRQigkQqecmBJXVYdWlvazdpvBHwG7XscGuyKAYP4EqWbqRN1/BIPxkmfhpkqRRlMRhnBGMEXjJacKU0AVaKS4lnIYKKQk4e6haHjgDvR10bmaTXuhXevhKXvPBTwi7XccGuyKDYvwEWjEaeaFnlERc9yqKYx2BRlEYg5MxYyUqQVZE5+s1WCFpLoVykv5Uk6qEyfjNY+0W3/cItG0ZtW1MvWC369hgV2RQjJ9AG4ryjRjT3HMCt0iTNIySLCoLxHX+TrHO3bnO1itNmaygAgaSuORSgLZd1T3UXq/Sbta+Ebh70V/r3St53Yc/Gex2HRvsigyK8RPoNUvLqJVTngd+5CVxugriRCfyBSnLAlNuIk5Zi6rmlAvGwNODc02pZh6pfaRbB503dHqSE9AzvTkOwG7XscGuyKA4AwIVWQKeSKaEFCRunKWRn0RRQYoE5zkThCgdgur8vZbtO1U3tcBmHKnZFJFul9pv2upPMxt/ljfHAdjtOjbYFRkU4yfQNReOG/iXmkFnq3Dp5EWYl3kSx2WZJoRgRkwEqjRxVuAX13Tv6l1Tj7s8uSkpWQI9Cna7jg12RQbFiQn0Cfjs45/+iR913dlscrlYrmbhj/7jX/yFL/3Yj/34T/7kj/74j3300Ve++o2Pfvnjjz/+xje//fE3v/3tb3722bc/++Znn+t/922NzzaP8vlnnxvAd/Zw7zcsLCwsjsMII9BGRlkaQiPo1Wxy5aV+IXCWp2mi8/kcCZCh54zXtU7fwU6u2Vp5dDFm9+7egfftN15Vkuks/+96ADbeGRvsigyK8RPoGhdlnLgwDD8J4yCJYoILlMdpnMSYQLs8EQLS9UrBu6berwcZF6RqV0zkNrpvvK4k01neHAdgt+vYYFdkUIyfQBvEMmc6XU5mM8/P0iDPywKVKC+zIikJZpxToQxxghv8vt1R6whfg5ryAxFmK9b0uiehZ3lzHIDdrmODXZFBMX4CrQTyXfdKZ/DzLIuyGMP0JgH+zMvcCNFz1mXua53C70aRzaZH/iavvw+v3c10ljfHAdjtOjbYFRkUZ0CgMo3clbuYT6I8TnTYyUiR6TeK85KBKRKTFYgnmxgThjK3/7pprZBUczexv4PXLsaf5c1xAHa7jg12RQbF+Am0plHoLGaT+WS6DJK4KFkOEnY6+NSxpyAEZpDARu7OKee6JVD93dYh6UFqtATaD3a7jg12RQbF+Am0ydPUWV5NJrPFZLIsSpykSGfwqCAwuUlFXRn5+fW6am3jtgzYzmi2HnP1/cqgLWwK3w92u44NdkUGxfgJtCrSKJhfgavxYrGKizxKihLlWYo4ZUwIpSpQUeay3vEyBgBn1qquTW/To9Roi0i9YLfr2GBXZFCMn0AlKqL51MzCL6KlE/p5nseYoiKhnGKqFOjWaQrlEs47qxv9JXMi2iilObR+nBpvF6BeGGd5cxyA3a5jg12RQXEGBEqzaHl1pXP46XIRuAs3yYMCM3AylkxSCRp2koH6kmZP+GOIEMJNYw/f1LKqH+/w1P+iuUd9+UVwljfHAdjtOjbYFRkU4yfQipSuuwAtptl86fuut/KiMkMkw5gxk8SDAr0AAdBKVUpn7HVleuebzTj8+vEZo1c35jzLm+MA7HYdG+yKDIrxE2hDUOzBJPx8MZ85bhT5qzjPM1xSkgspYI5T06eUgjFpCFTVRkmk1oFnR5+PPs/ra9qd5c1xAHa7jg12RQbFGRCoKrM4XE5Xs9VyOXNTP/WCNE8jTDkSVaU4pzANLzSRskoKEFZuzGRSBaWjfnHl60syneXNcQB2u44NdkUGxRkQaC2LIA4WV0tv5TpBGOWZ/isuKSO0bWRimEpNoUxxwasafDxM73xVd31N60d1QiyB9oXdrmODXZFBMX4CXdeVSJbLJFrMPR14hrjIojTJGeZUUuOGRLBO4qn5U7WqTEZLGdL4lhQf1QmxKXxf2O06NtgVGRTjJ1Cdw2NMYsfP0jgvUVmWqIhzSgvMSIlopcDDmDChA1JQpK8rqTgMH+nwE6pJoLNkuFF/cn8kaotIPWG369hgV2RQnAOB6uwcFeCBlCeUgXoIIaBEjwkmJZaSV0IJpsNPbCw9KtH2Mpnepcbk7+tWkQlU7e6LRF9XzO5Mb44DsNt1bLArMijGT6DrSghUpHnk54QWiDGQsNMRJ6gwcSKYrJRikkENCZzgpawrVek/24DS8Cdwqdqk9IfwqnLKZ3pzHIDdrmODXZFBMX4CbRSjgpdBkqUlJOqcQvOnDkPBA16/6ahTf6aJ1FhzQgGprsEeqdkxgW+MnogyI/Gv7b95z5UM8JyvAbtdxwa7IoPiDAhUs6Yo0zRMU527MyGAP3lFmOScSJ29SyEkl1zoP0zp6NPEmebIs4VmzDYArZuHQtDXxVneHAdgt+vYYFdkUIyfQGvOaB5HSeBHmU7fdaKu83QhMMMUlOykKSNV4AjPBcSq1Z3uzw2BNpZAnw27XccGuyKDYvwEWlUIFXHghW6WlYhyzZEwvSlJKSodfsIsZy2BPCV8LImsbyXqayMJanw9bAr/XNjtOjbYFRkUZ0CgkueZ7yydKA6jDFo+depOCXQuSf09qmS1VppSdabPGeP6i/vGSMZVTtZGXXmwAPQ8b44DsNt1bLArMijOgEC5zANn5V4GUeD7GaZM6qQeFTDCKQRXMLKpuI4+NShI26mqaao9WWUN08H0QBvTa+Msb44DsNt1bLArMijOgEBlibPI85xLN4zciBY5YQxBOUlRpGqpQPOzlhToU3KoIlUgANo9wnbGqGsJHSR/vz7Tm+MA7HYdG+yKDIozIFCOcBqsrq6mq2WQJ3GB8ogwjAkU45U53oTGTzMVLyXwZ7WTp9fdQPwwifsNzvLmOAC7XccGuyKD4gwIFMsi9ZzVZD4PkiyL8zROc4YpoZRKONusQcKuaioppWoFQQ1ftm7vVWsVbwn0hWC369hgV2RQnAGBaqJE2XIxXfh+GKSgBVrEWGBGCdYxJ5xvQu9n3UguaiVBTaRujCj9uqm6FvqBSu+7VzLs078Y7HYdG+yKDIozIFBZIhxdThaXc2fu+nGSplmaavpEiGEGMWhTtZ3zOgKtwdUDknrTr6SZ1bSA6jB14AD0PG+OA7DbdWywKzIoxk+gDedoufKWk8lqNXe8KNUpfBojyjDh0LwEVfdWbglc5WpZmXAUXD1grrMCGZGdovxQOMub4wDsdh0b7IoMivET6DXn3nw5n04W8+XlzI3TPE3SrMSM6fCTMwp+xg1I19XrqjJN82YWHnL3qu58PepHn+m1cZY3xwHY7To22BUZFGdAoDJZhvPJZDmdzC4n8ySI0zJOC0SoAilQsOOEiU4ThtY6ozfSdfoLMPle6bfmsQPQk/Q2neXNcQB2u44NdkUGxfgJtKFpEjoLdzJdTN353E3CLC5QiVBVCeNnTBmR4CQHzFlD/GkMkSTYcpomp0cq8K+tBNpdyWs/wYlgt+vYYFdkUIyfQAUrsth3l5PJ1cRPQjeKsxwzQikTOo3nFIMgfVVXrROn7AyRVCtoBwWlh9nx1bXouyt55cc/Fex2HRvsigyK8RMoFaRI/TkYw1/5aRL4RZohmEIqKaGEcDCXQxS8PCqwhFfQDFrXSrYz8U1VP5K/v7YbUnclr/vwJ4PdrmODXZFBMX4C5UzkqbeczSdXSyfI8jDLCOWsxIKRQnOoILSklCtZSZPBUyprIZpGilZ76eFneH0/zu5KXvfhTwa7XccGuyKDYvwEWhOR+747nUwWznKZZ2mOKaWYCMF4gShYfGAQFgFLeLD0UJxxk9FXVY/DTUugx8Fu17HBrsigGD+BXsuiyBydwq9cz4uTvMAYobLAoArKMDP+ctARChyqlBSVEJDP6/QdxuAfewabwh8Hu13HBrsig+IMCLRGZeQ48/k88APfR5opSYkwQVRxoYNRBv8JKSWlVReCKlXtmMrdxn7bki0iHQW7XccGuyKDYvwEuq4kzqNlGPiXizgIYog1cVHkOuoUlCPKCRTipRL6TVZSClAUkUZB5CAr3m5bsm1Mx8Bu17HBrsigGD+BNrXEtAzTcD51wpzkpRRFUaIUcQoZPOWCAJdy6KdXUHyXD/bP3404bSP9EbDbdWywKzIozoBAG6ET9txdzJ2lV2KEdPKuk3iCS0IYEUJICrGn/qASVVXDaDyMc94TgJ7qzPPOlZz26V4NdruODXZFBsX4CXTdMJaXZXA5WaySJM7ztGRE5/BIh6GaOBmTisJf+s0oK4Ojh7y3AH+qqvudKznt070a7HYdG+yKDIrxE+h1LTBGyQyq8Cs/S5OEYqS/kmcFFN2VMi5zojJaoLUyAej63rTcEujzYLfr2GBXZFCcAYFWFUWpH7iLpRNESZaVmDBKUUmQ4kpIzjWHMhAUqZSCClL1UHZuU/jnwW7XscGuyKAYP4Guq0rg2A+9hRskaZTmeVJgTHVazyVFEH4K8ITnsmm4hCC0Cy7vCUJP1LZ0G2d5cxyA3a5jg12RQTF+Am0gsEw934sWbqwjUUzytCgxYkggpImUKs2h0PhZyVZApG2fv7c76TRtS3eu5NRP+Eqw23VssCsyKMZPoHUtBSnTxJ2ugmgVFIjiDNGiFArljBcZ4zoABQJVvAYJu1Z+aS/Q3A9GB/E2Psub4wDsdh0b7IoMinMgUEEoiqZzP1gsVxHCRU5IlhBGcIkIAX9jwRQU4YUxOTYhaGuK1B11DhNz3rqSYZ/+xWC369hgV2RQjJ9AGyVoHjqBu1o5geNBA2hJMsxJVpIcZEQwoRIa6JVQdV1VIKOs83mlmi4EHejU89aVDPrsLwe7XccGuyKD4gwItMI5Tlbzhev7jpcUBWYkpYyUBUM6BmUEdEWkjj2FMnZI+oO6AYNOVXf+8MPU3W9dyZBP/oKw23VssCsyKM6AQAVDue8Ec02hZRKkiHFWUFrq/B2VpiOUM53EwzCSNFLKHCyRFPTU18CaQ3V+3rqSIZ/8BWG369hgV2RQjJ9AK0ULFLqLpR/5EdghEU4IJUxzp45GYa5T0yejFAslOKTusjF+xu2B6HCt87euZMgnf0HY7To22BUZFOMnUFXxIot81/H8IEiyoih4QTBhjJAiFVQn8AwKSbhgQupQVAefYGdcK3D2qK6Ha52/dSVDPvkLwm7XscGuyKAYP4FWFcN5EQaLKz+Ig5IgjAgGMySuM3iGMKcMUYhEMZaC8YqL1hq+ElVberdFpBeE3a5jg12RQTF+Am0UL/M89hzHXUQ5Ahs5jjhk7UiTJhUgCEoYVJOYZlDOVAXVJJBW3gSdto3p5WC369hgV2RQjJ9Ar6UkRZDEy9k0SlGug0/Oda5OCUKMc82YHOtPckIZLfXntK6goUmBtMiGNAdpnd/HWd4cB2C369hgV2RQnAGBVpJif+lEqRdHJaeaQKUgBQNJEZ2uSynA3pgiHZnqPJ7LqqlAHVRWqupj6XEinOXNcQB2u44NdkUGxfgJdF3XLEyiJAyjuEgJ45o3NVeCDScTMIEkJGacFkSUlEmmCbRpCbSuD+oy2Vn458Bu17HBrsigGD+BNmshsywKYydx07KEw05wNAYbD1HXUspGQghaYk2jTEilmtrYesBcfHX3Ia0a07Ngt+vYYFdkUJwBgdYK5VEWx0GQ+lmBsQ40NXdiQgW4v0PHp9R5PSM6/BSi1aRXCsrwmkDvhKBWD/R5sNt1bLArMijGT6BrKQiK4zjygsxPC4KhdoRK8DIG77imgu55xpWOSCsJfaCyrkU701nfTdU3bfVNdVoKPcub4wDsdh0b7IoMivET6DVnPE+D0Hf9IEwwIVhQzHUgquNNna/rAFVwCW2fqlGqAo8PHZXWLYPezdQ7AjW6y6dM48/y5jgAu13HBrsig+IMCFTzZZJEwWKx9JMoLylGAkSYKKJE6TxdKhg60kQqa6MGqkSzbmAQvlIHEvU2ha9B8u6kB6FneXMcgN2uY4NdkUFxBgQqMcKBu1hdTtwgzVFRFpgSyv7/9u6uSZIbOw8w/bnh1ZIz090VpXJtqVRKRiqcNw45lb1aSggEHL60wyK0u8SC6wvpkhgwKDnCdxpMiJryrUZadjAcpE1x/qiBrOpm9xAzbNZ05zmn+D78mp4luZN9cF4ClZnA0CiXszIaVzZTDpcBmsrkclv2tcuL9EpCjsGZA3TiD0JFDo4KtCs3qAgpAQFqh75Znr3z4x/9u4fz+ardDEP+vW0GrWNewXtvc1aW2+6xfOZZ0jOMa/RU+QS0SGlcwE98L17k4KhAu3KDipDiH6Bb36t29uDBTx6+8/bZfD7frHOgtsqUF5LKRDO6chKnczkYc3yOE8zyqGe8fpfoxrPz4w0kBOhh0K7coCKk+AdoiqZZzNcPfvTjRw8fnZ7MV02zaZSxSpUAdVbr8VNQd/0JpZdeNnr52XmCZ5lEDo4KtCs3qAgpAQGa3HKzmp08eudHJ8vZbLXcbDbtprOmKw99lmdCy/5LIb76Gflv//z0T9OLHBwVaFduUBFS/AN0m0yzXi4XJz95++Hp2bo5a7pN03R5ER+8dd6U1znd7pH5+luatfnm5O9zihwcFWhXblARUvwD9CKpYbOenz04PXt7Nl+erppO980m56fTzvkyATXKxvHvr+4TUt2SfuodRUQOjgq0KzeoCCkJAap1s5zPT09nJycPTubNuuvbTdu3djzI2Fsz9IN9zXSSxZkeIgdHBdqVG1SEFP8A3SbX921ewz/80duz2WyxbNrNZr1ulXLBR5/nocZo/Zp4ZHGmh8jBUYF25QYVIcU/QFOMyjTN8tHJO4vT5aZbLoamaYZ2ML6cXuycdda48Jp85HCmh8jBUYF25QYVIcU/QMs7mf2qWc4erPLsc7WerZum7fteex+DKYcZO2vLI/Wv3h6EwZkeIgdHBdqVG1SElIQAdcG0J4/OTlaLZrZYd8vToVe9MXn9vi072FltS8hebg9Suz1Ef6aHyMFRgXblBhUhxT9Aywkd7fp0MXs0my3X7bpZlx1FjNHWu230TivrQ9kGdLc9yPXZJn1uXhE5OCrQrtygIqT4B+g2hKZZnj58dPrO/Kxv1svZZtkNVivnfCi7hpTNREwO0XGbJT/m6O7zTgYr9ysiB0cF2pUbVIQU/wC9CLZfPjqdn/zOg7PZYrk8nfVD/k0Z51JMFzk+bTmcM4ybMAU/bicy3lHicO/oisjBUYF25QYVISUgQKPaLJr5g9NHj35yOjubL5fLftNulFbjp57JGTMMgx93YkrjSUhjgvJ4eumKyMFRgXblBhUhJSBAg24WzXrx8J3Thz+eLVbr5XpWHqY346I9xN0E1JQTkEIqOTpulpx4PD9/ReTgqEC7coOKkBIQoN42zXI+m58+OHnULteb5Xqx6Y12OTBjKrvRl92YtB0DNOx2pS/TTgTofUC7coOKkBIQoOUz0JNHp7PTxWI2n52tc34uVaejK4Fp3S5Arc5f+Li9DFAmLyBdETk4KtCu3KAipAQEaDLdfHl2NjudPzhbzd5ZtOvVcuht2UY5RV/2ZDLlhaRynPF+K/q4uwnPaAIqc3BUoF25QUVICQjQ6Nd51X52cvZ2XsefrZpl/m1w2oWcmdtgjc3TT2XdeEdpPNXj8jR4PMZ099Cu3KAipPgH6DYNql8uZmcns+Vsudo08/WmVd6GcvzmNuX8dEZbnaegqZwTH8M3kYkH6e8c2pUbVIQU/wBNURkzLE9P5pvZar5etetF35a3j/z46pE3Pi/gy234chT8OAW98a9gEqIiB0cF2pUbVIQU/wCN0ehhs9osTherZr0+nbXrpte2rN/HjzzzIt65Mv8sz4DG8VTja/8GLst4kYOjAu3KDSpCSkKAulZ13Xx5+qhRm1m3mi0HpZ1V+wDdhjwFLafAl3tK1pVF/Df/grg/p/NOv2eHEDk4KtCu3KAipPgHaPKhX5+tFmeLRdd063a10crmBA3Wba+eXCqPhJbT4cN4a/4qL2PYnRRPv4oXOTgq0K7coCKkBARoUM1y/uD0ZN0vVpucoMZq7cuq3SuX558xeu+MzQFa4tPHsjXo5W348anQ8mon+RRU5OCoQLtyg4qQEhCgtm+75mR+smwXi9OmGZSzgzduf+No68cfubInky+72uUA3efl9jJAEwL0rqBduUFFSPEP0KBUN/TN7OxsdrJqlqo8s6RNnn7m1DQp+eSszet57/KPyib1Yfci0kV5kv6bBL3779z3I3JwVKBduUFFSPEPUKtczs9uPTtZrhaqHXptO2N8eXbeqjzfDN7F/Icrf3Hls9CrvEzb7WWA3v037nsSOTgq0K7coCKk+AdonmjqzWLeLM7aft0O7WB1k5fwyltXFu6xTDuz/AO3m3DGbzakH9/sTCHe+bftexM5OCrQrtygIqT4B6izfdd2ZyezRdf0i06bXvk8BR2fng/OxxKiJUDLK5y7vLyab45PMOX/7Y6/Z4cQOTgq0K7coCKk+Ado6pXu1qvFo/XQdv0wDHmpnpf1OT91uevuvSkJWkK0vHSUQrj2eSeXx+iFDo4KtCs3qAgpAQGqVbNZrs9Om161ejBKh5hccMaHPAUNZgzROD79uc05evN2EZMXOYUOjgq0KzeoCCn+ARpC17aLs0W3HkwzdF05yLgkZTTaBaNTOVbOubKHCJ/55reJHBwVaFduUBFSAgJUW73ZLNtmlaeg81Y5o2N5B8n6cuu9LNzLTfiw5bX/58tEDo4KtCs3qAgpAQE6aNV1ZRXfqbZRgylPzafyEmcM5RDOtI9NXjvQv0zk4KhAu3KDipASEKBKd33Xblabzpbj4POEtNe2rNzLkUhx3IApsTtE7mUiB0cF2pUbVIQU/wD1vm3bTc7P5aCU02ZolNWtC7tn5v14EGco+9EjQCeAduUGFSHFP0CDG7pmvVzO1/1mUDpPP5VSOUed9yElP+ZnCdN4uXUdlvD3CO3KDSpCin+AJqv6tivbibTKrNUwDEYPNidp2TwkRjfuY1cW8m6/dd29fJ/elMjBUYF25QYVIcU/QLd+2AzdatW163I3qet7NVitnR4PNA7jnqCpbCpSTkS69hoSLyIHRwXalRtUhBT/AL3wpm+XTdduls2gurbty5vwVg8uOBsuNwwpu4B+6zwPRkQOjgq0KzeoCCkBAZqUGnJ6rtebTa/btjHW5TW8sdr4mCeguwAts9DI9haS0MFRgXblBhUhdRcB+vUn75+f/+LTl372qw//9G4CdGuGZnW2Wq6bflgNQ6+M6fPvgynvcF5u+lnuyicE6L1Du3KDipC6gwD96sPz4k/+/uZPPz2/qwBVqlnPF4v5um1XXa9apUybI9QY71J5gTMv3X0I0Ue29+CFDo4KtCs3qAipOwjQp+fvffriy4/P3/vttZ/8+un5XQWoi33XNrNZe3K27je90kM3GK2cs9qXwCy3kfIaPvA4/OgVRA6OCrQrN6gIqTcP0C/eH+eeX334s7/55if/6TfndxWgeXVu+lXXzk7mZw8WrerK2/De2Mz4XWJuyyOgu9/v43t0F0QOjgq0KzeoCKk3D9Dn+6B8fv6raz93/st/vKMADdFp3W1WqwePHp6uVk1ncnrGcSeRvISPZfvP/evwPLZOrhM5OCrQrtygIqTePECfnv/l+NfPrwXm85//9Y2v3yhAU16vm3Y1e2d2slhv1uUmko3lAPjgbdmB/uo1+F2a8iRycFSgXblBRUi9cYB+/fF+6f7F+zc+BL0ZoO/ufe9//YsXz379+M//+M9+/6cnp2env/vTd//gD//4gw/+/PHjjx5/9NEHj589+eyzZ4+f5D9/9tmTJ0+ePXt2wP8DAMBdYBign/36yUd/9nu//9MHj07//ez33v1Pf/gHHzz59eMnj3/90eMPSnKW3Hxc/vqspOlnSFAAIPJGAXrzQaa7WsKnrbdqfXa6OJsvlutN2wwubp2Pweq4fw8pJu/KXiJ8twOVuTypwIKRG1SE1F0G6GtmoG8UoMn26/VyuVouVvPyIKjJSVk2ow/lsaWYcpSGskH9/pPQyOUYpBtEDo4KtCs3qAgp/gG6TT6apm1Xy02znHd9noD63WyzbL4Uo3O2vIXkd29ybsvhxruDkdgcKFeIHBwVaFduUBFSbxyg1bvwdxmgFzkv+/Vms1zMl03T6nKUR3TjdDOWtXvwZjzdY7cb6O7P5elQXkfMiRwcFWhXblARUm8eoJfPf15/DvROAzQF3bXr+XxxNl+uh/EM+LBfr0cXnM8TUF8mpeOLSLsPQrdpy+yIOZGDowLtyg0qQurNA7T6JtKdBmjsVbtarZbvzJs+zzhzgF6u15MvM9BQfo/j4j3E7eUnobyOmBM5OCrQrtygIqTePEC//vj8599+F/4OA3RrrF5t1vOzxWrZGOdc2Yh+d5Rc2Ym+bExfXknajtuCXh6MFJidkCRycFSgXblBRUi9eYC++PLabkxfvH81D72zAL1QVnXL2WK2OFV9p/uydbIbT5Qr24GWszzKBDTt3oq/eikJAXov0K7coCKk7iBAX3z5Sc7PX4zzz3sJUKOHtl3NF4t1DtA8Hb08S248Ra48B1rOiN/fL7pauWMJfy/QrtygIqTuIkC/h+/9q8t/2gbVL9fdZjNv1+3QGz1+6unHSWcc77uXvewug/Ly5jtuIt0LtCs3qAgpAQGaou0362Z5tuxX63En0GBdnoKOj4LmvEzhxh4il49/4jGm+4B25QYVISUgQPOKXfWrxXyxWbad0sY7Z0JwYbd/8j4vK0/N40H6e4B25QYVIcU/QMfH5fWwXq+Xi3XXD9abshVoGE8xfnnhzpbIwVGBduUGFSHFP0DLfSJfjjFer9aLch6Sszb48X2kqw3omX3gWSFycFSgXblBRUhJCNCtt84OneraTZ+DVNny8nuOTx92f9c2hsTqlmP05IoAABUYSURBVHuFyMFRgXblBhUhxT9Ay0bzWuuhH5TSXduboRtceaEz+F1ejsdyRuZTUJGDowLtyg0qQop/gF5E67wzvRpyhnZdl/9krQ8hh+Z4n+hyT1AE6BTQrtygIqQEBGi5Y+SM6ttON23XDloZY2zIC/jyKH0I46agqbz8jiX8vUO7coOKkOIfoMnF4P3QtW3b9X1ew2unlLXGlq2XyjP08WoKyncCKnNwVKBduUFFSPEP0FA+7dR62Cw73atuyOnptPG+vH5UXuOMZWu7srkIHmOaANqVG1SElIAATc5bO/R9o/IUtFMlQE2elSY7BmiO17LzUg7S+vqdyeP0IgdHBdqVG1SEFP8AzUt4W27ArzrVb1qtdGeMLTvaWTc+zZSnoK+5f8TlCXuRg6MC7coNKkKKf4Bu8wRUq6HrBq1abXKWGmXLIUjOjb9771+dkWyesBc5OCrQrtygIqT4B2iKzhhTdmEyRvfKaq2cddGnYIJz5UikdHOVfm3RzmdTO5GDowLtyg0qQop/gJZX4dWgndZ5Iqp0nnxaO25mF7wd56A+3vhnri/aE5ttlUUOjgq0KzeoCCkRARr0oMuDS9qVPZjG0zzKycYxT0BdORP++vzyxqIdAXrX0K7coCKk+AdoXsK7oJQyxqd4+cpmXr6n8XROXw74uBaPNxftWMLfNbQrN6gIKf4Bui3r9HIfPuT03B8mVx4NLZsylS2Zbj4A+tKcEzeR7hjalRtUhBT/AE0lQF1ev5cH5tN4mJzPK3jnvXY+hvElzm/+iZcX7XiM6W6hXblBRUjxD9Dx/KPxhtF2XLXH6K0pLyB5Nxg7Hih37c77txbteJD+TqFduUFFSPEPUD9+1JkD047HcMby6Kct+9k5a6wxZVvldG2eyWbRfpPIwVGBduUGFSHFP0DDeMO9bJ+ctjGG8vpRXr3b8WjOkMN0fBP++seeTBbtN4kcHBVoV25QEVL8AzRdBmhM2/E8Yxe07pXSeVqavx4PN47p2rKdyaL9JpGDowLtyg0qQop/gG5TOQDJ+1TuwZfIdG3bq6Hb7Qkay0/vt1Nmt26/RuTgqEC7coOKkOIfoOVUOWf9uPNSyhNQ1bVm0+tBqTwXLTfhEaATQrtyg4qQEhCgF+XZpXJuXNm+zvam6zqj2mEoJ8SXoz1eXsKzJHJwVKBduUFFSIkI0F1CphygwSvVlhc7B6PLrsoh+vjSTSSeRA6OCrQrN6gIKQEBevVoZwohWKfU0PfKmWBM2Qt0fBOJ553360QOjgq0KzeoCCkBAZq20Zd55pigedap2t2b8WVPprJ+D4npnffrRA6OCrQrN6gIKQkBursLX5boIYbx8XmltXZ+f+uI9dL9ksjBUYF25QYVISUgQMvxHeU50DzH3MZonDd5BtqbECKXvepuQeTgqEC7coOKkOIfoHndXp7/9C5sx2eW8uLd9UO5/c5mr7pbEDk4KtCu3KAipPgHaA5Kb2wOUDPeiXfRm7IZaJ53Mn3tvUrk4KhAu3KDipCSEKDBOaOtd+ONJFfePioPNm25vvZeJXJwVKBduUFFSPEP0OSCMdbpxuz2DQnjWfAxlP99vPnO/g58IXJwVKBduUFFSPEP0K3T1rm+6YyzOUBzepYD4X24/HtkTENFDo4KtCs3qAgp/gGagjKu7zutrC97KvtxE7v40sGb3BNU5OCoQLtyg4qQ4h+g0Qeb49MobXJubl0Yn2ry7I6Nez2Rg6MC7coNKkJKQoBGN6hh6Aad555lPyY/Hgu/m3TyObj49UQOjgq0KzeoCCn+AZpCsO3Qt5smz0Bd2O4CdHyO6QIBOjW0KzeoCCn+AbpNVpvNpul77VQ51Xhcwof9WZzbuNvLDkv4aaBduUFFSPEP0IsYTLvpu2YwxpY97cL+gI/x7yh73JXd7JhPQGUOjgq0KzeoCCkBAZq8HYZNq1U7pBhycpbbSPvHmMYnQ1MK3PNT5uCoQLtyg4qQkhCgwSql9dD3ttw8Kqcj5T/GyBzvwZfTjpkv4IUOjgq0KzeoCCkBAbr11tqyA5MebDkXaTyfc/eZp5RbSEIHRwXalRtUhJSAAL0I1mlj9aC02Z0gl67OgEeATgztyg0qQkpCgG6dsmZQeRIaxrON09VrSFIeoxc6OCrQrtygIqQkBOiFN6rvlVYulNlniuEqL4W8yCl0cFSgXblBRUhJCNAUnFVaK2PHY+BvzDdlbCUidHBUoF25QUVICQjQtI3BDoNyzrhdgF7/W0RsZid0cFSgXblBRUjxD9A84YzWmzwBDW7chUnAfPPbRA6OCrQrN6gIKf4Bmtfo3ntn828+BC9ivvltIgdHBdqVG1SElIQATT5aa7Wy4fIFTnlEDo4KtCs3qAgp/gFa3jTyqjwEam0UcL+9TuTgqEC7coOKkOIfoBcpBmWMUS6YyP+l91cQOTgq0K7coCKkBAToRZ5/dq12OUJjlHkLSejgqEC7coOKkBIQoFvbKj3kP4z3Ih6arxE5OCrQrtygIqQEBKiz1hhr+8H6KOK1zRqRg6MC7coNKkKKf4CmcgdeazMY55OM9zYrRA6OCrQrN6gIKf4BGrzJE9ByF8kGIS++V4gcHBVoV25QEVICAtQ5rXpldW+F7LxUI3JwVKBduUFFSPEP0Gi1UqprWpXkTkBlDo4KtCs3qAgp/gGatHV6GFTnbrfzEs/dRUQOjgq0KzeoCCn+ARq8HXROUOPTbbKR6f52IgdHBdqVG1SEFP8A9SHk+NTWutvMLLnusCxycFSgXblBRUjxD9AQrLc6r+PtLWKR7RkfIgdHBdqVG1SEFP8ATd4oXU7l9LdYmbM9ZU7k4KhAu3KDipDiH6AXzpQHQZ1x4bunlQjQe4Z25QYVISUgQIPWzhntjP3ufwBL+HuGduUGFSElIEB98Fob56y9xbQSN5HuF9qVG1SElIAADSFG55z3/ja5iMeY7hXalRtUhJSAAE0h+DwL9T7eamWOB+nvE9qVG1SElIAAvQjJ+zwDdRyX5rclcnBUoF25QUVISQjQi5DT05jw8pHwkogcHBVoV25QEVIiAvTCDcrFECLHxfntiBwcFWhXblARUiICNLryGWiMPt79N2AiIgdHBdqVG1SElIQATXnuWW4jBQQoObQrN6gIKQEBuk3jPXjvQgr38S2YhMjBUYF25QYVISUgQNPW2fIcaAwRM1BqaFduUBFSEgI0ejM+xxRu8TI8VyIHRwXalRtUhJSEAHWxxKfXNi/i7+N7MAWRg6MC7coNKkJKQIDGcv/dWdOqlILUT0FFDo4KtCs3qAgpAQEaknfemsGZkFK81b70/IgcHBVoV25QEVICAjR673TZEdSFspKPDLcK+W4iB0cF2pUbVISUhAC15RaSsjbPQ8vjTCJf6BQ5OCrQrtygIqT4B+g2hBycru91yDkagmW4XfJ3Ezk4KtCu3KAipPgHaIwpWGN0r8qOTMH5JHEKKnJwVKBduUFFSPEP0JBScnn5rrQ3zgeXRG7KJHJwVKBduUFFSPEP0DIDddYHq6w1zqV0u32VmRE5OCrQrtygIqT4B+g2BDeeiuSd0eVBpiRwAipzcFSgXblBRUjxD9CLHKCZ1TammKejeIyJEtqVG1SEFP8A3aZobXkTPvqQtjEIXL9fCB0cFWhXblARUvwDNK/YQ4nPGHJ4ykzPC6GDowLtyg0qQkpCgOZlu3N5Aholrt33RA6OCrQrN6gIKf4BmpfwIU8+nY0Sbx5dEjk4KtCu3KAipPgH6HiiR17AOx+lrt8vhA6OCrQrN6gIKQEBug0+5jV8DB4zUHJoV25QEVICAjRtk9Mu5Hmo4DW8yMFRgXblBhUhJSJA8+TTOy/zFaQ9kYOjAu3KDSpCSkCAbkPyvjwGKnIXkT2Rg6MC7coNKkJKRICGvIDPGYoApYd25QYVISUgQFNZwZffsYSnh3blBhUhJSBAy/vv5VWkEOROQGUOjgq0KzeoCCkZAVqO48RjTBygXblBRUgJCNCy/1Iq6/h4H9+AiYgcHBVoV25QEVITB+ghPnv25MmTxx89fvYZ9a8EAOA1OM5AL9K2nGccwj3892MyIv/rWoH5DjeoCCkJAXoRyi0k0ZsxyRwcFWhXblARUhICdFvuwMeUgtiHmIQOjgq0KzeoCCkJATrehi/3kQTfRRI5OCrQrtygIqQkBGhIe4I/BRU5OCrQrtygIqQkBChmoHygXblBRUhJCNDtfgqKz0DpoV25QUVISQjQi1TmoLEcCC/2ZXiRg6MC7coNKkJKRICWBB3X8dutyEPhL4QOjgq0KzeoCCkZAXpR5p45PguZCSpycFSgXblBRUgJCdCLcrZcHCNU5ipe5OCoQLtyg4qQEhOgKZSPQcVOQUUOjgq0KzeoCCkpAZq2uz2ZEKC00K7coCKkhARoXriPu9qVO/FYwhNCu3KDipASEqDl08/9FFTkBFTm4KhAu3KDipASFKDb8iRTkJmfMgdHBdqVG1SElJAA3T3DlKLU/JQ5OCrQrtygIqSEBOjF7k0koev3C6GDowLtyg0qQkpMgIYoeP4pdHBUoF25QUVICQnQMvksH4He9eVPRuTgqEC7coOKkJIRoFevcYp8hKkQOTgq0K7coCKkZAToPj/xGSg5tCs3qAgpBOg0RA6OCrQrN6gIKRkBiiU8F2hXblARUjIC9EL0VnaFyMFRgXblBhUhJSRALyRvplyIHBwVaFduUBFSUgL0QvBxHoXIwVGBduUGFSElJkCFO5YLQUW4QUVIIUCncSwXgopwg4qQQoBO41guBBXhBhUhhQCdxrFcCCrCDSpCCgE6jWO5EFSEG1SEFAJ0GsdyIagIN6gIKQToNI7lQlARblARUgjQaRzLhaAi3KAipBCg0ziWC0FFuEFFSCFAp3EsF4KKcIOKkEKATuNYLgQV4QYVIYUAncaxXAgqwg0qQkpIgArfSkTo4KhAu3KDipCSEaDSN7MTOjgq0K7coCKkRASo+O2UhQ6OCrQrN6gIKQkBenWgR5K7kBc5OCrQrtygIqQkBOjlkXIxyF3IixwcFWhXblARUoICNKYodyEvcnBUoF25QUVISQjQ3RI+xZjknswpcnBUoF25QUVISQjQ3RR0PwEVOgUVOTgq0K7coCKkRATo+BhT2OcnApQS2pUbVISUjAC92N2B32IJTw3tyg0qQkpIgBainwYVOTgq0K7coCKkBAWo6PeRRA6OCrQrN6gIKUkBKvmNeJGDowLtyg0qQkpUgAp2LBeCinCDipBCgE7jWC4EFeEGFSGFAJ3GsVwIKsINKkIKATqNY7kQVIQbVIQUAnQax3IhqAg3qAgpBOg0juVCUBFuUBFSCNBpHMuFoCLcoCKkEKDTOJYLQUW4QUVIIUCncSwXgopwg4qQQoBO41guBBXhBhUhhQCdxrFcCCrCDSpCCgE6jWO5EFSEG1SEFAJ0GsdyIagIN6gIKQToNI7lQlARblARUgjQaRzLhaAi3KAipBCg0ziWC0FFuEFFSCFAp3EsF4KKcIOKkEKATuNYLgQV4QYVIYUAncaxXAgqwg0qQgoBOo1juRBUhBtUhBQCdBrHciGoCDeoCCkE6DSO5UJQEW5QEVII0Gkcy4WgItygIqQQoNM4lgtBRbhBRUghQKdxLBeCinCDipBCgE7jWC4EFeEGFSGFAJ3GsVwIKsINKkIKATqNY7kQVIQbVIQUAnQax3IhqAg3qAgpBOg0juVCUBFuUBFSCNBpHMuFoCLcoCKkEKDTOJYLQUW4QUVIIUCncSwXgopwg4qQQoBO41guBBXhBhUhNXGAfk/vvkv9K4CbUBFuUBFOEKDwWqgIN6gIJwhQeC1UhBtUhBMEKLwWKsINKsIJAhReCxXhBhXhBAEKr4WKcIOKcIIAhddCRbhBRThBgMJroSLcoCKcMAtQAAA5EKAAAAdCgAIAHAgBCgBwIAQoAMCBEKAAAAdCgAIAHAgBCgBwIE4B+vUn75+f/+JT6l/GD9RXH56P/uTvy1c3avHqL+C+fPXhn+5/dMtSoC4kGAXovoN3DQxT++L9awF6oxav/gLuzdPzfYDeshSoCw1GAfr0/L1PX3z58fl7v6X+lfwgfX7ZscWNWrz6C7gnXz89vyzHLUuButDgE6BfvL+f+/zsb6h/KT9IT89/dfXjG7V49RdwT/7pN+eXAXrLUqAuRPgE6PP9iHl+rZFhMl9/fK31btTi1V/A/Xh+fv7Lf7z6Rt+qFKgLET4B+vT8L8e/3lhKwlS++vC9v8vznr/4tHxxoxav/gLux/Of//XVN/iWpUBdiLAJ0KsZ0Bfv42McApf3kEoj3qjFq78g+7X+EOyT8JalQF2oIEBh9HleNv72xf/95DyXAY1KDwEqA8cAxaMYBJ5fLRl/dbMWr/6C5hf6A/HtAH1dKVAXKhwDFP8NJfT5OWY6HGAGKgMCFG54aT6DRiWCAJWBTYDiPiIPYwfibi853IWXgU+AXj7BhifZKHz98fUOvFGLV38B9+fzlx7s/I5SoC5E+AQo3qUg9fRyyViCFG+8kLsMULyJxBufAM2t+3O8zUvmi/fLY0xf/mb89t+oxau/gPtzGaC3LAXqQoRPgL74EvvJUHq+34zp0/LFjVq8+gu4N1cfZt6yFKgLDUYB+uLLT/II+AX+C0rky/9xfv6zX+6//Tdq8eov4L58czfolqVAXUhwClAAAFEQoAAAB0KAAgAcCAEKAHAgBCgAwIEQoAAAB0KAAgAcCAEKAHAgBCgAwIEQoAAAB0KAAgAcCAEKAHAgBCgAwIEQoAAAB0KAAgAcCAEKAHAgBCgAwIEQoAAAB0KAAgAcCAEKsv2///zWH/3z//oPb731r/7rP1D/WuAHBwEKsuUA/Y//5a3Rv/5b6l8M/NAgQEG2HKBv/Yv/9g8v/s9fvfXWH1H/YuCHBgEKspUA/e/lB//8V2/9GyziYVoIUJAtB+g+N//nW/8Sa3iYFgIUZMsB+m93P/rfCFCYGgIUZCt34Xc/QoDC5BCgIBsCFAghQEE2BCgQQoCCbAhQIIQABdkQoEAIAQqyIUCBEAIUZEOAAiEEKMiGAAVCCFCQDQEKhBCgAAAHQoACABwIAQoAcCAEKADAgRCgAAAHQoACABwIAQoAcCAEKADAgRCgAAAHQoACABwIAQoAcCAEKADAgRCgAAAHQoACABwIAQoAcCAEKADAgRCgAAAHQoACABwIAQoAcCAEKADAgf4/d1sYN440D9AAAAAASUVORK5CYII=" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li>La variación en performance es más grande entre jugadores con menos oportunidades en el bate.</li>
+<li>Hay una correlación positiva entre performance y oportunidades en el bate.</li>
+</ol>
+<p>Ahora si organizamos de manera descendente por performance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>batters <span class="sc">|&gt;</span> </span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(performance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20,469 × 3
+   playerID  performance     n
+   &lt;chr&gt;           &lt;dbl&gt; &lt;int&gt;
+ 1 abramge01           1     1
+ 2 alberan01           1     1
+ 3 banisje01           1     1
+ 4 bartocl01           1     1
+ 5 bassdo01            1     1
+ 6 birasst01           1     2
+ 7 bruneju01           1     1
+ 8 burnscb01           1     1
+ 9 cammaer01           1     1
+10 campsh01            1     1
+# ℹ 20,459 more rows</code></pre>
+</div>
+</div>
+<p>Los que mejor tienen performance son los que tienen menos oportunidades en el bate. Esto es un error, por lo que hay que tener cuidado con la cantidad de datos que tenemos.</p>
 </section>
 
 </main>
