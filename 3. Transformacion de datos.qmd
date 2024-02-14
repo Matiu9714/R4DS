@@ -511,4 +511,4 @@ batters |>
   arrange(desc(performance))
 ```
 
-Los que mejor tienen performance son los que tienen menos oportunidades en el bate. Esto es un error, por lo que hay que tener cuidado con la cantidad de datos que tenemos.
+Los que mejor tienen performance son los que tienen menos oportunidades en el bate. Esto es un error, por lo que hay que tener cuidado con la cantidad de datos que tenemos disponibles.
