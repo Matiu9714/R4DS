@@ -1,0 +1,394 @@
+---
+title: 'Datos organizados'
+author: 'Mateo Vega'
+format: 
+  html:
+    embed-resources: true
+---
+
+Se aprenderá a organizar nuestros datos de una forma consistente usando un sistema llamado **tidy data**.
+
+```{r}
+#| warning: false
+
+library(tidyverse)
+```
+
+## Tidy data
+
+Se pueden representar los datos de diferentes formas
+
+```{r}
+table1
+```
+
+```{r}
+table2
+```
+
+```{r}
+table3
+```
+Estas tres tablas representan los mismos datos pero no son igual de fáciles de usar. `table1` es la más sencilla de usar porque es **tidy**.
+
+Hay tres reglas para que un conjunto de datos sea tidy:
+
+1. Cada variable es una columna, cada columna es una variables.
+1. Cada observación es una fila, cada fila es una observación.
+1. Cada valor es una celda, cada celda es un valor.
+
+Hay dos ventajas de tener los datos ordenados:
+
+1. Si se tiene una estructura consistente es más fácil aprender las herramientas que sirven con los datos ya que tienen uniformidad.
+
+1. Hay ventajas en poner variables en columnas ya que permite brillar a la vectorización de R.
+
+`dplyr`, `ggplot2` y los otros paquetes en el tidyverse están diseñados para trabajar con datos ordenados.
+
+```{r}
+table1 |> 
+  mutate(rate = cases / population * 10000)
+```
+
+```{r}
+# Total casos por año 
+
+table1 |> 
+  group_by(year) |> 
+  summarize(total_cases = sum(cases))
+```
+
+```{r}
+## Visualizar el cambio con el tiempo
+
+ggplot(table1, aes(x = year, y = cases)) +
+  geom_line(aes(group = country), color = "grey50") +
+  geom_point(aes(color = country, shape = country)) +
+  scale_x_continuous(breaks = c(1999, 2000))
+```
+## Ejercicios
+
+1. For each of the sample tables, describe what each observation and each column represents.
+
+
+La primera tabla representa el pais, año, casos en el año y la población.
+
+La segunda tabla representa pais, el tipo y la cuenta, en la cuenta se combinan casos y población en una sola columna, por lo tanto está desordenado.
+
+La tercera tabla representa país, año y tasa, pero la tasa está como una cadena.
+
+
+2. Sketch out the process you’d use to calculate the rate for table2 and table3. You will need to perform four operations:
+
+## Alargamiento de datos
+
+La mayoría de veces los datos no están ordenados, al tener un conjunto de datos nuevos lo primero que se debe hacer es consultar con la gente que generó los datos, luego debemos pivotar los datos en una forma ordenada con variables en columnas y observaciones en filas.
+
+tidyr provee dos funciones para pivotar datos: `pivot_longer()` y `pivot_wider`.
+
+
+### Datos en los nombres de las columnas
+
+
+El siguiente conjunto de datos registra el ranking de canciones en el año 2000:
+
+```{r}
+billboard
+```
+
+
+Cada observación es una canción. `artist`, `track`, `date.entered` son variables que describen la canción. Luego hay 76 columnas (`wk1` - `wk-76`) que describe el ranking de la canción en cada semana. Aquí los nombres de columnas son una variable (la semana) y los valores de la celda son otra (el rango).
+
+Se usa `pivot_longer()`
+
+```{r}
+billboard |> 
+  pivot_longer(
+    cols = starts_with("wk"),
+    names_to = "week",
+    values_to = "rank"
+  )
+```
+
+* `col` especifica que columnas necesitan ser pivotadas (qué columnas no son variables). Este argumento usa el mismo syntax que `select()`.
+
+* `names_to` nombra la variable almacenada en los nombres de las columnas.
+
+* `values_to` nombra la variable almacenada en los valores de la celda.
+
+Si una canción no estuvo en el ranking por las 76 semanas se representa con un `NA`, se ven obligados a existir por la estructura de los datos, podemos eliminarlos con el parámetro `values_drop_na = TRUE`
+
+```{r}
+billboard |> 
+  pivot_longer(
+    cols = starts_with("wk"),
+    names_to = "week",
+    values_to = "rank",
+    values_drop_na = TRUE
+  )
+```
+
+Las filas con `NA` se eliminaron.
+
+Ahora está ordenado el conjunto de datos, ahora podemos convertir los valores de semana a numeros
+
+```{r}
+billboard_longer <- billboard |> 
+  pivot_longer(
+    cols = starts_with("wk"),
+    names_to = "week",
+    values_to = "rank",
+    values_drop_na = TRUE
+  ) |> 
+  mutate(
+    week = parse_number(week)
+  )
+
+billboard_longer
+```
+
+Ahora tenemos todos los numeros de semanas en una variable y los rankings en otra, podemos visualizar
+
+```{r}
+billboard_longer |> 
+  ggplot(aes(x = week, y = rank, group = track)) +
+  geom_line(alpha = 0.25) +
+  scale_y_reverse()
+```
+
+### Como funciona el pivotar
+
+```{r}
+df <- tribble(
+  ~id, ~bp1, ~bp2,
+  "A",  100,  120,
+  "B",  140,  115,
+  "C",  120,  125
+)
+```
+
+
+```{r}
+df |> 
+  pivot_longer(
+    cols = bp1:bp2,
+    names_to = "medicion",
+    values_to = "valor"
+  )
+```
+
+### Muchas variables en nombres de columnas
+
+Es más complicado cuando se tienen muchas piezas de información combinadas en los nombres de las variables y se desean almacenar separadas.
+
+
+```{r}
+who2
+```
+
+Hay 56 columnas como `sp_m_014` y `rel_m_3544`. Cada nombre de columna está creado por tres piezas separadas por `_`. La primer pieza `sp/rel/ep` describe el método de diagnóstico, la segunda pieza `m/f` describe el genero y la tercer pieza es el rango de edades.
+
+Tenemos seis piezas de información registrada en la base de datos. Para organizarla usamos:
+
+```{r}
+who2 |> 
+  pivot_longer(cols = !(country:year),
+  names_to = c("diagnostico", "genero", "edad"),
+  names_sep = "_",
+  values_to = "count"
+  )
+```
+
+### Datos y nombres de variables el los encabezados
+
+El siguiente paso en complejidad es cuando el nombre de la columna incluye una mezcla de valores de variables y nombres de variables, por ejemplo:
+
+```{r}
+household
+```
+
+Las columnas contienen el nombre de dos variables (`dob`, `name`) y el valor de otra (`child`, con valores 1 o 2). Para resolver este problema necesitamos dar un vector de nombres pero esta vez usamos `".value"` que le dice a `pivot_longer()` que haga algo especials.
+
+```{r}
+household |> 
+  pivot_longer(
+    cols = !family,
+    names_to = c(".value", "child"),
+    names_sep = "_",
+    values_drop_na = TRUE
+  )
+```
+## Ampliando datos
+
+Ahora usaremos `pivot_wider()` lo cual hace el conjunto de datos más ancho incrementando las columnas y reduciendo las filas, esto ayuda cuando una observación se esparce en multiples filas
+
+Por ejemplo
+
+```{r}
+cms_patient_experience
+```
+
+La pieza central para investigar es la organización pero cada organización se esparce en seis filas con cada fila siendo cada medida tomada en la encuesta.
+
+```{r}
+cms_patient_experience |> 
+  distinct(measure_cd, measure_title)
+```
+Ni `measure_cd` ni `measure_title` harían buenos nombres de variables. Usaremos `measure_cd` como la fuente de nuestros nombres de variables nuevos.
+
+`pivot_wider()` tiene la interfaz opuesta a `pivot_longer()`, en lugar de escoger nuevos nombres de columnas tenemos que proveer las columnas existentes que definen los valores y el nombre de la columna
+
+```{r}
+cms_patient_experience |> 
+  pivot_wider(
+    names_from = measure_cd,
+    values_from = prf_rate
+  )
+```
+
+Todavía tenemos muchas filas para una observación, tenemos que decirle a `pivot_wider()` que columnas tienen valores que identifican unicamente a cada fila, en este caso empiezan con `"org"`.
+
+```{r}
+cms_patient_experience |> 
+  pivot_wider(
+    id_cols = starts_with("org"),
+    names_from = measure_cd,
+    values_from = prf_rate
+  )
+```
+
+### Cómo funciona `pivot_wider()`
+
+Veamos un ejemplo sencillo
+
+```{r}
+df <- tribble(
+  ~id, ~measurement, ~value,
+  "A",        "bp1",    100,
+  "B",        "bp1",    140,
+  "B",        "bp2",    115, 
+  "A",        "bp2",    120,
+  "A",        "bp3",    105
+)
+```
+
+Tomamos los valores de la columna `valor` y los nombres de `measurement`
+
+```{r}
+df |> 
+  pivot_wider(
+    names_from = measurement,
+    values_from = value
+  )
+```
+
+Para empezar se necesita saber que valores van en las filas y columnas. Las nuevas columnas son los valores unicos de `measurement`
+
+```{r}
+df |> 
+  distinct(measurement) |> 
+  pull()
+```
+Por defecto, las filas se determinan por las filas se determinan por las variables que no van en nuevos nombres o valores. Se llaman `id_cols`. Aquí solo hay una columna
+
+```{r}
+df |> select(-measurement, -value) |> 
+  distinct()
+```
+
+Luego combina este resultado para generar un data frame vacio
+
+```{r}
+df |> 
+  select(-measurement, -value) |> 
+  distinct() |> 
+  mutate(x = NA, y = NA, z = NA)
+```
+Luego llena todos los valores perdidos usando los valores en la entrada. Qué pasa si hay multiples filas en la entrada que corresponde a una celda en la salida
+
+```{r}
+df <- tribble(
+  ~id, ~measurement, ~value,
+  "A",        "bp1",    100,
+  "A",        "bp1",    102,
+  "A",        "bp2",    120,
+  "B",        "bp1",    140, 
+  "B",        "bp2",    115
+)
+```
+
+Si intentamos pivotar esto obtenemos una salida que contiene listas-columnas
+
+```{r}
+df |> 
+  pivot_wider(
+    names_from = measurement, 
+    values_from = value
+  )
+```
+
+Siguiendo lo que dice la advertencia
+
+```{r}
+df |> 
+  group_by(id, measurement) |> 
+  summarize(n = n(), .groups = "drop") |> 
+  filter(n > 1)
+```
+
+Aquí hay que entrar a analizar qué está mal con nuestros datos.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
