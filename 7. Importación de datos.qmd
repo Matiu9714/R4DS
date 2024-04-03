@@ -1,0 +1,289 @@
+---
+title: 'Importación de datos'
+author: 'Mateo Vega'
+format: 
+  html:
+    embed-resources: true
+---
+
+
+```{r}
+#| warning: false
+
+library(tidyverse)
+```
+
+## Leer datos de un archivo
+
+```{r}
+estudiantes <- read_csv("data/students.csv")
+```
+- Qué nos dice el mensaje que sale cuando corremos `read_csv()`?
+
+### Consejo práctico
+
+```{r}
+estudiantes
+```
+
+- Qué está mal con estos datos?
+- Cuales son los pasos que debemos tomar para mejorar y entender la base?
+
+```{r}
+estudiantes <- read_csv("data/students.csv", na = c("N/A", ""))
+estudiantes
+```
+
+```{r}
+estudiantes |> 
+  rename(
+    student_id = `Student ID`,
+    full_name = `Full Name`
+  )
+```
+
+```{r}
+estudiantes |> janitor::clean_names()
+```
+
+```{r}
+estudiantes |> 
+  janitor::clean_names() |> 
+  mutate(meal_plan = factor(meal_plan))
+```
+
+- Qué cambió?
+
+```{r}
+estudiantes <- estudiantes |> 
+  janitor::clean_names() |> 
+  mutate(
+    meal_plan = factor(meal_plan),
+    age = parse_number(if_else(age == "five", "5", age))
+  )
+estudiantes
+```
+
+- Cómo funciona el if else en el código anterior?
+
+### Otros argumentos
+
+`read_csv()` puede leer cadenas que se creen y formateadas como un archivo CSV
+
+```{r}
+read_csv(
+  "a,b,c
+  1,2,3
+  4,5,6"
+)
+```
+
+```{r}
+read_csv(
+  "Primer linea con metadatos
+  Segunda linea con metadatos
+  x,y,z
+  1,2,3",
+  skip = 2
+)
+```
+
+```{r}
+read_csv(
+  "# Un comnetario que quiero saltar
+  x,y,z
+  1,2,3",
+  comment = "#"
+)
+```
+
+```{r}
+read_csv(
+  "1,2,3
+  4,5,6",
+  col_names = FALSE
+)
+```
+
+```{r}
+read_csv(
+  "1,2,3
+  4,5,6",
+  col_names = c("x", "y", "z")
+)
+```
+
+### Otros tipos de datos
+
+- Cuales otras funciones existen para otros tipos de datos?
+
+### Ejercicios
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
