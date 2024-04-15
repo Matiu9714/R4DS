@@ -1,0 +1,202 @@
+---
+title: 'Capas'
+author: 'Mateo Vega'
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+```
+
+
+## Mapeados estéticos
+
+```{r}
+mpg
+```
+
+* Describe este conjunto de datos, qué variables y tipos tiene?
+
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point()
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, shape = class)) +
+  geom_point()
+```
+
+* Qué significan las advertencias que salen al poner `shape = class`?
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, size = class)) +
+  geom_point()
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, alpha = class)) +
+  geom_point()
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(color = "blue")
+```
+
+[Opciones para un gráfico ggplot2](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
+
+
+## Objetos geométricos
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point()
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth()
+```
+
+* Cual es la diferencia de estos dos gráficos anteriores?
+* Cual es la diferencia en poner los valores a mapear en la capa `geom` que globalmente en la capa `ggplot`?
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, shape = drv)) +
+  geom_smooth()
+```
+```{r}
+ggplot(mpg, aes( x = displ, y = hwy, linetype = drv)) +
+  geom_smooth()
+```
+
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_point() +
+  geom_smooth(aes(linetype = drv))
+```
+
+* Qué tiene de especial este gráfico?
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth()
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(aes(group = drv))
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth(aes(color = drv), show.legend = FALSE)
+```
+
+* Cual es la diferencia entre `group` y `linetype`.
+* Para qué sirve poner mapeados en la función `geom` y no globalmente?
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth()
+```
+
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_point(
+    data = mpg |> filter(class == "2seater"),
+    color = "red"
+  ) +
+  geom_point(
+    data = mpg |> filter(class == "2seater"),
+    shape = "circle open", size = 3, color = "blue"
+  )
+```
+
+* Qué nos pueden decir diferentes `geoms`?
+
+```{r}
+ggplot(mpg, aes(x = hwy)) +
+  geom_histogram(binwidth = 2)
+```
+
+```{r}
+ggplot(mpg, aes(x = hwy)) +
+  geom_density()
+```
+
+```{r}
+ggplot(mpg, aes(x = hwy)) +
+  geom_boxplot()
+```
+
+[Extensiones de ggplot](https://exts.ggplot2.tidyverse.org/gallery/)
+
+```{r}
+library(ggridges)
+
+ggplot(mpg, aes(x = hwy, y = drv, fill = drv, color = drv)) +
+  geom_density_ridges(alpha = 0.5, show.legend = FALSE)
+```
+
+[Referencia ggplot](https://ggplot2.tidyverse.org/reference/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
